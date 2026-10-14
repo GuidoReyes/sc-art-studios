@@ -1,0 +1,43 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS specific
+.DS_Store
+
+# Secretos y variables (PRD 1.2): nunca al repositorio
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Builds
+.next/
+dist/
+out/
+coverage/
+
+# Respaldos de base de datos
+*.sql
+*.sql.gz
+*.sql.age
+*.sql.gpg

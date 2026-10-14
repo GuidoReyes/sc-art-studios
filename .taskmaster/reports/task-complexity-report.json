@@ -1,0 +1,405 @@
+{
+	"meta": {
+		"generatedAt": "2026-10-14T14:27:39.171Z",
+		"tasksAnalyzed": 49,
+		"totalTasks": 49,
+		"analysisCount": 49,
+		"thresholdScore": 5,
+		"projectName": "SC Art Studio",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Completar configuración del repositorio Git y protecciones",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Inicializar Git y configurar user.name/email, 2) Crear repositorio privado en GitHub con gh CLI, 3) Activar protecciones de rama main (branch protection rules), 4) Habilitar Dependabot alerts, secret scanning y push protection. Incluir verificación de cada paso con comandos específicos.",
+			"reasoning": "Tarea de configuración estándar con comandos bien documentados en el PRD. La complejidad es baja porque usa herramientas CLI conocidas (git, gh). El único riesgo es que algunas protecciones requieren plan de GitHub apropiado. No hay código que escribir, solo configuración."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Completar estructura de monorepo con plantilla MEA",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear estructura de directorios apps/web, apps/api, packages/shared, 2) Configurar package.json raíz con workspaces npm, 3) Crear package.json inicial para apps/web con scripts básicos, 4) Crear package.json inicial para apps/api con scripts básicos, 5) Actualizar .gitignore con todas las exclusiones requeridas (.env, node_modules, .next, dist, etc.) y crear README.md del proyecto.",
+			"reasoning": "Requiere conocimiento de npm workspaces y monorepos. El PRD tiene detalles específicos sobre la estructura esperada. La complejidad aumenta ligeramente por necesitar coordinar múltiples package.json y asegurar que los workspaces se reconozcan correctamente."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Completar CLAUDE.md y AGENTS.md con reglas del proyecto",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Documentar stack técnico completo (Next.js/Express/Prisma/Shopify/R2), 2) Escribir las 13 capas de seguridad de Sección 4.8 de forma clara y accionable, 3) Documentar reglas de protección de menor (Sección 4.9), 4) Definir convención de commits en español con conventional commits, 5) Crear AGENTS.md con lista de agentes y cuándo usarlos.",
+			"reasoning": "Es principalmente trabajo de documentación, pero requiere comprensión profunda del PRD (608 líneas). Las 13 capas de seguridad son detalladas y críticas. El reto es sintetizar la información del PRD en reglas claras y accionables para Claude Code."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Configurar zona DNS en Cloudflare y nameservers",
+			"complexityScore": 2,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio sc-artstudio.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS.",
+			"reasoning": "Tarea marcada como [HUMANO] en su mayoría. La configuración DNS es estándar. La complejidad es baja porque Cloudflare y Vercel tienen interfaces claras. El único riesgo es el tiempo de propagación DNS (15min-48h)."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Configurar proyecto Railway y base de datos MySQL",
+			"complexityScore": 2,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) Instalar Railway CLI y autenticar con GitHub, 2) Crear proyecto sc-art-studio y agregar servicio MySQL, 3) Obtener DATABASE_URL, guardar en .env local y verificar conexión.",
+			"reasoning": "Tarea [HUMANO] con Railway CLI. La creación del proyecto y base de datos es automatizada por Railway. Complejidad baja porque Railway genera automáticamente las variables de conexión. Solo requiere seguir pasos documentados."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Scaffold del backend Express con TypeScript en apps/api",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Dividir en: 1) Inicializar proyecto TypeScript con dependencias (express, typescript, @types/*, tsx, dotenv, zod), 2) Configurar tsconfig.json con target ES2022 y strict mode, 3) Configurar Helmet con CSP restrictiva y CORS limitado a dominios propios, 4) Implementar rate limiting general (100 req/15min) y estricto para rutas sensibles, 5) Configurar logger Pino para logs JSON estructurados, 6) Crear endpoint /health con respuesta JSON, 7) Configurar scripts dev/build/start en package.json.",
+			"reasoning": "Scaffold completo de backend con múltiples middlewares de seguridad. Requiere conocimiento de Express, TypeScript, Helmet, CORS y rate limiting. La CSP restrictiva necesita planificación cuidadosa para permitir solo dominios necesarios (Shopify, YouTube, etc.). Los 13 middlewares de seguridad del PRD hacen esto más complejo que un scaffold básico."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Configurar Prisma con schema base y migración inicial",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: 1) Instalar Prisma y ejecutar prisma init para MySQL, 2) Definir modelos core: Mask, MaskImage, Story, Video con relaciones, 3) Definir modelos de comercio: CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, 4) Definir modelos de admin: SocialAccount, AdminUser, AuditLog con enums de status, 5) Configurar tipos correctos (Decimal, DateTime, Json) y relaciones entre modelos, 6) Ejecutar migración inicial y verificar con Prisma Studio.",
+			"reasoning": "Schema complejo con 13 modelos interrelacionados. Requiere diseño cuidadoso de relaciones (1:N entre Mask↔MaskImage, Mask↔Video, etc.), uso correcto de tipos Prisma (Decimal para precios, Json para arrays de países), y múltiples enums (MaskStatus, VideoSource, etc.). La migración inicial es crítica porque errores aquí afectan todo el proyecto."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Crear script de seed con datos iniciales",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear seed.ts con configuración de Prisma Client, 2) Insertar ShippingZones (zona C: US/CA/MX, zona E: Europa, zona F: Australia), 3) Insertar ShippingRates con tarifas FedEx verificadas de Sección 6.4, 4) Insertar PackagingProfile y CostSettings con valores de Sección 6.2, 5) Insertar 4 Masks en estado DRAFT (Jaguar Dorado, Lobo Florido, Venado Rosa, Cebra Mágica).",
+			"reasoning": "Requiere traducir datos específicos del PRD (tarifas FedEx, parámetros de costos) a código. La complejidad está en asegurar tipos correctos (Decimal) y marcar correctamente los valores SUPUESTO. Dependencia directa del schema de Prisma (tarea 7)."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Implementar endpoints públicos del API: GET /api/masks y GET /api/masks/:slug",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear router de Express para rutas de máscaras, 2) Implementar GET /api/masks con filtros Zod (status, animal), paginación y ordenamiento, 3) Implementar GET /api/masks/:slug con validación y relaciones (images, videos, story), 4) Agregar headers Cache-Control para CDN (max-age=60, s-maxage=300), 5) Crear tipos compartidos en packages/shared para MaskListResponse y MaskDetailResponse.",
+			"reasoning": "Endpoints REST estándar pero con validación Zod, caché y tipos compartidos. Requiere coordinación entre apps/api y packages/shared. La complejidad está en incluir correctamente las relaciones de Prisma y manejar el 404 para slugs inexistentes."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Implementar endpoints públicos del API: GET /api/stories, GET /api/videos",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Implementar GET /api/stories con paginación (limit, offset), 2) Implementar GET /api/stories/:slug con lookup por slug, 3) Implementar GET /api/videos con filtro opcional por maskId, 4) Agregar tipos compartidos y headers de caché.",
+			"reasoning": "Similar a tarea 9 pero más simple porque stories y videos tienen menos relaciones. La paginación con limit/offset es estándar. Menor complejidad que máscaras porque no hay tantos filtros ni estados."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implementar endpoint POST /api/custom-requests con validación y subida a R2",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: 1) Configurar cliente S3 compatible para Cloudflare R2, 2) Implementar validación con Zod del formulario de encargo personalizado, 3) Integrar verificación de Cloudflare Turnstile con fetch al API de Cloudflare, 4) Generar presigned URL para subida de imagen de referencia a R2, 5) Crear registro en CustomRequest con manejo de errores, 6) Agregar rate limiting estricto (5 req/15min por IP).",
+			"reasoning": "Integración con dos servicios externos (Cloudflare Turnstile y R2). Requiere manejo de presigned URLs, validación de captcha, y rate limiting estricto. La complejidad aumenta por la naturaleza asíncrona de la verificación Turnstile y la gestión segura de credenciales R2."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Implementar endpoint POST /api/shipping/quote para cotización de envío",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Implementar cálculo de peso volumétrico con fórmula (L×W×H)/divisor, 2) Implementar lógica de peso facturable: max(peso real empacado, volumétrico), 3) Buscar zona de envío por código de país ISO, 4) Calcular precio al cliente para cubrir comisiones de pasarela, 5) Construir respuesta con múltiples opciones de carrier/servicio.",
+			"reasoning": "Implementa el motor de costos F7 descrito en Sección 6. Requiere cálculos matemáticos precisos con Decimal para evitar errores de redondeo. La lógica de peso facturable y cobertura de comisiones es específica del negocio y crítica para evitar pérdidas."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implementar autenticación de admin con argon2id y JWT",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: 1) Crear AdminUser en seed con password hasheado con argon2id, 2) Implementar POST /api/auth/login con verificación argon2 y generación JWT, 3) Implementar sistema de bloqueo tras 5 intentos fallidos con tabla LoginAttempt, 4) Configurar cookies httpOnly/Secure/SameSite con refresh token, 5) Implementar generación y validación de CSRF token, 6) Crear middleware requireAdmin y registrar logins en AuditLog.",
+			"reasoning": "Seguridad crítica con múltiples componentes: argon2id (no bcrypt), JWT con vida corta, refresh tokens, CSRF protection, bloqueo por intentos fallidos. Cada componente debe implementarse correctamente o compromete la seguridad. La Capa 1 del PRD (4.8) es muy específica sobre estos requisitos."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Crear endpoints CRUD de admin para masks, stories, videos",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Implementar CRUD completo para /api/admin/masks con validación Zod, 2) Implementar CRUD para /api/admin/stories y /api/admin/videos, 3) Agregar lógica de negocio: no permitir eliminar máscara SOLD, 4) Registrar cada acción en AuditLog con diff del cambio, 5) Aplicar middleware requireAdmin y rate limiting por usuario.",
+			"reasoning": "CRUD estándar pero con lógica de negocio específica (no borrar SOLD) y requisito de audit log detallado. El AuditLog debe capturar userId, action, entity, entityId y diff JSON, lo que añade complejidad. Debe coordinarse con el middleware de auth (tarea 13)."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Implementar motor de costos y precios (F7) en POST /api/admin/pricing/suggest",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Cargar CostSettings y PackagingProfile desde DB, 2) Implementar fórmula de costo fijo por pieza: (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth, 3) Calcular costo unitario: materiales + labor + empaque + fijo, 4) Calcular precios sugeridos para márgenes 30%, 40%, 50% usando fórmula P = (costo + fixed) / (1 - %comisiones - margen).",
+			"reasoning": "Implementación directa de las fórmulas de Sección 6.1-6.3 del PRD. Requiere precisión con Decimal y comprensión del modelo de negocio. Las fórmulas están bien documentadas pero deben verificarse contra los ejemplos calculados en el PRD."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Configurar cuenta Shopify Basic y obtener tokens API",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) [HUMANO] Registrar cuenta Shopify Basic y configurar moneda/mercados/idiomas, 2) Instalar canal Headless y obtener Storefront API token, 3) Crear app personalizada con permisos Admin API requeridos, 4) Guardar tokens en .env local y Railway (nunca en código).",
+			"reasoning": "Tarea [HUMANO] de configuración en Shopify. La complejidad técnica es baja porque Shopify tiene UI clara. El riesgo está en configurar correctamente los permisos de la app (read/write products, inventory, orders, draft_orders, files)."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Activar PayPal como proveedor de pagos en Shopify",
+			"complexityScore": 2,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) [HUMANO] Crear cuenta PayPal Business y conectar en Shopify, 2) Crear producto de prueba y hacer compra real de $1 USD, 3) Procesar reembolso y documentar comisiones reales vs esperadas.",
+			"reasoning": "Tarea [HUMANO] con pasos bien definidos. La prueba de pago real es importante para verificar que todo funciona. Baja complejidad técnica pero crítica para el negocio."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Configurar dominio shop.sc-artstudio.com para checkout de Shopify",
+			"complexityScore": 2,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) Conectar dominio shop en Shopify Domains, 2) Crear CNAME en Cloudflare con DNS only (nube gris), 3) Verificar SSL y hacer compra de prueba desde el subdominio.",
+			"reasoning": "Configuración DNS estándar similar a tarea 4 pero para Shopify checkout. El patrón 'DNS only' en Cloudflare es consistente con MEA. Baja complejidad."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Implementar integración con Shopify Admin API: crear y actualizar productos",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Configurar cliente de Shopify Admin GraphQL API con autenticación, 2) Implementar mutation productCreate con todos los campos requeridos, 3) Implementar mutation productUpdate y productCreateMedia para imágenes, 4) Implementar inventorySetQuantities para configurar stock, 5) Agregar manejo de errores de Shopify (rate limit 429, auth 401, validación).",
+			"reasoning": "Integración compleja con GraphQL de Shopify. Requiere conocer las mutations específicas y manejar múltiples operaciones relacionadas (producto, media, inventario). El rate limiting de Shopify y manejo de errores añade complejidad."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Implementar endpoint POST /api/admin/masks/:id/publish para publicar máscara en Shopify",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: 1) Validar que la máscara tiene precio, nombre e imágenes antes de publicar, 2) Crear o actualizar producto en Shopify usando servicios de tarea 19, 3) Subir imágenes a Shopify desde R2, 4) Actualizar mask.status=AVAILABLE, guardar shopifyProductId, 5) Llamar webhook de revalidación del frontend, 6) Generar plantilla de texto para redes sociales con UTM.",
+			"reasoning": "Orquesta múltiples operaciones: validación, Shopify API, actualización DB, revalidación frontend, generación de contenido. Es el flujo más crítico del admin porque conecta el backend con Shopify y el frontend. Debe ser idempotente (re-publicar actualiza en lugar de duplicar)."
+		},
+		{
+			"taskId": 21,
+			"taskTitle": "Implementar webhooks de Shopify: orders/paid, products/update, inventory_levels/update",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Configurar ruta POST /webhooks/shopify con express.raw para verificación HMAC, 2) Implementar verificación HMAC-SHA256 con SHOPIFY_WEBHOOK_SECRET, 3) Manejar orders/paid: marcar máscara SOLD, crear Order, notificar, 4) Manejar products/update e inventory_levels/update para sincronización, 5) Implementar idempotencia guardando webhook IDs procesados.",
+			"reasoning": "Webhooks son críticos para mantener sincronía entre Shopify y el backend. La verificación HMAC es obligatoria por seguridad. El procesamiento debe ser rápido (<5s) o usar cola. La idempotencia previene procesamiento duplicado."
+		},
+		{
+			"taskId": 22,
+			"taskTitle": "Desplegar backend en Railway con variables de entorno",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear servicio Railway conectado a GitHub, 2) Configurar Root Directory, Build Command y Start Command, 3) Agregar todas las variables de entorno (JWT_SECRET, SHOPIFY_*, R2_*, etc.), 4) Verificar que migrations se ejecutan al arrancar, 5) Probar endpoint /health y verificar logs.",
+			"reasoning": "Despliegue en Railway es relativamente directo pero requiere configuración cuidadosa de variables de entorno (muchas según el PRD) y verificar que Prisma migrations funcionen en el arranque. El Root Directory apps/api debe configurarse correctamente."
+		},
+		{
+			"taskId": 23,
+			"taskTitle": "Configurar dominio api.sc-artstudio.com en Railway y DNS",
+			"complexityScore": 2,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) Agregar custom domain en Railway Settings, 2) Crear CNAME en Cloudflare con DNS only, 3) Verificar HTTPS y actualizar webhooks de Shopify.",
+			"reasoning": "Similar a tareas 4 y 18, configuración DNS estándar. Railway emite certificado SSL automáticamente. Baja complejidad."
+		},
+		{
+			"taskId": 24,
+			"taskTitle": "Configurar respaldo automático diario de MySQL a R2",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear script backup-db.ts que exporta MySQL (mysqldump o Prisma raw query), 2) Implementar cifrado con age usando AGE_PUBLIC_KEY, 3) Subir archivo cifrado a R2 con nombre backup-YYYY-MM-DD.sql.age, 4) Implementar lógica de retención: 7 diarios, 4 semanales, 6 mensuales, 5) Configurar cron job en Railway y documentar proceso de restauración.",
+			"reasoning": "Script complejo que combina: exportación de DB, cifrado con age, subida a R2, y lógica de retención inteligente. La documentación de restauración en docs/seguridad.md es crítica. Requiere probar restauración manualmente."
+		},
+		{
+			"taskId": 25,
+			"taskTitle": "Scaffold del frontend Next.js con App Router y TypeScript en apps/web",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear proyecto Next.js 14+ con create-next-app y configuración TypeScript/Tailwind, 2) Configurar next-intl para i18n con locales en/es, 3) Configurar tokens de diseño en globals.css (colores ink, cream, pink, purple, turquoise, orange), 4) Configurar fuentes Bagel Fat One y Nunito con next/font/google, 5) Crear estructura de rutas app/[locale]/(marketing) y app/[locale]/admin.",
+			"reasoning": "Scaffold de Next.js moderno con App Router, i18n y sistema de diseño específico del PRD. La configuración de next-intl requiere middleware y estructura de rutas específica. Los tokens de diseño de Sección 3 deben traducirse a CSS variables."
+		},
+		{
+			"taskId": 26,
+			"taskTitle": "Crear componentes reutilizables base del diseño",
+			"complexityScore": 6,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Dividir en: 1) Crear Header con logo, nav, selector de idioma y carrito, 2) Crear Footer con logo, links legales, SocialLinks y copyright, 3) Crear MaskCard con imagen, nombre, StatusPill y PriceTag, 4) Crear StatusPill y PriceTag (USD/GTQ), 5) Crear SectionBlock, WhatsAppButton y SocialLinks, 6) Crear página de prueba para verificar todos los componentes.",
+			"reasoning": "10+ componentes según la lista del PRD Sección 3. Cada uno debe seguir el sistema de diseño (bordes 4px, radios 24-28px, paleta específica). La responsividad móvil-primero añade complejidad. Algunos componentes (MaskCard, Header) son más complejos que otros."
+		},
+		{
+			"taskId": 27,
+			"taskTitle": "Implementar integración con Shopify Storefront API en el frontend",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear cliente de Storefront API con fetch y token público, 2) Implementar queries: getProducts, getProductByHandle, 3) Implementar mutations: cartCreate, cartLinesAdd, getCart, 4) Persistir cartId en cookie o localStorage, 5) Agregar caché con SWR o React Query y manejo de errores.",
+			"reasoning": "Integración GraphQL con Shopify desde el cliente. Requiere manejo de estado del carrito, persistencia entre sesiones, y caché para rendimiento. El token de Storefront es público pero hay que manejar errores de red y rate limiting."
+		},
+		{
+			"taskId": 28,
+			"taskTitle": "Implementar páginas públicas: Home (/), Catálogo (/mascaras), Ficha (/mascaras/[slug])",
+			"complexityScore": 8,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Dividir en: 1) Implementar Home con hero, máscaras destacadas, sección Scarlett, videos y cómo comprar, 2) Implementar Catálogo con grid de MaskCard y filtros (status, animal), 3) Implementar Ficha con galería carousel, medidas, historia, video embebido, 4) Integrar ShippingEstimator en ficha, 5) Agregar botones Comprar y 'Quiero una parecida', 6) Configurar ISR con revalidate y generateStaticParams, 7) Implementar metadata dinámica, JSON-LD Product y og:image.",
+			"reasoning": "Las 3 páginas más importantes del sitio. Combina fetching de API backend + Storefront API, ISR, SEO avanzado (JSON-LD), y múltiples componentes interactivos. La ficha es especialmente compleja con galería, video, estimador de envío y checkout."
+		},
+		{
+			"taskId": 29,
+			"taskTitle": "Implementar componente ShippingEstimator y página /envios",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Crear ShippingEstimator con select de país y fetch a /api/shipping/quote, 2) Mostrar opciones de envío con carrier, precio y nota de aranceles, 3) Crear página /envios con contenido de Sección 6.4-6.5 (tiempos, aranceles DDU, empaque), 4) Agregar metadata SEO y fecha de última actualización.",
+			"reasoning": "Componente interactivo que consume el endpoint de cotización (tarea 12). La página /envios es mayormente contenido estático del PRD pero debe ser clara sobre aranceles y políticas. La nota sobre aranceles suspendidos es crítica para EE. UU."
+		},
+		{
+			"taskId": 30,
+			"taskTitle": "Implementar página /personalizada con formulario de encargos y Cloudflare Turnstile",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear formulario con campos: nombre, email, whatsapp, país, idea, colores, tamaño, uso, fecha deseada, 2) Agregar input de archivo para foto de referencia con preview, 3) Integrar widget Turnstile con @marsidev/react-turnstile, 4) Implementar flujo: obtener uploadUrl, subir foto a R2, enviar formulario, 5) Agregar galería de ejemplos (máscaras COMMISSION_EXAMPLE) y mensaje de éxito.",
+			"reasoning": "Formulario complejo con validación Zod client-side, subida de archivos a R2 via presigned URL, y captcha Turnstile. El flujo de 3 pasos (obtener URL, subir, enviar) requiere manejo de errores cuidadoso. La UX debe ser clara para usuarios no técnicos."
+		},
+		{
+			"taskId": 31,
+			"taskTitle": "Implementar páginas /historias, /videos, /sobre-scarlett con contenido editorial",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Implementar /historias con grid de StoryCard y página de detalle /historias/[slug], 2) Implementar /videos con VideoCard y embed modal para YouTube/TikTok/Instagram, 3) Implementar /sobre-scarlett con BookViewer portado del prototipo HTML, 4) Verificar que NO se muestran datos sensibles de la menor (Sección 4.9).",
+			"reasoning": "Páginas de contenido editorial relativamente simples excepto por el BookViewer que debe portarse del prototipo HTML existente. La protección de la menor (sin apellido, escuela, ciudad) es requisito obligatorio que debe verificarse."
+		},
+		{
+			"taskId": 32,
+			"taskTitle": "Desplegar frontend en Vercel con dominios y variables de entorno",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Importar repo en Vercel con Root Directory apps/web, 2) Configurar variables de entorno (SHOPIFY_*, API_URL, REVALIDATE_SECRET, etc.), 3) Agregar dominios apex y www en Vercel, 4) Crear registros DNS en Cloudflare con DNS only y configurar redirección www.",
+			"reasoning": "Despliegue en Vercel es relativamente directo. La configuración DNS sigue el patrón MEA (DNS only). El riesgo principal es coordinar los registros DNS correctamente entre Cloudflare y Vercel."
+		},
+		{
+			"taskId": 33,
+			"taskTitle": "Implementar panel de administración con login y dashboard",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear layout protegido /admin con middleware de verificación de sesión, 2) Implementar /admin/login con formulario y manejo de CSRF, 3) Crear /admin/dashboard con métricas (total máscaras por status, pedidos, solicitudes), 4) Agregar sidebar con navegación a todas las secciones, 5) Configurar metadata robots noindex para admin.",
+			"reasoning": "Panel completo con autenticación, dashboard y navegación. El middleware de sesión debe verificar JWT y CSRF. Las métricas del dashboard requieren queries agregados al API. El diseño es funcional (no el estilo de libro del público)."
+		},
+		{
+			"taskId": 34,
+			"taskTitle": "Implementar gestión de máscaras en admin: lista, crear, editar, publicar",
+			"complexityScore": 8,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Dividir en: 1) Crear tabla de máscaras con filtros y acciones, 2) Implementar formulario de nueva máscara móvil-first con subida de fotos a R2, 3) Agregar campos de información: nombre es/en, animal, descripción, historia, medidas, peso, 4) Integrar cálculo de precio en vivo con /api/admin/pricing/suggest, 5) Mostrar desglose de costos y 3 precios sugeridos (30/40/50%), 6) Implementar botón Publicar que llama /api/admin/masks/:id/publish, 7) Mostrar plantilla de redes sociales al publicar.",
+			"reasoning": "La página más compleja del admin. Combina: formulario multi-paso móvil-first, subida de múltiples fotos a R2, cálculo de precios en tiempo real, publicación a Shopify, y generación de contenido para redes. El flujo debe tomar <5 minutos según el PRD."
+		},
+		{
+			"taskId": 35,
+			"taskTitle": "Configurar CI/CD en GitHub Actions: lint, typecheck, tests, audit, deploy",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Crear workflow ci.yml con jobs paralelos: lint, typecheck, test, 2) Agregar job de npm audit con nivel high, 3) Agregar job de build para verificar compilación, 4) Configurar branch protection en GitHub para requerir checks.",
+			"reasoning": "CI/CD estándar pero con múltiples jobs. El monorepo requiere ejecutar lint/typecheck en apps/web y apps/api. npm audit debe fallar en vulnerabilidades high/critical. La integración con branch protection asegura calidad."
+		},
+		{
+			"taskId": 36,
+			"taskTitle": "[HUMANO] Fase 0: decisiones, cuentas externas y datos reales de costos",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Elegir dominio y confirmar compra, 2) Cita con contador US/GT sobre LLC (escenario B2), 3) Crear cuentas: Shopify, PayPal, Cloudflare, Railway, Vercel a nombre del adulto, 4) Crear cuentas de marca: YouTube, TikTok, Instagram administradas por adulto, 5) Recopilar datos reales: costos de materiales, horas, pesos/medidas de 3 máscaras, cotizaciones de empaque y envío.",
+			"reasoning": "Tarea [HUMANO] de preparación crítica. Sin esta fase no se puede avanzar en configuración de pagos ni cálculos de costos reales. La complejidad técnica es baja pero requiere coordinación de múltiples cuentas y datos del negocio."
+		},
+		{
+			"taskId": 37,
+			"taskTitle": "Escribir docs/seguridad.md y configurar gitleaks como pre-commit",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Crear docs/seguridad.md con procedimiento de rotación de secretos, 2) Documentar proceso de restauración de respaldos, 3) Configurar gitleaks como hook pre-commit con husky, 4) Verificar que .gitignore cubre .env*, *.pem, *.key, *.sql.",
+			"reasoning": "Documentación de seguridad crítica (Capas 2 y 13 del PRD). El hook gitleaks previene commits accidentales de secretos. La verificación de .gitignore es simple pero importante."
+		},
+		{
+			"taskId": 38,
+			"taskTitle": "Internacionalización en/es con next-intl",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Configurar next-intl middleware con detección de locale por Accept-Language, 2) Crear archivos messages/en.json y messages/es.json con todas las traducciones, 3) Agregar selector de idioma en Header con banderas US/GT, 4) Configurar hreflang en metadata para SEO.",
+			"reasoning": "i18n completo requiere: middleware de locale, archivos de mensajes, selector UI, y SEO con hreflang. Todos los textos de componentes deben usar useTranslations en lugar de strings hardcoded. La detección automática por Accept-Language mejora UX."
+		},
+		{
+			"taskId": 39,
+			"taskTitle": "Carrito con Storefront API y redirección al checkout de Shopify",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Implementar server actions o route handlers para operaciones de carrito, 2) Persistir cartId en cookie httpOnly, 3) Crear drawer/modal de carrito con lista de productos y totales, 4) Bloquear agregar si máscara está SOLD o RESERVED, 5) Agregar copy 'Un adulto de la familia responde los mensajes' y botón checkout.",
+			"reasoning": "Carrito completo con estado persistido, UI de drawer, y validación de inventario. La integración con Storefront API requiere mutations específicas. El copy de protección de menor debe estar visible."
+		},
+		{
+			"taskId": 40,
+			"taskTitle": "Admin: gestión de encargos personalizados (F4)",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Implementar lista de encargos con filtros por estado, 2) Implementar flujo de cotización y envío de quote al cliente, 3) Crear endpoint para Draft Order de anticipo 50% y saldo con Shopify, 4) Validar transiciones de estado (NEW→QUOTED→DEPOSIT_PAID→...→CLOSED), 5) Agregar campos de tracking y notas con registro en AuditLog.",
+			"reasoning": "Flujo de estado complejo con 8 estados posibles. La integración con Shopify Draft Orders requiere mutations específicas. Las transiciones deben validarse (no se puede saltar pasos). El AuditLog de cada cambio es obligatorio."
+		},
+		{
+			"taskId": 41,
+			"taskTitle": "Admin: historias y videos con oEmbed",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Implementar servicio oEmbed con soporte para YouTube/TikTok/Instagram, 2) Crear formulario para pegar URL y resolver metadatos automáticamente, 3) Implementar editor de historias con sanitización de HTML, 4) Agregar vinculación de videos/historias a máscaras.",
+			"reasoning": "oEmbed simplifica la integración con plataformas de video. El editor de historias debe sanitizar HTML para prevenir XSS. La vinculación a máscaras es relación N:1 simple."
+		},
+		{
+			"taskId": 42,
+			"taskTitle": "Admin: pantalla 'Costos y envíos' (CostSettings, ShippingRate, PackagingProfile)",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Crear formulario de edición de CostSettings con versionado (nueva fila por cambio), 2) Implementar CRUD de ShippingRates con source, validFrom/validTo, isEstimate, 3) Implementar CRUD de PackagingProfiles, 4) Agregar banner de aviso si usImportDutyPct no se revisa en 60 días.",
+			"reasoning": "Configuración crítica del negocio que afecta precios y márgenes. El versionado de CostSettings permite auditar cambios. El aviso de 60 días ayuda a mantener aranceles actualizados."
+		},
+		{
+			"taskId": 43,
+			"taskTitle": "Fase 6: tarifas reales, peso facturable, empaque y certificado fitosanitario",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Cargar tarifas reales de Fase 0.5 con source y validFrom, 2) Implementar cálculo de peso facturable con redondeo al medio kilo superior, 3) Completar página /envios con tiempos, aranceles DDU, política de no retorno, 4) Definir PackagingProfile real con datos de empaque, 5) [HUMANO] Llamar a VISAR/MAGA y documentar requisito fitosanitario.",
+			"reasoning": "Requiere datos reales de Fase 0 para ser útil. El cálculo de peso facturable tiene reglas específicas del transportista. El certificado fitosanitario puede afectar qué destinos están habilitados."
+		},
+		{
+			"taskId": 44,
+			"taskTitle": "SEO y rendimiento: metadata, JSON-LD, sitemap, OG y Lighthouse ≥ 90",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Implementar generateMetadata con hreflang en todas las páginas, 2) Agregar JSON-LD Product en fichas y Organization en home, 3) Crear app/sitemap.ts y app/robots.ts, 4) Configurar imágenes OG dinámicas para máscaras, 5) Auditar con Lighthouse y optimizar hasta score ≥90.",
+			"reasoning": "SEO técnico completo. Los JSON-LD deben pasar validación de Rich Results. Las imágenes OG dinámicas requieren @vercel/og o similar. Lighthouse ≥90 puede requerir optimizaciones de imágenes, fuentes y código."
+		},
+		{
+			"taskId": 45,
+			"taskTitle": "Cabeceras de seguridad en Next.js y firewall de Vercel",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Configurar CSP en next.config permitiendo solo dominios necesarios (Shopify, YouTube, TikTok, Instagram, R2, Turnstile), 2) Agregar cabeceras HSTS, X-Frame-Options DENY en admin, Referrer-Policy, Permissions-Policy, 3) Configurar reglas de firewall en Vercel para /admin y /api, 4) Verificar nota A+ en securityheaders.com.",
+			"reasoning": "Cabeceras de seguridad según Capa 4 del PRD. La CSP debe ser restrictiva pero permitir embeds de video y checkout de Shopify. Las reglas de firewall de Vercel tienen límites en plan Hobby (3 reglas)."
+		},
+		{
+			"taskId": 46,
+			"taskTitle": "Agente semanal de ciberseguridad y alertas (Capas 8 y 10)",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Crear script de auditoría que revisa npm audit, certificados, último respaldo, admins activos, 2) Implementar envío de reporte por correo con Resend o Telegram, 3) Configurar cron semanal en Railway, 4) Agregar alertas por 5xx repetidos, logins fallidos, webhooks fallidos.",
+			"reasoning": "Automatización de seguridad según Capas 8 y 10. Requiere integración con servicio de correo y acceso a múltiples fuentes de datos (npm audit, certificados, logs, DB). El cron debe ser confiable."
+		},
+		{
+			"taskId": 47,
+			"taskTitle": "Fase 7: sincronización de YouTube y plan editorial",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Dividir en: 1) Implementar cron diario que lee últimos videos con YouTube Data API v3, 2) Guardar videos con source=SYNC y externalId único, 3) Crear UI para vincular videos a máscaras, 4) Verificar historias iniciales cumplen Sección 4.9 (sin datos sensibles).",
+			"reasoning": "Integración con YouTube Data API requiere credenciales OAuth. El cron diario sincroniza videos nuevos. La vinculación manual de videos a máscaras es simple. La revisión de protección de menor es crítica."
+		},
+		{
+			"taskId": 48,
+			"taskTitle": "Fase 8: legales, QA final y lanzamiento",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Dividir en: 1) Crear páginas /privacidad, /terminos, /devoluciones, /faq, /contacto, 2) [HUMANO] Revisión legal de textos por adulto responsable, 3) QA completo: móvil/escritorio, en/es, webhooks, respaldos, 4) Configurar métricas semanales (Vercel Analytics, UTM), 5) Lanzar con 6-8 máscaras y calcular punto de equilibrio.",
+			"reasoning": "Fase de cierre que combina contenido legal, QA exhaustivo y lanzamiento. Las páginas legales deben ser revisadas por adulto o abogado. El QA debe cubrir todo el flujo de compra. Las métricas permiten evaluar el negocio."
+		},
+		{
+			"taskId": 49,
+			"taskTitle": "Fase 9: actualizar la plantilla stack-web-mea",
+			"complexityScore": 3,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Dividir en: 1) Identificar componentes reutilizables (middlewares, CI, respaldos, componentes base), 2) Copiar a ~/Developer/_plantillas/stack-web-mea/ sin .env ni datos de clientes, 3) Actualizar CHANGELOG.md y hacer commit/push al repo de plantilla.",
+			"reasoning": "Tarea de mantenimiento post-lanzamiento. Requiere criterio para identificar qué es genérico vs específico del proyecto. La separación de datos sensibles es crítica."
+		}
+	]
+}
