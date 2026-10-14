@@ -43,9 +43,10 @@
               2
             ],
             "details": "1. Crear ruleset de protección de rama usando gh CLI:\n   ```\n   gh api repos/{owner}/sc-art-studio/rulesets -X POST -f name='main-protection' -f target='branch' -f enforcement='active' --input - <<EOF\n   {\n     \"conditions\": {\"ref_name\": {\"include\": [\"refs/heads/main\"], \"exclude\": []}},\n     \"rules\": [\n       {\"type\": \"deletion\"},\n       {\"type\": \"non_fast_forward\"}\n     ]\n   }\n   EOF\n   ```\n2. Alternativamente, si gh api no está disponible, ir a GitHub Settings → Branches → Add branch protection rule:\n   - Branch name pattern: main\n   - Marcar: 'Do not allow force pushes'\n   - Marcar: 'Do not allow deletions'\n3. Verificar con: `gh api repos/{owner}/sc-art-studio/rulesets` o revisar en Settings",
-            "status": "pending",
+            "status": "deferred",
             "testStrategy": "Intentar hacer force-push a main: `git push --force origin main` - debe ser rechazado. Verificar reglas activas: `gh api repos/{owner}/sc-art-studio/rulesets` o ir a GitHub → Settings → Rules → Rulesets y confirmar que 'main-protection' existe y está activo con las reglas de deletion y non_fast_forward.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-14T15:21:25.227Z"
           },
           {
             "id": 4,
@@ -55,15 +56,16 @@
               2
             ],
             "details": "1. Habilitar Dependabot alerts:\n   `gh api repos/{owner}/sc-art-studio/vulnerability-alerts -X PUT`\n2. Habilitar Dependabot security updates:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.dependabot_security_updates.status='enabled'`\n3. Habilitar secret scanning:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.secret_scanning.status='enabled'`\n4. Habilitar push protection:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.secret_scanning_push_protection.status='enabled'`\n5. Nota: Algunas características requieren GitHub Advanced Security (disponible en repos públicos o con plan Enterprise). Si el repo es privado sin plan enterprise, secret scanning puede no estar disponible.\n6. Verificar estado de todas las configuraciones: `gh api repos/{owner}/sc-art-studio --jq '.security_and_analysis'`",
-            "status": "pending",
+            "status": "review",
             "testStrategy": "Ejecutar `gh api repos/{owner}/sc-art-studio --jq '.security_and_analysis'` y verificar que cada sección muestra status='enabled'. Ir a GitHub → Settings → Code security and analysis y confirmar visualmente que Dependabot alerts, Dependabot security updates están habilitados. Para secret scanning y push protection, verificar disponibilidad según el plan de GitHub. Crear archivo de prueba con un secret falso para verificar que push protection lo detecta.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-14T15:21:27.244Z"
           }
         ],
         "complexity": 3,
         "recommendedSubtasks": 4,
         "expansionPrompt": "Dividir en: 1) Inicializar Git y configurar user.name/email, 2) Crear repositorio privado en GitHub con gh CLI, 3) Activar protecciones de rama main (branch protection rules), 4) Habilitar Dependabot alerts, secret scanning y push protection. Incluir verificación de cada paso con comandos específicos.",
-        "updatedAt": "2026-10-14T15:19:07.697Z"
+        "updatedAt": "2026-10-14T15:21:27.244Z"
       },
       {
         "id": "2",
@@ -3546,7 +3548,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-14T15:19:07.697Z",
+      "lastModified": "2026-10-14T15:21:27.247Z",
       "taskCount": 49,
       "completedCount": 0,
       "tags": [
