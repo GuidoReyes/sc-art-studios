@@ -2683,7 +2683,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "review",
         "subtasks": [
           {
             "id": 1,
@@ -2691,9 +2691,10 @@
             "description": "Documentar contactos de emergencia y procedimientos detallados para rotar cada secreto del sistema (Shopify, JWT, R2, Turnstile, DB), incluyendo pasos específicos y verificación post-rotación.",
             "dependencies": [],
             "details": "Crear directorio `docs/` y archivo `docs/seguridad.md`. Incluir: 1) Sección de contactos de emergencia (responsables técnicos, canales de comunicación). 2) Procedimiento de rotación para cada secreto: **Shopify API Key** (regenerar en Admin → Apps → tu app → API credentials, actualizar SHOPIFY_ACCESS_TOKEN en Railway), **JWT_SECRET** (generar nuevo con `openssl rand -base64 32`, actualizar en Railway, invalidará sesiones activas), **R2** (regenerar en Cloudflare Dashboard → R2 → API Tokens), **Turnstile** (regenerar en Cloudflare Dashboard → Turnstile → tu sitio), **DATABASE_URL** (rotar credenciales en Railway MySQL, actualizar connection string). 3) Sección de activación de modo mantenimiento durante rotación crítica. 4) Checklist de verificación post-rotación. 5) Sección de aviso a clientes en caso de fuga de datos con plantilla de comunicación. 6) Registro mensual de prueba de restauración con formato de fecha y firma.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Revisar manualmente que docs/seguridad.md contiene: contactos, procedimientos de rotación para los 5 tipos de secretos, modo mantenimiento, plantilla de aviso a clientes, y formato de registro mensual. Verificar que los pasos son claros y ejecutables.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T03:51:32.417Z"
           },
           {
             "id": 2,
@@ -2703,9 +2704,10 @@
               1
             ],
             "details": "Agregar al archivo `docs/seguridad.md` una sección de 'Restauración de Respaldos' que incluya: 1) Cómo listar respaldos disponibles en R2 (usando wrangler o aws cli con endpoint R2). 2) Cómo descargar el respaldo más reciente o uno específico por fecha. 3) Proceso de descifrado con age: `age -d -i <clave-privada> backup-YYYY-MM-DD.sql.age > restored.sql`. 4) Verificación de integridad del archivo SQL antes de restaurar. 5) Pasos para restaurar en MySQL: crear base temporal, importar SQL, verificar datos, hacer swap de conexión. 6) Checklist post-restauración (verificar funcionalidad crítica: login, checkout, productos). 7) Documentar dónde se almacena de forma segura la clave privada age (AGE_PRIVATE_KEY) para descifrado - debe estar en ubicación segura fuera del repositorio. 8) Incluir tiempo estimado de recuperación (RTO) y política de retención (7 diarios, 4 semanales, 6 mensuales).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que la documentación incluye todos los pasos necesarios para una restauración completa. Idealmente, ejecutar el proceso documentado con un respaldo de prueba para validar que los pasos son correctos y completos.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T03:51:32.425Z"
           },
           {
             "id": 3,
@@ -2713,9 +2715,10 @@
             "description": "Instalar y configurar husky para ejecutar gitleaks automáticamente antes de cada commit, bloqueando cualquier intento de subir secretos al repositorio.",
             "dependencies": [],
             "details": "1) Instalar dependencias: `npm install -D husky gitleaks` (o verificar si gitleaks debe instalarse globalmente con `brew install gitleaks` en macOS). 2) Inicializar husky: `npx husky init` (crea directorio .husky/). 3) Crear hook pre-commit en `.husky/pre-commit` con contenido: `#!/bin/sh\n. \"$(dirname \"$0\")/_/husky.sh\"\nnpx gitleaks protect --staged --verbose` o usar el binario global `gitleaks protect --staged`. 4) Crear archivo de configuración `.gitleaks.toml` en la raíz con reglas básicas (puede usar las reglas por defecto de gitleaks o personalizarlas). 5) Agregar script en package.json: `\"prepare\": \"husky\"` para que se configure automáticamente al hacer npm install. 6) Hacer `.husky/pre-commit` ejecutable: `chmod +x .husky/pre-commit`. 7) Documentar en README.md o CONTRIBUTING.md que el proyecto usa gitleaks.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear un archivo temporal con un secreto falso (ej: `API_KEY=sk_live_1234567890abcdef`), hacer `git add` y `git commit`. Verificar que gitleaks bloquea el commit con un mensaje de error claro. Luego eliminar el archivo y verificar que commits normales funcionan correctamente.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T03:51:32.429Z"
           },
           {
             "id": 4,
@@ -2723,14 +2726,16 @@
             "description": "Actualizar .gitignore para incluir todos los patrones críticos de seguridad: .env*, *.pem, *.key, *.sql, y confirmar que .DS_Store ya está cubierto.",
             "dependencies": [],
             "details": "Editar el archivo `.gitignore` existente. El archivo actual solo tiene `.env` básico y `.DS_Store`. Agregar los siguientes patrones faltantes en una sección claramente etiquetada como '# Security - sensitive files': 1) `.env*` (para cubrir .env.local, .env.production, etc., pero añadir `!.env.example` para permitir el archivo de ejemplo). 2) `*.pem` (certificados y claves privadas). 3) `*.key` (archivos de clave). 4) `*.sql` (dumps de base de datos que podrían contener datos sensibles). 5) Verificar que ya existe `.DS_Store` (confirmado). 6) Agregar también: `*.age` (respaldos cifrados locales), `*.p12`, `*.pfx` (certificados adicionales), `credentials.json`, `secrets/` (directorio de secretos). 7) Ejecutar `git status` después para verificar que no hay archivos sensibles ya trackeados. Si los hay, usar `git rm --cached <archivo>` para dejar de trackearlos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `git check-ignore .env.local test.pem credentials.key backup.sql` y verificar que todos son ignorados. Verificar que `.env.example` NO es ignorado (debe poder comitearse). Ejecutar `git status` para confirmar que no hay archivos sensibles pendientes de commit.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T03:51:32.433Z"
           }
         ],
         "complexity": 4,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Crear docs/seguridad.md con procedimiento de rotación de secretos, 2) Documentar proceso de restauración de respaldos, 3) Configurar gitleaks como hook pre-commit con husky, 4) Verificar que .gitignore cubre .env*, *.pem, *.key, *.sql."
+        "expansionPrompt": "Dividir en: 1) Crear docs/seguridad.md con procedimiento de rotación de secretos, 2) Documentar proceso de restauración de respaldos, 3) Configurar gitleaks como hook pre-commit con husky, 4) Verificar que .gitignore cubre .env*, *.pem, *.key, *.sql.",
+        "updatedAt": "2026-10-15T03:51:32.956Z"
       },
       {
         "id": "38",
@@ -3557,7 +3562,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T03:46:49.029Z",
+      "lastModified": "2026-10-15T03:51:32.956Z",
       "taskCount": 49,
       "completedCount": 3,
       "tags": [

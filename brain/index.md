@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-14
-**Total de nodos:** 2 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 3 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -37,7 +37,7 @@
 
 ### seguridad
 
-*(vacío)*
+- [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — Tarea 37: husky + gitleaks en pre-commit, rotación de secretos, restauración de respaldos y plan de incidentes
 
 ---
 

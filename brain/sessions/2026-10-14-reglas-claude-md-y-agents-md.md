@@ -7,6 +7,7 @@ title: "Reglas del proyecto en CLAUDE.md y AGENTS.md (tarea 3)"
 tags: [task-master, claude-md, agents, seguridad, proteccion-menor, commits]
 status: active
 related:
+  - 2026-10-14-gitleaks-pre-commit-y-plan-incidentes
   - 2026-10-14-repo-publico-monorepo-y-dominio
 sources:
   - repo:CLAUDE.md
@@ -36,6 +37,7 @@ Tarea 3 de Task Master: dejar las reglas del PRD (§4.2, §4.7, §4.8, §4.9 y �
 - Siguientes tareas desbloqueadas: #4 (DNS) y #5. También quedan disponibles #25 (frontend) y #37 (pre-commit de gitleaks).
 
 ## Cross-refs
+- [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — tarea 37: detalle operativo de las capas 2 y 13
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — sesión anterior del mismo día; dejó el monorepo y el CLAUDE.md base que esta tarea amplía
 
 ## Fuentes
