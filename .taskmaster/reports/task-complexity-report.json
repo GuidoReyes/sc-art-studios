@@ -38,7 +38,7 @@
 			"taskTitle": "Configurar zona DNS en Cloudflare y nameservers",
 			"complexityScore": 2,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio sc-artstudio.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS.",
+			"expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio scartstudios.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS.",
 			"reasoning": "Tarea marcada como [HUMANO] en su mayoría. La configuración DNS es estándar. La complejidad es baja porque Cloudflare y Vercel tienen interfaces claras. El único riesgo es el tiempo de propagación DNS (15min-48h)."
 		},
 		{
@@ -147,7 +147,7 @@
 		},
 		{
 			"taskId": 18,
-			"taskTitle": "Configurar dominio shop.sc-artstudio.com para checkout de Shopify",
+			"taskTitle": "Configurar dominio shop.scartstudios.com para checkout de Shopify",
 			"complexityScore": 2,
 			"recommendedSubtasks": 3,
 			"expansionPrompt": "Dividir en: 1) Conectar dominio shop en Shopify Domains, 2) Crear CNAME en Cloudflare con DNS only (nube gris), 3) Verificar SSL y hacer compra de prueba desde el subdominio.",
@@ -187,7 +187,7 @@
 		},
 		{
 			"taskId": 23,
-			"taskTitle": "Configurar dominio api.sc-artstudio.com en Railway y DNS",
+			"taskTitle": "Configurar dominio api.scartstudios.com en Railway y DNS",
 			"complexityScore": 2,
 			"recommendedSubtasks": 3,
 			"expansionPrompt": "Dividir en: 1) Agregar custom domain en Railway Settings, 2) Crear CNAME en Cloudflare con DNS only, 3) Verificar HTTPS y actualizar webhooks de Shopify.",

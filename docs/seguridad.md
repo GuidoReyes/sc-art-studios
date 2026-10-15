@@ -68,7 +68,7 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 - [ ] `.env` fuera de Git; secret scanning y push protection activos; hook de gitleaks instalado
 - [ ] argon2id en contraseñas; bloqueo por intentos fallidos probado
 - [ ] Zod en todas las rutas; subidas re-codificadas sin EXIF
-- [ ] Cabeceras de seguridad verificadas con `curl -I https://sc-artstudio.com`
+- [ ] Cabeceras de seguridad verificadas con `curl -I https://scartstudios.com`
 - [ ] Rate limits y Turnstile activos
 - [ ] Webhooks con HMAC y control de repetidos
 - [ ] Respaldo automático funcionando y una restauración de prueba hecha

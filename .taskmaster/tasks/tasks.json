@@ -226,9 +226,9 @@
       {
         "id": "4",
         "title": "Configurar zona DNS en Cloudflare y nameservers",
-        "description": "[HUMANO] Comprar dominio sc-artstudio.com en Vercel, crear zona en Cloudflare, cambiar nameservers en Vercel a los de Cloudflare",
-        "details": "[HUMANO] Ejecutar `vercel domains buy sc-artstudio.com` (confirmar precio US$11.25/año antes de aceptar). Opcional: comprar también `scartstudio.art` como secundario. Crear zona en Cloudflare para sc-artstudio.com. En Vercel → Domains → Settings del dominio, cambiar nameservers a los dos que indique Cloudflare (usualmente ns1.cloudflare.com y ns2.cloudflare.com). Esperar propagación DNS (15 min - 48 h). Verificar con `dig NS sc-artstudio.com` que responde los NS de Cloudflare. Anotar dominio principal en `CLAUDE.md` y `.env.example` como `DOMAIN=sc-artstudio.com`.",
-        "testStrategy": "Ejecutar `dig NS sc-artstudio.com` y verificar que devuelve los nameservers de Cloudflare. Verificar en Cloudflare Dashboard que la zona está activa y reconoce el dominio.",
+        "description": "[HUMANO] Comprar dominio scartstudios.com en Vercel, crear zona en Cloudflare, cambiar nameservers en Vercel a los de Cloudflare",
+        "details": "[HUMANO] Ejecutar `vercel domains buy scartstudios.com` (confirmar precio US$11.25/año antes de aceptar). Opcional: comprar también `scartstudio.art` como secundario. Crear zona en Cloudflare para scartstudios.com. En Vercel → Domains → Settings del dominio, cambiar nameservers a los dos que indique Cloudflare (usualmente ns1.cloudflare.com y ns2.cloudflare.com). Esperar propagación DNS (15 min - 48 h). Verificar con `dig NS scartstudios.com` que responde los NS de Cloudflare. Anotar dominio principal en `CLAUDE.md` y `.env.example` como `DOMAIN=scartstudios.com`.",
+        "testStrategy": "Ejecutar `dig NS scartstudios.com` y verificar que devuelve los nameservers de Cloudflare. Verificar en Cloudflare Dashboard que la zona está activa y reconoce el dominio.",
         "priority": "high",
         "dependencies": [
           "3"
@@ -237,24 +237,24 @@
         "subtasks": [
           {
             "id": 1,
-            "title": "[HUMANO] Comprar dominio sc-artstudio.com en Vercel",
-            "description": "Ejecutar comando de compra del dominio principal sc-artstudio.com en Vercel CLI y opcionalmente el dominio secundario scartstudio.art",
+            "title": "[HUMANO] Comprar dominio scartstudios.com en Vercel",
+            "description": "Ejecutar comando de compra del dominio principal scartstudios.com en Vercel CLI y opcionalmente el dominio secundario scartstudio.art",
             "dependencies": [],
-            "details": "Ejecutar `vercel domains buy sc-artstudio.com` en terminal. Confirmar que el precio sea aproximadamente US$11.25/año antes de aceptar la compra. Opcionalmente, ejecutar también `vercel domains buy scartstudio.art` como dominio secundario si se desea redundancia. Verificar en Vercel Dashboard → Domains que el dominio aparece como registrado y activo. Guardar comprobante de compra para registros.",
+            "details": "Ejecutar `vercel domains buy scartstudios.com` en terminal. Confirmar que el precio sea aproximadamente US$11.25/año antes de aceptar la compra. Opcionalmente, ejecutar también `vercel domains buy scartstudio.art` como dominio secundario si se desea redundancia. Verificar en Vercel Dashboard → Domains que el dominio aparece como registrado y activo. Guardar comprobante de compra para registros.",
             "status": "pending",
-            "testStrategy": "Ejecutar `vercel domains ls` y verificar que sc-artstudio.com aparece en la lista de dominios. Verificar en Vercel Dashboard que el dominio tiene status 'Active' o 'Registered'.",
+            "testStrategy": "Ejecutar `vercel domains ls` y verificar que scartstudios.com aparece en la lista de dominios. Verificar en Vercel Dashboard que el dominio tiene status 'Active' o 'Registered'.",
             "parentId": "undefined"
           },
           {
             "id": 2,
             "title": "Crear zona DNS en Cloudflare y obtener nameservers",
-            "description": "Agregar el dominio sc-artstudio.com en Cloudflare Dashboard y obtener los nameservers asignados para configurar en Vercel",
+            "description": "Agregar el dominio scartstudios.com en Cloudflare Dashboard y obtener los nameservers asignados para configurar en Vercel",
             "dependencies": [
               1
             ],
-            "details": "Acceder a Cloudflare Dashboard → Add a Site → ingresar 'sc-artstudio.com'. Seleccionar plan Free. Cloudflare escaneará registros DNS existentes (probablemente vacíos). Continuar al paso de nameservers donde Cloudflare asignará dos nameservers (típicamente algo como ns1.cloudflare.com y ns2.cloudflare.com, pero pueden variar). Anotar exactamente los dos nameservers asignados. La zona quedará en estado 'Pending Nameserver Update' hasta completar el paso 3.",
+            "details": "Acceder a Cloudflare Dashboard → Add a Site → ingresar 'scartstudios.com'. Seleccionar plan Free. Cloudflare escaneará registros DNS existentes (probablemente vacíos). Continuar al paso de nameservers donde Cloudflare asignará dos nameservers (típicamente algo como ns1.cloudflare.com y ns2.cloudflare.com, pero pueden variar). Anotar exactamente los dos nameservers asignados. La zona quedará en estado 'Pending Nameserver Update' hasta completar el paso 3.",
             "status": "pending",
-            "testStrategy": "Verificar en Cloudflare Dashboard que la zona sc-artstudio.com existe y muestra los dos nameservers asignados. El status debe ser 'Pending Nameserver Update' en este punto.",
+            "testStrategy": "Verificar en Cloudflare Dashboard que la zona scartstudios.com existe y muestra los dos nameservers asignados. El status debe ser 'Pending Nameserver Update' en este punto.",
             "parentId": "undefined"
           },
           {
@@ -264,15 +264,15 @@
             "dependencies": [
               2
             ],
-            "details": "En Vercel Dashboard → Domains → seleccionar sc-artstudio.com → Settings → Nameservers, cambiar a los dos nameservers proporcionados por Cloudflare en la subtarea anterior. Guardar cambios. La propagación DNS puede tomar entre 15 minutos y 48 horas. Verificar propagación ejecutando `dig NS sc-artstudio.com` periódicamente hasta que devuelva los nameservers de Cloudflare. Una vez verificado, actualizar `CLAUDE.md` agregando la línea de dominio principal. Actualizar `.env.example` agregando `DOMAIN=sc-artstudio.com`. Verificar que Cloudflare Dashboard muestra la zona como 'Active'.",
+            "details": "En Vercel Dashboard → Domains → seleccionar scartstudios.com → Settings → Nameservers, cambiar a los dos nameservers proporcionados por Cloudflare en la subtarea anterior. Guardar cambios. La propagación DNS puede tomar entre 15 minutos y 48 horas. Verificar propagación ejecutando `dig NS scartstudios.com` periódicamente hasta que devuelva los nameservers de Cloudflare. Una vez verificado, actualizar `CLAUDE.md` agregando la línea de dominio principal. Actualizar `.env.example` agregando `DOMAIN=scartstudios.com`. Verificar que Cloudflare Dashboard muestra la zona como 'Active'.",
             "status": "pending",
-            "testStrategy": "Ejecutar `dig NS sc-artstudio.com` y verificar que devuelve los nameservers de Cloudflare (ej: ns1.cloudflare.com, ns2.cloudflare.com). Verificar en Cloudflare Dashboard que el status de la zona cambió de 'Pending' a 'Active'. Confirmar que CLAUDE.md y .env.example contienen la variable DOMAIN correcta.",
+            "testStrategy": "Ejecutar `dig NS scartstudios.com` y verificar que devuelve los nameservers de Cloudflare (ej: ns1.cloudflare.com, ns2.cloudflare.com). Verificar en Cloudflare Dashboard que el status de la zona cambió de 'Pending' a 'Active'. Confirmar que CLAUDE.md y .env.example contienen la variable DOMAIN correcta.",
             "parentId": "undefined"
           }
         ],
         "complexity": 2,
         "recommendedSubtasks": 3,
-        "expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio sc-artstudio.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS."
+        "expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio scartstudios.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS."
       },
       {
         "id": "5",
@@ -368,7 +368,7 @@
               1,
               2
             ],
-            "details": "Instalar dependencias: `npm install helmet cors @types/cors`. Crear `src/middleware/security.ts`. Configurar Helmet con CSP restrictiva que permita: defaultSrc 'self', scriptSrc para Shopify/YouTube/TikTok/Instagram/Turnstile, imgSrc para R2/Shopify CDN/YouTube thumbnails, frameSrc para embeds de video, connectSrc para API propia y Shopify. CORS: origin desde `process.env.FRONTEND_URL` (ej: https://sc-artstudio.com), credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']. Exportar como middleware configurable. Incluir X-Frame-Options: DENY para rutas admin.",
+            "details": "Instalar dependencias: `npm install helmet cors @types/cors`. Crear `src/middleware/security.ts`. Configurar Helmet con CSP restrictiva que permita: defaultSrc 'self', scriptSrc para Shopify/YouTube/TikTok/Instagram/Turnstile, imgSrc para R2/Shopify CDN/YouTube thumbnails, frameSrc para embeds de video, connectSrc para API propia y Shopify. CORS: origin desde `process.env.FRONTEND_URL` (ej: https://scartstudios.com), credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']. Exportar como middleware configurable. Incluir X-Frame-Options: DENY para rutas admin.",
             "status": "pending",
             "testStrategy": "Iniciar servidor y verificar cabeceras con `curl -I http://localhost:8080`. Verificar que CSP está presente. Hacer fetch desde origen no permitido y verificar que CORS bloquea la solicitud.",
             "parentId": "undefined"
@@ -900,7 +900,7 @@
         "id": "13",
         "title": "Implementar autenticación de admin con argon2id y JWT",
         "description": "Crear sistema de login seguro para AdminUser con hash argon2id, JWT en cookie httpOnly, CSRF token, y bloqueo tras intentos fallidos",
-        "details": "Instalar `argon2`, `jsonwebtoken`, `cookie-parser`, `csurf` (o implementar CSRF manualmente). Crear modelo AdminUser en seed: email='admin@sc-artstudio.com', passwordHash=await argon2.hash('temp123'), role='OWNER'. Crear `apps/api/src/routes/auth.ts`. POST `/api/auth/login`: body Zod (email, password). Buscar AdminUser, verificar con argon2.verify. Implementar bloqueo: tabla LoginAttempt (email, failedCount, lockedUntil). Si 5 intentos fallidos en 15 min, bloquear por 15 min. Si correcto, generar JWT (expiración 15 min) con {userId, role}, firmar con JWT_SECRET. Guardar en cookie httpOnly, Secure (solo HTTPS), SameSite=Lax, path=/admin. Generar CSRF token y devolverlo en body. Actualizar lastLoginAt. POST `/api/auth/logout`: limpiar cookie. Middleware `requireAdmin` que verifica JWT y CSRF en requests subsecuentes. Registrar en AuditLog cada login exitoso.",
+        "details": "Instalar `argon2`, `jsonwebtoken`, `cookie-parser`, `csurf` (o implementar CSRF manualmente). Crear modelo AdminUser en seed: email='admin@scartstudios.com', passwordHash=await argon2.hash('temp123'), role='OWNER'. Crear `apps/api/src/routes/auth.ts`. POST `/api/auth/login`: body Zod (email, password). Buscar AdminUser, verificar con argon2.verify. Implementar bloqueo: tabla LoginAttempt (email, failedCount, lockedUntil). Si 5 intentos fallidos en 15 min, bloquear por 15 min. Si correcto, generar JWT (expiración 15 min) con {userId, role}, firmar con JWT_SECRET. Guardar en cookie httpOnly, Secure (solo HTTPS), SameSite=Lax, path=/admin. Generar CSRF token y devolverlo en body. Actualizar lastLoginAt. POST `/api/auth/logout`: limpiar cookie. Middleware `requireAdmin` que verifica JWT y CSRF en requests subsecuentes. Registrar en AuditLog cada login exitoso.",
         "testStrategy": "Seed de AdminUser. Hacer POST /api/auth/login con credenciales correctas, verificar que devuelve CSRF token y Set-Cookie. Hacer request a ruta protegida con cookie y CSRF, verificar que pasa. Probar 5 logins fallidos, verificar que el 6to devuelve 429. Esperar 15 min (o modificar tiempo en test) y verificar que se desbloquea. Verificar que AuditLog registra el login. Hacer POST /api/auth/logout y verificar que borra la cookie.",
         "priority": "high",
         "dependencies": [
@@ -911,11 +911,11 @@
           {
             "id": 1,
             "title": "Crear AdminUser en seed con password hasheado con argon2id",
-            "description": "Instalar dependencia argon2 y extender prisma/seed.ts para crear el usuario administrador inicial con email 'admin@sc-artstudio.com', password hasheado con argon2id y rol OWNER",
+            "description": "Instalar dependencia argon2 y extender prisma/seed.ts para crear el usuario administrador inicial con email 'admin@scartstudios.com', password hasheado con argon2id y rol OWNER",
             "dependencies": [],
-            "details": "1. Instalar dependencia: `npm install argon2 --workspace=@sc-art-studio/api`\n2. En `apps/api/prisma/seed.ts`, importar argon2: `import * as argon2 from 'argon2'`\n3. Crear AdminUser con upsert:\n   - email: 'admin@sc-artstudio.com'\n   - passwordHash: await argon2.hash('temp123', {type: argon2.argon2id})\n   - role: 'OWNER'\n   - createdAt: new Date()\n4. Verificar que el modelo AdminUser existe en schema.prisma con campos: id, email (unique), passwordHash, role (enum), lastLoginAt (nullable), createdAt\n5. Agregar tipos argon2 si se usa TypeScript estricto: `npm install -D @types/argon2` (si necesario)\n6. El password 'temp123' es temporal para desarrollo; documentar en README que debe cambiarse en producción",
+            "details": "1. Instalar dependencia: `npm install argon2 --workspace=@sc-art-studio/api`\n2. En `apps/api/prisma/seed.ts`, importar argon2: `import * as argon2 from 'argon2'`\n3. Crear AdminUser con upsert:\n   - email: 'admin@scartstudios.com'\n   - passwordHash: await argon2.hash('temp123', {type: argon2.argon2id})\n   - role: 'OWNER'\n   - createdAt: new Date()\n4. Verificar que el modelo AdminUser existe en schema.prisma con campos: id, email (unique), passwordHash, role (enum), lastLoginAt (nullable), createdAt\n5. Agregar tipos argon2 si se usa TypeScript estricto: `npm install -D @types/argon2` (si necesario)\n6. El password 'temp123' es temporal para desarrollo; documentar en README que debe cambiarse en producción",
             "status": "pending",
-            "testStrategy": "Ejecutar `npm run prisma:seed`. Abrir Prisma Studio y verificar que existe AdminUser con email 'admin@sc-artstudio.com', que passwordHash es un string largo que inicia con '$argon2id$', y que role es 'OWNER'. Intentar verificar manualmente: `argon2.verify(hash, 'temp123')` debe retornar true.",
+            "testStrategy": "Ejecutar `npm run prisma:seed`. Abrir Prisma Studio y verificar que existe AdminUser con email 'admin@scartstudios.com', que passwordHash es un string largo que inicia con '$argon2id$', y que role es 'OWNER'. Intentar verificar manualmente: `argon2.verify(hash, 'temp123')` debe retornar true.",
             "parentId": "undefined"
           },
           {
@@ -927,7 +927,7 @@
             ],
             "details": "1. Instalar dependencias: `npm install jsonwebtoken cookie-parser --workspace=@sc-art-studio/api` y tipos `npm install -D @types/jsonwebtoken @types/cookie-parser`\n2. Crear archivo `apps/api/src/routes/auth.ts` con router Express\n3. Agregar middleware cookie-parser en app principal\n4. POST `/api/auth/login`:\n   - Body Zod schema: { email: z.string().email(), password: z.string().min(1) }\n   - Buscar AdminUser por email en Prisma\n   - Si no existe, retornar 401 'Credenciales inválidas' (mensaje genérico por seguridad)\n   - Verificar password: `await argon2.verify(user.passwordHash, password)`\n   - Si falla, retornar 401 'Credenciales inválidas'\n   - Si correcto, generar JWT: `jwt.sign({userId: user.id, role: user.role}, process.env.JWT_SECRET, {expiresIn: '15m'})`\n   - Actualizar lastLoginAt del usuario\n   - Guardar JWT en cookie: `res.cookie('adminToken', token, {httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', path: '/admin', maxAge: 15*60*1000})`\n5. Agregar JWT_SECRET a .env.example y documentar que debe ser string aleatorio de 32+ caracteres",
             "status": "pending",
-            "testStrategy": "Hacer POST /api/auth/login con {email: 'admin@sc-artstudio.com', password: 'temp123'}. Verificar respuesta 200, que Set-Cookie incluye 'adminToken' con flags HttpOnly, Secure (en prod), SameSite=Lax. Decodificar JWT y confirmar que contiene userId y role con exp de 15 min. Probar con password incorrecto y verificar 401.",
+            "testStrategy": "Hacer POST /api/auth/login con {email: 'admin@scartstudios.com', password: 'temp123'}. Verificar respuesta 200, que Set-Cookie incluye 'adminToken' con flags HttpOnly, Secure (en prod), SameSite=Lax. Decodificar JWT y confirmar que contiene userId y role con exp de 15 min. Probar con password incorrecto y verificar 401.",
             "parentId": "undefined"
           },
           {
@@ -939,7 +939,7 @@
             ],
             "details": "1. Agregar modelo LoginAttempt a schema.prisma:\n   - id: Int @id @default(autoincrement())\n   - email: String @db.VarChar(255)\n   - failedCount: Int @default(0)\n   - lockedUntil: DateTime?\n   - lastAttemptAt: DateTime @default(now())\n   - @@index([email])\n2. Ejecutar migración: `npx prisma migrate dev --name add_login_attempts`\n3. En POST /api/auth/login, ANTES de verificar credenciales:\n   - Buscar LoginAttempt por email\n   - Si lockedUntil > now(), retornar 429 'Cuenta bloqueada temporalmente. Intente en X minutos'\n   - Si lockedUntil < now(), resetear failedCount a 0\n4. Si login falla:\n   - Incrementar failedCount (upsert si no existe)\n   - Si failedCount >= 5, set lockedUntil = now() + 15 minutos\n   - Actualizar lastAttemptAt\n5. Si login exitoso:\n   - Eliminar o resetear registro de LoginAttempt para ese email\n6. Constantes configurables: MAX_ATTEMPTS=5, LOCKOUT_MINUTES=15 (pueden venir de env o hardcoded inicialmente)",
             "status": "pending",
-            "testStrategy": "Hacer 5 intentos de login con password incorrecto para admin@sc-artstudio.com. Verificar que los primeros 5 retornan 401. El intento 6 debe retornar 429 con mensaje de bloqueo. Verificar en DB que LoginAttempt tiene failedCount=5 y lockedUntil está 15 min en el futuro. Esperar (o modificar lockedUntil en test) y verificar que el login funciona nuevamente. Hacer login exitoso y verificar que LoginAttempt se resetea.",
+            "testStrategy": "Hacer 5 intentos de login con password incorrecto para admin@scartstudios.com. Verificar que los primeros 5 retornan 401. El intento 6 debe retornar 429 con mensaje de bloqueo. Verificar en DB que LoginAttempt tiene failedCount=5 y lockedUntil está 15 min en el futuro. Esperar (o modificar lockedUntil en test) y verificar que el login funciona nuevamente. Hacer login exitoso y verificar que LoginAttempt se resetea.",
             "parentId": "undefined"
           },
           {
@@ -1245,10 +1245,10 @@
       },
       {
         "id": "18",
-        "title": "Configurar dominio shop.sc-artstudio.com para checkout de Shopify",
+        "title": "Configurar dominio shop.scartstudios.com para checkout de Shopify",
         "description": "[HUMANO] Conectar subdominio shop en Shopify, crear CNAME en Cloudflare con DNS only, verificar certificado SSL",
-        "details": "[HUMANO] En Shopify: Settings → Domains → Connect existing domain → 'shop.sc-artstudio.com'. Shopify mostrará un CNAME record a crear (algo como 'shops.myshopify.com'). En Cloudflare: DNS → Add record → CNAME, name='shop', target=<lo que indique Shopify>, Proxy status = DNS only (nube gris). Guardar. Volver a Shopify y hacer 'Verify connection'. Esperar a que Shopify emita el certificado SSL para shop.sc-artstudio.com (puede tardar unos minutos a 1 hora). Verificar que https://shop.sc-artstudio.com redirige al checkout de Shopify y tiene candado verde (HTTPS válido).",
-        "testStrategy": "Abrir https://shop.sc-artstudio.com en navegador y verificar que carga (aunque sea página de Shopify). Verificar que el certificado SSL es válido y emitido por Shopify. En Shopify Dashboard, verificar que el dominio shop.sc-artstudio.com aparece como 'Connected'. Hacer una compra de prueba y confirmar que el checkout usa shop.sc-artstudio.com en la URL.",
+        "details": "[HUMANO] En Shopify: Settings → Domains → Connect existing domain → 'shop.scartstudios.com'. Shopify mostrará un CNAME record a crear (algo como 'shops.myshopify.com'). En Cloudflare: DNS → Add record → CNAME, name='shop', target=<lo que indique Shopify>, Proxy status = DNS only (nube gris). Guardar. Volver a Shopify y hacer 'Verify connection'. Esperar a que Shopify emita el certificado SSL para shop.scartstudios.com (puede tardar unos minutos a 1 hora). Verificar que https://shop.scartstudios.com redirige al checkout de Shopify y tiene candado verde (HTTPS válido).",
+        "testStrategy": "Abrir https://shop.scartstudios.com en navegador y verificar que carga (aunque sea página de Shopify). Verificar que el certificado SSL es válido y emitido por Shopify. En Shopify Dashboard, verificar que el dominio shop.scartstudios.com aparece como 'Connected'. Hacer una compra de prueba y confirmar que el checkout usa shop.scartstudios.com en la URL.",
         "priority": "high",
         "dependencies": [
           "4",
@@ -1258,12 +1258,12 @@
         "subtasks": [
           {
             "id": 1,
-            "title": "Conectar dominio shop.sc-artstudio.com en Shopify Domains",
-            "description": "Acceder a Shopify Admin y configurar el subdominio shop.sc-artstudio.com como dominio personalizado para el checkout",
+            "title": "Conectar dominio shop.scartstudios.com en Shopify Domains",
+            "description": "Acceder a Shopify Admin y configurar el subdominio shop.scartstudios.com como dominio personalizado para el checkout",
             "dependencies": [],
-            "details": "En Shopify Admin: ir a Settings → Domains → 'Connect existing domain'. Ingresar 'shop.sc-artstudio.com' y hacer clic en Next. Shopify mostrará las instrucciones DNS con el CNAME target específico (generalmente algo como 'shops.myshopify.com' o un subdominio específico de la tienda). IMPORTANTE: Copiar exactamente el valor del CNAME target que indica Shopify, ya que será necesario para el siguiente paso en Cloudflare. NO hacer clic en 'Verify connection' todavía - primero se debe configurar el DNS.",
+            "details": "En Shopify Admin: ir a Settings → Domains → 'Connect existing domain'. Ingresar 'shop.scartstudios.com' y hacer clic en Next. Shopify mostrará las instrucciones DNS con el CNAME target específico (generalmente algo como 'shops.myshopify.com' o un subdominio específico de la tienda). IMPORTANTE: Copiar exactamente el valor del CNAME target que indica Shopify, ya que será necesario para el siguiente paso en Cloudflare. NO hacer clic en 'Verify connection' todavía - primero se debe configurar el DNS.",
             "status": "pending",
-            "testStrategy": "Verificar que en Shopify → Settings → Domains aparece shop.sc-artstudio.com listado con estado 'Pending' o 'Verification required'. Confirmar que se tiene anotado el CNAME target exacto proporcionado por Shopify.",
+            "testStrategy": "Verificar que en Shopify → Settings → Domains aparece shop.scartstudios.com listado con estado 'Pending' o 'Verification required'. Confirmar que se tiene anotado el CNAME target exacto proporcionado por Shopify.",
             "parentId": "undefined"
           },
           {
@@ -1273,9 +1273,9 @@
             "dependencies": [
               1
             ],
-            "details": "En Cloudflare Dashboard: ir a la zona sc-artstudio.com → DNS → Records → Add record. Configurar: Type = CNAME, Name = 'shop' (sin el dominio completo), Target = el valor exacto que proporcionó Shopify en el paso anterior. CRÍTICO: Proxy status = 'DNS only' (clic en la nube naranja para cambiarla a gris). Esto es esencial porque Shopify necesita emitir su propio certificado SSL y manejar el tráfico directamente. Guardar el registro. Esperar 1-5 minutos para propagación inicial. Verificar con: dig shop.sc-artstudio.com CNAME - debe mostrar el target de Shopify.",
+            "details": "En Cloudflare Dashboard: ir a la zona scartstudios.com → DNS → Records → Add record. Configurar: Type = CNAME, Name = 'shop' (sin el dominio completo), Target = el valor exacto que proporcionó Shopify en el paso anterior. CRÍTICO: Proxy status = 'DNS only' (clic en la nube naranja para cambiarla a gris). Esto es esencial porque Shopify necesita emitir su propio certificado SSL y manejar el tráfico directamente. Guardar el registro. Esperar 1-5 minutos para propagación inicial. Verificar con: dig shop.scartstudios.com CNAME - debe mostrar el target de Shopify.",
             "status": "pending",
-            "testStrategy": "Ejecutar 'dig shop.sc-artstudio.com CNAME' y verificar que devuelve el target de Shopify (shops.myshopify.com o similar). En Cloudflare, confirmar que el registro CNAME aparece con la nube gris (DNS only). Verificar que NO hay otros registros conflictivos para 'shop'.",
+            "testStrategy": "Ejecutar 'dig shop.scartstudios.com CNAME' y verificar que devuelve el target de Shopify (shops.myshopify.com o similar). En Cloudflare, confirmar que el registro CNAME aparece con la nube gris (DNS only). Verificar que NO hay otros registros conflictivos para 'shop'.",
             "parentId": "undefined"
           },
           {
@@ -1285,9 +1285,9 @@
             "dependencies": [
               2
             ],
-            "details": "Volver a Shopify → Settings → Domains y hacer clic en 'Verify connection' para shop.sc-artstudio.com. Shopify verificará el DNS y comenzará a emitir el certificado SSL (puede tardar de unos minutos hasta 1 hora). Refrescar la página periódicamente hasta que el estado cambie a 'Connected' con SSL activo. Abrir https://shop.sc-artstudio.com en navegador - debe mostrar la tienda Shopify con candado verde. Realizar compra de prueba completa: agregar producto al carrito, ir al checkout (que debe estar en shop.sc-artstudio.com), ingresar datos de prueba, y verificar que todo el flujo funciona correctamente con HTTPS válido en cada paso.",
+            "details": "Volver a Shopify → Settings → Domains y hacer clic en 'Verify connection' para shop.scartstudios.com. Shopify verificará el DNS y comenzará a emitir el certificado SSL (puede tardar de unos minutos hasta 1 hora). Refrescar la página periódicamente hasta que el estado cambie a 'Connected' con SSL activo. Abrir https://shop.scartstudios.com en navegador - debe mostrar la tienda Shopify con candado verde. Realizar compra de prueba completa: agregar producto al carrito, ir al checkout (que debe estar en shop.scartstudios.com), ingresar datos de prueba, y verificar que todo el flujo funciona correctamente con HTTPS válido en cada paso.",
             "status": "pending",
-            "testStrategy": "En navegador: abrir https://shop.sc-artstudio.com y verificar candado verde (certificado SSL válido emitido por Shopify/Let's Encrypt). En Shopify Dashboard: confirmar que shop.sc-artstudio.com aparece como 'Connected' con SSL activo. Realizar compra de prueba: agregar producto, proceder al checkout, verificar que la URL del checkout usa shop.sc-artstudio.com, completar con tarjeta de prueba de Shopify (4242424242424242), confirmar que el pedido se procesa correctamente.",
+            "testStrategy": "En navegador: abrir https://shop.scartstudios.com y verificar candado verde (certificado SSL válido emitido por Shopify/Let's Encrypt). En Shopify Dashboard: confirmar que shop.scartstudios.com aparece como 'Connected' con SSL activo. Realizar compra de prueba: agregar producto, proceder al checkout, verificar que la URL del checkout usa shop.scartstudios.com, completar con tarjeta de prueba de Shopify (4242424242424242), confirmar que el pedido se procesa correctamente.",
             "parentId": "undefined"
           }
         ],
@@ -1469,7 +1469,7 @@
         "title": "Implementar webhooks de Shopify: orders/paid, products/update, inventory_levels/update",
         "description": "Crear ruta POST /webhooks/shopify que verifica HMAC, procesa eventos de pedidos pagados (marcar máscara SOLD), actualización de productos y niveles de inventario",
         "details": "Crear `apps/api/src/routes/webhooks.ts`. POST `/webhooks/shopify`: raw body (usar express.raw para verificar HMAC). Leer header X-Shopify-Hmac-Sha256 y X-Shopify-Topic. Verificar HMAC: calcular hash HMAC-SHA256 del body con SHOPIFY_WEBHOOK_SECRET (configurar en Shopify app), comparar con header. Si no coincide, responder 401. Si coincide, parsear JSON del body según topic. `orders/paid`: leer line_items, buscar Mask por shopifyProductId, actualizar status=SOLD, crear Order (shopifyOrderId, maskId, totalUsd, shippingCountry, status='PAID'). Enviar notificación por correo/WhatsApp al adulto (implementar con Resend o servicio de correo). `products/update`: actualizar priceUsd del Mask si cambió en Shopify. `inventory_levels/update`: si inventario llegó a 0, marcar máscara RESERVED o SOLD según lógica. Responder 200 en menos de 5 segundos. Si procesamiento demora, usar cola (opcional: BullMQ). Registrar evento en logs.",
-        "testStrategy": "Configurar webhook en Shopify: Settings → Notifications → Webhooks → Create webhook para orders/paid apuntando a https://api.sc-artstudio.com/webhooks/shopify. Hacer compra real de prueba en Shopify de una máscara. Verificar que el webhook llega al backend (ver logs), que pasa verificación HMAC, y que la máscara se marca SOLD en DB. Verificar que se crea el Order. Simular webhook con HMAC incorrecto (enviar POST manual con firma mala) y confirmar 401. Verificar que el procesamiento toma <5s.",
+        "testStrategy": "Configurar webhook en Shopify: Settings → Notifications → Webhooks → Create webhook para orders/paid apuntando a https://api.scartstudios.com/webhooks/shopify. Hacer compra real de prueba en Shopify de una máscara. Verificar que el webhook llega al backend (ver logs), que pasa verificación HMAC, y que la máscara se marca SOLD en DB. Verificar que se crea el Order. Simular webhook con HMAC incorrecto (enviar POST manual con firma mala) y confirmar 401. Verificar que el procesamiento toma <5s.",
         "priority": "high",
         "dependencies": [
           "19",
@@ -1545,7 +1545,7 @@
         "id": "22",
         "title": "Desplegar backend en Railway con variables de entorno",
         "description": "Configurar servicio Railway para apps/api, agregar todas las variables de entorno, configurar Root Directory, deploy, verificar health endpoint",
-        "details": "En Railway: crear nuevo Service en el proyecto sc-art-studio. Conectar con GitHub repo (branch main). Settings → Root Directory = 'apps/api'. Settings → Build Command = 'npm install && npm run build && npx prisma generate'. Start Command = 'npx prisma migrate deploy && npm start'. Variables: copiar de .env local todas las que no sean DATABASE_URL (esa ya existe). Agregar: JWT_SECRET (generar con openssl rand -base64 32), SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_TOKEN (no es secreto pero útil en backend), SHOPIFY_ADMIN_TOKEN, SHOPIFY_WEBHOOK_SECRET (crear en Shopify app), R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET, TURNSTILE_SECRET, FRONTEND_URL (será https://sc-artstudio.com), REVALIDATE_SECRET (generar random). Deploy. Esperar a que termine el build y arranque. Railway asignará una URL pública (algo.up.railway.app). Verificar logs: debe ejecutar migraciones y arrancar sin errores.",
+        "details": "En Railway: crear nuevo Service en el proyecto sc-art-studio. Conectar con GitHub repo (branch main). Settings → Root Directory = 'apps/api'. Settings → Build Command = 'npm install && npm run build && npx prisma generate'. Start Command = 'npx prisma migrate deploy && npm start'. Variables: copiar de .env local todas las que no sean DATABASE_URL (esa ya existe). Agregar: JWT_SECRET (generar con openssl rand -base64 32), SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_TOKEN (no es secreto pero útil en backend), SHOPIFY_ADMIN_TOKEN, SHOPIFY_WEBHOOK_SECRET (crear en Shopify app), R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET, TURNSTILE_SECRET, FRONTEND_URL (será https://scartstudios.com), REVALIDATE_SECRET (generar random). Deploy. Esperar a que termine el build y arranque. Railway asignará una URL pública (algo.up.railway.app). Verificar logs: debe ejecutar migraciones y arrancar sin errores.",
         "testStrategy": "Abrir la URL de Railway/health (ej: https://sc-art-studio-api.up.railway.app/health) y verificar respuesta 200 {status: 'ok'}. Hacer GET a /api/masks desde la URL pública y verificar que devuelve datos (o vacío si no hay). Verificar en Railway Logs que no hay errores. Verificar que las migraciones se aplicaron: en Railway → MySQL → Connect → ejecutar SHOW TABLES; y confirmar que existen las tablas Mask, Order, etc.",
         "priority": "high",
         "dependencies": [
@@ -1584,7 +1584,7 @@
             "dependencies": [
               1
             ],
-            "details": "En Railway Service → Variables, agregar: 1) JWT_SECRET: generar con 'openssl rand -base64 32'. 2) SHOPIFY_STORE_DOMAIN: dominio de la tienda Shopify. 3) SHOPIFY_STOREFRONT_TOKEN: token público del storefront. 4) SHOPIFY_ADMIN_TOKEN: token admin API (secreto). 5) SHOPIFY_WEBHOOK_SECRET: crear nuevo webhook secret en Shopify App. 6) R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET: credenciales Cloudflare R2. 7) TURNSTILE_SECRET: clave secreta de Cloudflare Turnstile. 8) FRONTEND_URL: 'https://sc-artstudio.com'. 9) REVALIDATE_SECRET: generar con 'openssl rand -base64 32'. Nota: DATABASE_URL ya existe del servicio MySQL.",
+            "details": "En Railway Service → Variables, agregar: 1) JWT_SECRET: generar con 'openssl rand -base64 32'. 2) SHOPIFY_STORE_DOMAIN: dominio de la tienda Shopify. 3) SHOPIFY_STOREFRONT_TOKEN: token público del storefront. 4) SHOPIFY_ADMIN_TOKEN: token admin API (secreto). 5) SHOPIFY_WEBHOOK_SECRET: crear nuevo webhook secret en Shopify App. 6) R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET: credenciales Cloudflare R2. 7) TURNSTILE_SECRET: clave secreta de Cloudflare Turnstile. 8) FRONTEND_URL: 'https://scartstudios.com'. 9) REVALIDATE_SECRET: generar con 'openssl rand -base64 32'. Nota: DATABASE_URL ya existe del servicio MySQL.",
             "status": "pending",
             "testStrategy": "Listar todas las variables en Railway y verificar que están presentes (sin mostrar valores). Confirmar que DATABASE_URL referencia el servicio MySQL interno. Verificar que no hay variables faltantes comparando con el .env.example del proyecto.",
             "parentId": "undefined"
@@ -1621,10 +1621,10 @@
       },
       {
         "id": "23",
-        "title": "Configurar dominio api.sc-artstudio.com en Railway y DNS",
-        "description": "[HUMANO] Agregar custom domain api.sc-artstudio.com en Railway, crear CNAME en Cloudflare con DNS only, verificar conexión",
-        "details": "[HUMANO] En Railway: Service del API → Settings → Custom Domain → 'api.sc-artstudio.com'. Railway mostrará un CNAME target (algo como <id>.up.railway.app). En Cloudflare: DNS → Add record → CNAME, name='api', target=<target de Railway>, Proxy status = DNS only (nube gris, como en MEA). Guardar. Esperar propagación DNS (1-10 min). Verificar con `dig api.sc-artstudio.com` que resuelve al CNAME de Railway. Railway emitirá certificado SSL automáticamente. Verificar que https://api.sc-artstudio.com/health responde 200 con HTTPS válido. Actualizar FRONTEND_URL y webhook de Shopify si usaban la URL temporal de Railway.",
-        "testStrategy": "Ejecutar `dig api.sc-artstudio.com` y verificar que devuelve el CNAME de Railway. Abrir https://api.sc-artstudio.com/health en navegador y verificar respuesta 200 y certificado SSL válido. Hacer GET a https://api.sc-artstudio.com/api/masks y verificar que funciona. En Shopify, actualizar URL del webhook a https://api.sc-artstudio.com/webhooks/shopify. Hacer compra de prueba y verificar que el webhook llega.",
+        "title": "Configurar dominio api.scartstudios.com en Railway y DNS",
+        "description": "[HUMANO] Agregar custom domain api.scartstudios.com en Railway, crear CNAME en Cloudflare con DNS only, verificar conexión",
+        "details": "[HUMANO] En Railway: Service del API → Settings → Custom Domain → 'api.scartstudios.com'. Railway mostrará un CNAME target (algo como <id>.up.railway.app). En Cloudflare: DNS → Add record → CNAME, name='api', target=<target de Railway>, Proxy status = DNS only (nube gris, como en MEA). Guardar. Esperar propagación DNS (1-10 min). Verificar con `dig api.scartstudios.com` que resuelve al CNAME de Railway. Railway emitirá certificado SSL automáticamente. Verificar que https://api.scartstudios.com/health responde 200 con HTTPS válido. Actualizar FRONTEND_URL y webhook de Shopify si usaban la URL temporal de Railway.",
+        "testStrategy": "Ejecutar `dig api.scartstudios.com` y verificar que devuelve el CNAME de Railway. Abrir https://api.scartstudios.com/health en navegador y verificar respuesta 200 y certificado SSL válido. Hacer GET a https://api.scartstudios.com/api/masks y verificar que funciona. En Shopify, actualizar URL del webhook a https://api.scartstudios.com/webhooks/shopify. Hacer compra de prueba y verificar que el webhook llega.",
         "priority": "high",
         "dependencies": [
           "22"
@@ -1633,12 +1633,12 @@
         "subtasks": [
           {
             "id": 1,
-            "title": "Agregar custom domain api.sc-artstudio.com en Railway Settings",
-            "description": "Configurar el dominio personalizado api.sc-artstudio.com en el servicio API de Railway y obtener el CNAME target necesario para la configuración DNS",
+            "title": "Agregar custom domain api.scartstudios.com en Railway Settings",
+            "description": "Configurar el dominio personalizado api.scartstudios.com en el servicio API de Railway y obtener el CNAME target necesario para la configuración DNS",
             "dependencies": [],
-            "details": "[HUMANO] En Railway Dashboard: 1) Navegar al proyecto SC Art Studio → seleccionar el servicio del API. 2) Ir a Settings → Networking → Custom Domain. 3) Escribir 'api.sc-artstudio.com' y hacer clic en Add. 4) Railway mostrará un CNAME target único (formato: <id>.up.railway.app). 5) IMPORTANTE: Copiar y guardar este CNAME target exacto porque se necesitará en el siguiente paso para Cloudflare. 6) Dejar la ventana abierta o anotar el target antes de proceder. Railway no emitirá el certificado SSL hasta que el DNS esté configurado correctamente.",
+            "details": "[HUMANO] En Railway Dashboard: 1) Navegar al proyecto SC Art Studio → seleccionar el servicio del API. 2) Ir a Settings → Networking → Custom Domain. 3) Escribir 'api.scartstudios.com' y hacer clic en Add. 4) Railway mostrará un CNAME target único (formato: <id>.up.railway.app). 5) IMPORTANTE: Copiar y guardar este CNAME target exacto porque se necesitará en el siguiente paso para Cloudflare. 6) Dejar la ventana abierta o anotar el target antes de proceder. Railway no emitirá el certificado SSL hasta que el DNS esté configurado correctamente.",
             "status": "pending",
-            "testStrategy": "Verificar en Railway Dashboard que el dominio api.sc-artstudio.com aparece en la lista de Custom Domains con estado 'Pending' o 'Waiting for DNS'. Confirmar que se muestra el CNAME target correcto. Tomar screenshot del CNAME target para referencia.",
+            "testStrategy": "Verificar en Railway Dashboard que el dominio api.scartstudios.com aparece en la lista de Custom Domains con estado 'Pending' o 'Waiting for DNS'. Confirmar que se muestra el CNAME target correcto. Tomar screenshot del CNAME target para referencia.",
             "parentId": "undefined"
           },
           {
@@ -1648,9 +1648,9 @@
             "dependencies": [
               1
             ],
-            "details": "[HUMANO] En Cloudflare Dashboard: 1) Ir a la zona sc-artstudio.com → DNS → Records. 2) Hacer clic en 'Add record'. 3) Tipo: CNAME. 4) Name: 'api' (Cloudflare añadirá automáticamente .sc-artstudio.com). 5) Target: pegar el CNAME target de Railway (ej: abc123.up.railway.app). 6) CRÍTICO: Proxy status = 'DNS only' (nube gris, NO naranja). Esto es necesario porque Railway necesita manejar SSL directamente. 7) TTL: Auto. 8) Guardar. 9) Esperar propagación DNS (1-10 minutos típicamente). 10) Verificar propagación ejecutando: `dig api.sc-artstudio.com CNAME` - debe mostrar el target de Railway.",
+            "details": "[HUMANO] En Cloudflare Dashboard: 1) Ir a la zona scartstudios.com → DNS → Records. 2) Hacer clic en 'Add record'. 3) Tipo: CNAME. 4) Name: 'api' (Cloudflare añadirá automáticamente .scartstudios.com). 5) Target: pegar el CNAME target de Railway (ej: abc123.up.railway.app). 6) CRÍTICO: Proxy status = 'DNS only' (nube gris, NO naranja). Esto es necesario porque Railway necesita manejar SSL directamente. 7) TTL: Auto. 8) Guardar. 9) Esperar propagación DNS (1-10 minutos típicamente). 10) Verificar propagación ejecutando: `dig api.scartstudios.com CNAME` - debe mostrar el target de Railway.",
             "status": "pending",
-            "testStrategy": "Ejecutar `dig api.sc-artstudio.com CNAME` y verificar que devuelve el CNAME target de Railway. Ejecutar `dig api.sc-artstudio.com` y verificar que resuelve a una IP. En Cloudflare, confirmar que el registro aparece con nube gris (DNS only). Usar https://dnschecker.org para verificar propagación global.",
+            "testStrategy": "Ejecutar `dig api.scartstudios.com CNAME` y verificar que devuelve el CNAME target de Railway. Ejecutar `dig api.scartstudios.com` y verificar que resuelve a una IP. En Cloudflare, confirmar que el registro aparece con nube gris (DNS only). Usar https://dnschecker.org para verificar propagación global.",
             "parentId": "undefined"
           },
           {
@@ -1660,9 +1660,9 @@
             "dependencies": [
               2
             ],
-            "details": "[HUMANO] Verificación SSL: 1) Esperar 5-15 minutos después de configurar DNS para que Railway emita el certificado. 2) En Railway Dashboard → Custom Domains, verificar que el estado cambia a 'Active' o 'Valid'. 3) Abrir https://api.sc-artstudio.com/health en navegador. 4) Verificar respuesta 200 OK. 5) Hacer clic en el candado del navegador y verificar que el certificado es válido y emitido por Let's Encrypt (Railway usa esto). 6) Probar endpoint de prueba: `curl -I https://api.sc-artstudio.com/health`. Actualizar Shopify: 7) En Shopify Admin → Settings → Notifications → Webhooks, actualizar todas las URLs que apuntan a <id>.up.railway.app para usar https://api.sc-artstudio.com. 8) Probar que los webhooks funcionan (crear orden de prueba si es necesario). 9) Actualizar variable FRONTEND_URL en Railway si aplica.",
+            "details": "[HUMANO] Verificación SSL: 1) Esperar 5-15 minutos después de configurar DNS para que Railway emita el certificado. 2) En Railway Dashboard → Custom Domains, verificar que el estado cambia a 'Active' o 'Valid'. 3) Abrir https://api.scartstudios.com/health en navegador. 4) Verificar respuesta 200 OK. 5) Hacer clic en el candado del navegador y verificar que el certificado es válido y emitido por Let's Encrypt (Railway usa esto). 6) Probar endpoint de prueba: `curl -I https://api.scartstudios.com/health`. Actualizar Shopify: 7) En Shopify Admin → Settings → Notifications → Webhooks, actualizar todas las URLs que apuntan a <id>.up.railway.app para usar https://api.scartstudios.com. 8) Probar que los webhooks funcionan (crear orden de prueba si es necesario). 9) Actualizar variable FRONTEND_URL en Railway si aplica.",
             "status": "pending",
-            "testStrategy": "Ejecutar `curl -I https://api.sc-artstudio.com/health` y verificar respuesta HTTP 200 con headers de conexión segura. Verificar certificado SSL con `openssl s_client -connect api.sc-artstudio.com:443 -servername api.sc-artstudio.com`. En Shopify, verificar que cada webhook actualizado muestra estado 'Active' y hacer una llamada de prueba. Probar GET a https://api.sc-artstudio.com/api/masks para confirmar funcionamiento completo del API.",
+            "testStrategy": "Ejecutar `curl -I https://api.scartstudios.com/health` y verificar respuesta HTTP 200 con headers de conexión segura. Verificar certificado SSL con `openssl s_client -connect api.scartstudios.com:443 -servername api.scartstudios.com`. En Shopify, verificar que cada webhook actualizado muestra estado 'Active' y hacer una llamada de prueba. Probar GET a https://api.scartstudios.com/api/masks para confirmar funcionamiento completo del API.",
             "parentId": "undefined"
           }
         ],
@@ -1912,7 +1912,7 @@
         "title": "Implementar integración con Shopify Storefront API en el frontend",
         "description": "Crear servicios en frontend para queries GraphQL a Storefront API: obtener productos, crear carrito, agregar líneas, checkout",
         "details": "En `apps/web/lib/shopify.ts`: funciones con fetch a Shopify Storefront API (endpoint: https://<tienda>.myshopify.com/api/2024-01/graphql.json, headers: X-Shopify-Storefront-Access-Token). `getProducts(ids?: string[])`: query products. `getProductByHandle(handle: string)`: query productByHandle. `createCart()`: mutation cartCreate. `addCartLines(cartId, lines)`: mutation cartLinesAdd. `getCart(cartId)`: query cart. Guardar cartId en cookie o localStorage. Tipos TypeScript generados con @shopify/hydrogen o manual desde schema. Manejar errores de red y de GraphQL. Rate limiting del lado de Shopify: manejar 429. Cachear queries de productos con SWR o React Query.",
-        "testStrategy": "Crear página de prueba /test-shopify. Llamar a getProducts() y renderizar lista de productos de Shopify (deben aparecer los creados en tarea 20). Hacer clic en botón 'Add to cart' que llame a createCart y addCartLines, verificar que devuelve cartId y checkoutUrl. Llamar a getCart(cartId) y verificar que el producto está en el carrito. Abrir checkoutUrl en nueva pestaña y verificar que lleva al checkout de Shopify en shop.sc-artstudio.com. Verificar manejo de error: desconectar internet y confirmar que muestra error claro.",
+        "testStrategy": "Crear página de prueba /test-shopify. Llamar a getProducts() y renderizar lista de productos de Shopify (deben aparecer los creados en tarea 20). Hacer clic en botón 'Add to cart' que llame a createCart y addCartLines, verificar que devuelve cartId y checkoutUrl. Llamar a getCart(cartId) y verificar que el producto está en el carrito. Abrir checkoutUrl en nueva pestaña y verificar que lleva al checkout de Shopify en shop.scartstudios.com. Verificar manejo de error: desconectar internet y confirmar que muestra error claro.",
         "priority": "high",
         "dependencies": [
           "18",
@@ -2078,7 +2078,7 @@
               3,
               6
             ],
-            "details": "Implementar SEO completo en las páginas:\n\n1. **Metadata dinámica en Ficha** (`mascaras/[slug]/page.tsx`):\n   ```typescript\n   export async function generateMetadata({ params }): Promise<Metadata> {\n     const mask = await getMask(params.slug);\n     return {\n       title: `${mask.name} - Máscara pintada a mano | SC Art Studio`,\n       description: mask.description || `Máscara de ${mask.animal} pintada a mano por Scarlett...`,\n       openGraph: {\n         title: mask.name,\n         description: mask.description,\n         images: [{ url: mask.images[0].url, width: 1200, height: 630 }],\n         type: 'product',\n       },\n       twitter: {\n         card: 'summary_large_image',\n       },\n     };\n   }\n   ```\n\n2. **JSON-LD Product schema**:\n   ```typescript\n   const productJsonLd = {\n     '@context': 'https://schema.org',\n     '@type': 'Product',\n     name: mask.name,\n     description: mask.description,\n     image: mask.images.map(img => img.url),\n     brand: { '@type': 'Brand', name: 'SC Art Studio' },\n     offers: {\n       '@type': 'Offer',\n       price: mask.priceUsd,\n       priceCurrency: 'USD',\n       availability: mask.status === 'AVAILABLE' \n         ? 'https://schema.org/InStock' \n         : 'https://schema.org/SoldOut',\n       url: `https://sc-artstudio.com/mascaras/${mask.slug}`,\n     },\n     material: mask.materials,\n     weight: { '@type': 'QuantitativeValue', value: mask.weightGrams, unitCode: 'GRM' },\n   };\n   ```\n   - Insertar en <head> con <script type=\"application/ld+json\">\n\n3. **Metadata en Catálogo** (`mascaras/page.tsx`):\n   - Título: 'Catálogo de Máscaras | SC Art Studio'\n   - Descripción: 'Explora nuestra colección de máscaras de madera pintadas a mano...'\n   - CollectionPage JSON-LD\n\n4. **Metadata en Home** (`page.tsx`):\n   - Organization JSON-LD con logo, social links\n   - WebSite JSON-LD con SearchAction\n\n5. **og:image optimization**:\n   - Usar primera imagen de la galería\n   - Asegurar dimensiones 1200x630 o similar ratio\n   - Fallback a imagen genérica de la marca si no hay fotos",
+            "details": "Implementar SEO completo en las páginas:\n\n1. **Metadata dinámica en Ficha** (`mascaras/[slug]/page.tsx`):\n   ```typescript\n   export async function generateMetadata({ params }): Promise<Metadata> {\n     const mask = await getMask(params.slug);\n     return {\n       title: `${mask.name} - Máscara pintada a mano | SC Art Studio`,\n       description: mask.description || `Máscara de ${mask.animal} pintada a mano por Scarlett...`,\n       openGraph: {\n         title: mask.name,\n         description: mask.description,\n         images: [{ url: mask.images[0].url, width: 1200, height: 630 }],\n         type: 'product',\n       },\n       twitter: {\n         card: 'summary_large_image',\n       },\n     };\n   }\n   ```\n\n2. **JSON-LD Product schema**:\n   ```typescript\n   const productJsonLd = {\n     '@context': 'https://schema.org',\n     '@type': 'Product',\n     name: mask.name,\n     description: mask.description,\n     image: mask.images.map(img => img.url),\n     brand: { '@type': 'Brand', name: 'SC Art Studio' },\n     offers: {\n       '@type': 'Offer',\n       price: mask.priceUsd,\n       priceCurrency: 'USD',\n       availability: mask.status === 'AVAILABLE' \n         ? 'https://schema.org/InStock' \n         : 'https://schema.org/SoldOut',\n       url: `https://scartstudios.com/mascaras/${mask.slug}`,\n     },\n     material: mask.materials,\n     weight: { '@type': 'QuantitativeValue', value: mask.weightGrams, unitCode: 'GRM' },\n   };\n   ```\n   - Insertar en <head> con <script type=\"application/ld+json\">\n\n3. **Metadata en Catálogo** (`mascaras/page.tsx`):\n   - Título: 'Catálogo de Máscaras | SC Art Studio'\n   - Descripción: 'Explora nuestra colección de máscaras de madera pintadas a mano...'\n   - CollectionPage JSON-LD\n\n4. **Metadata en Home** (`page.tsx`):\n   - Organization JSON-LD con logo, social links\n   - WebSite JSON-LD con SearchAction\n\n5. **og:image optimization**:\n   - Usar primera imagen de la galería\n   - Asegurar dimensiones 1200x630 o similar ratio\n   - Fallback a imagen genérica de la marca si no hay fotos",
             "status": "pending",
             "testStrategy": "Usar herramientas de testing SEO (Google Rich Results Test, Facebook Sharing Debugger, Twitter Card Validator). Verificar que JSON-LD es válido en cada página de máscara. Compartir link de máscara en redes sociales y verificar que preview muestra imagen, título y descripción correctos. Verificar metadata en view-source de la página. Probar con Lighthouse que scores de SEO son altos (>90).",
             "parentId": "undefined"
@@ -2290,9 +2290,9 @@
       {
         "id": "32",
         "title": "Desplegar frontend en Vercel con dominios y variables de entorno",
-        "description": "[HUMANO] Conectar repo a Vercel, configurar Root Directory apps/web, agregar dominios sc-artstudio.com y www, configurar variables, deploy, crear registros DNS",
-        "details": "[HUMANO] En Vercel: Import Git Repository → seleccionar sc-art-studio. Framework: Next.js, Root Directory: apps/web. Variables de entorno: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN, NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN, API_URL='https://api.sc-artstudio.com', REVALIDATE_SECRET (mismo que en Railway), NEXT_PUBLIC_TURNSTILE_SITE_KEY. Deploy. Esperar a que termine. Vercel asignará URL temporal (.vercel.app). Agregar dominios: sc-artstudio.com (apex) y www.sc-artstudio.com. Vercel mostrará registros DNS a crear. En Cloudflare: agregar registros EXACTOS que Vercel indica (usualmente A y AAAA para apex, CNAME para www), con Proxy status = DNS only (nube gris, como en MEA). Esperar propagación (5-30 min). Vercel emitirá certificados SSL. Verificar que https://sc-artstudio.com carga el sitio. Configurar redirección 308 de www a apex (o viceversa, según preferencia) en Vercel Domains. Si se compró scartstudio.art, agregarlo también y redirigir a principal.",
-        "testStrategy": "Abrir https://sc-artstudio.com y verificar que carga el sitio con HTTPS válido. Verificar que www redirige a apex (o viceversa). Ejecutar `dig sc-artstudio.com` y verificar que resuelve a IPs de Vercel. Abrir DevTools → Network y verificar que los recursos (JS, CSS, imágenes) se sirven desde el dominio correcto. Hacer compra de prueba completa desde el dominio propio y verificar que el checkout usa shop.sc-artstudio.com. Lighthouse en producción: Performance >85, SEO 100.",
+        "description": "[HUMANO] Conectar repo a Vercel, configurar Root Directory apps/web, agregar dominios scartstudios.com y www, configurar variables, deploy, crear registros DNS",
+        "details": "[HUMANO] En Vercel: Import Git Repository → seleccionar sc-art-studio. Framework: Next.js, Root Directory: apps/web. Variables de entorno: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN, NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN, API_URL='https://api.scartstudios.com', REVALIDATE_SECRET (mismo que en Railway), NEXT_PUBLIC_TURNSTILE_SITE_KEY. Deploy. Esperar a que termine. Vercel asignará URL temporal (.vercel.app). Agregar dominios: scartstudios.com (apex) y www.scartstudios.com. Vercel mostrará registros DNS a crear. En Cloudflare: agregar registros EXACTOS que Vercel indica (usualmente A y AAAA para apex, CNAME para www), con Proxy status = DNS only (nube gris, como en MEA). Esperar propagación (5-30 min). Vercel emitirá certificados SSL. Verificar que https://scartstudios.com carga el sitio. Configurar redirección 308 de www a apex (o viceversa, según preferencia) en Vercel Domains. Si se compró scartstudio.art, agregarlo también y redirigir a principal.",
+        "testStrategy": "Abrir https://scartstudios.com y verificar que carga el sitio con HTTPS válido. Verificar que www redirige a apex (o viceversa). Ejecutar `dig scartstudios.com` y verificar que resuelve a IPs de Vercel. Abrir DevTools → Network y verificar que los recursos (JS, CSS, imágenes) se sirven desde el dominio correcto. Hacer compra de prueba completa desde el dominio propio y verificar que el checkout usa shop.scartstudios.com. Lighthouse en producción: Performance >85, SEO 100.",
         "priority": "high",
         "dependencies": [
           "23",
@@ -2320,20 +2320,20 @@
             "dependencies": [
               1
             ],
-            "details": "En Vercel: Project Settings → Environment Variables. Agregar las siguientes variables para Production, Preview y Development: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN (dominio .myshopify.com de la tienda), NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN (token público de Storefront API), NEXT_PUBLIC_API_URL='https://api.sc-artstudio.com' (URL del backend en Railway), REVALIDATE_SECRET (mismo valor que en Railway para ISR on-demand), NEXT_PUBLIC_TURNSTILE_SITE_KEY (site key de Cloudflare Turnstile para captcha). Después de agregar variables, hacer Redeploy desde Deployments → último deploy → Redeploy para que tome las nuevas variables.",
+            "details": "En Vercel: Project Settings → Environment Variables. Agregar las siguientes variables para Production, Preview y Development: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN (dominio .myshopify.com de la tienda), NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN (token público de Storefront API), NEXT_PUBLIC_API_URL='https://api.scartstudios.com' (URL del backend en Railway), REVALIDATE_SECRET (mismo valor que en Railway para ISR on-demand), NEXT_PUBLIC_TURNSTILE_SITE_KEY (site key de Cloudflare Turnstile para captcha). Después de agregar variables, hacer Redeploy desde Deployments → último deploy → Redeploy para que tome las nuevas variables.",
             "status": "pending",
-            "testStrategy": "Después del redeploy, abrir la URL temporal .vercel.app y verificar en DevTools → Network que las llamadas al API van a api.sc-artstudio.com. Verificar en Console que no hay errores de variables undefined. Verificar que Turnstile carga correctamente en formularios si aplica.",
+            "testStrategy": "Después del redeploy, abrir la URL temporal .vercel.app y verificar en DevTools → Network que las llamadas al API van a api.scartstudios.com. Verificar en Console que no hay errores de variables undefined. Verificar que Turnstile carga correctamente en formularios si aplica.",
             "parentId": "undefined"
           },
           {
             "id": 3,
             "title": "Agregar dominios apex y www en Vercel",
-            "description": "Configurar los dominios sc-artstudio.com (apex) y www.sc-artstudio.com en el proyecto de Vercel, obteniendo los registros DNS requeridos.",
+            "description": "Configurar los dominios scartstudios.com (apex) y www.scartstudios.com en el proyecto de Vercel, obteniendo los registros DNS requeridos.",
             "dependencies": [
               1,
               2
             ],
-            "details": "En Vercel: Project Settings → Domains → Add Domain. Agregar primero 'sc-artstudio.com' (dominio apex/raíz). Vercel mostrará los registros DNS necesarios: típicamente un registro A apuntando a 76.76.21.21 y posiblemente un AAAA para IPv6. Agregar también 'www.sc-artstudio.com'. Vercel mostrará un registro CNAME (usualmente cname.vercel-dns.com). Configurar redirección: en la sección de dominios, elegir cuál será el primario (recomendado: apex sin www) y configurar el otro para redirigir con código 308 (redirect permanente). Anotar EXACTAMENTE los registros que Vercel indica para el siguiente paso.",
+            "details": "En Vercel: Project Settings → Domains → Add Domain. Agregar primero 'scartstudios.com' (dominio apex/raíz). Vercel mostrará los registros DNS necesarios: típicamente un registro A apuntando a 76.76.21.21 y posiblemente un AAAA para IPv6. Agregar también 'www.scartstudios.com'. Vercel mostrará un registro CNAME (usualmente cname.vercel-dns.com). Configurar redirección: en la sección de dominios, elegir cuál será el primario (recomendado: apex sin www) y configurar el otro para redirigir con código 308 (redirect permanente). Anotar EXACTAMENTE los registros que Vercel indica para el siguiente paso.",
             "status": "pending",
             "testStrategy": "Verificar que ambos dominios aparecen en la lista de dominios del proyecto en Vercel. En este punto los dominios mostrarán status 'Invalid Configuration' o 'Pending' porque los DNS aún no están configurados - esto es esperado. Capturar screenshot de los registros DNS requeridos para referencia.",
             "parentId": "undefined"
@@ -2347,7 +2347,7 @@
             ],
             "details": "En Cloudflare Dashboard → DNS → Records: Agregar registro A para @ (apex) apuntando a la IP que indicó Vercel (76.76.21.21), con Proxy status = DNS only (nube gris, NO naranja). Si Vercel indicó AAAA, agregarlo también con DNS only. Agregar registro CNAME para 'www' apuntando al target que indicó Vercel (ej: cname.vercel-dns.com), con Proxy status = DNS only. IMPORTANTE: usar DNS only igual que en MEA para que Vercel maneje SSL. Esperar propagación DNS (5-30 minutos). En Vercel, los dominios cambiarán de 'Invalid' a 'Valid' cuando detecte los registros. Vercel emitirá certificados SSL automáticamente (Let's Encrypt). Si se compró scartstudio.art, agregarlo también como dominio adicional y configurar redirect al principal.",
             "status": "pending",
-            "testStrategy": "Ejecutar 'dig sc-artstudio.com' y verificar que resuelve a IP de Vercel. Abrir https://sc-artstudio.com en navegador y verificar: 1) Carga el sitio correctamente, 2) Certificado SSL válido (candado verde), 3) Certificado emitido por Let's Encrypt para sc-artstudio.com. Abrir https://www.sc-artstudio.com y verificar que redirige a https://sc-artstudio.com (o viceversa según configuración). Verificar en Vercel Domains que ambos dominios muestran 'Valid Configuration' con check verde.",
+            "testStrategy": "Ejecutar 'dig scartstudios.com' y verificar que resuelve a IP de Vercel. Abrir https://scartstudios.com en navegador y verificar: 1) Carga el sitio correctamente, 2) Certificado SSL válido (candado verde), 3) Certificado emitido por Let's Encrypt para scartstudios.com. Abrir https://www.scartstudios.com y verificar que redirige a https://scartstudios.com (o viceversa según configuración). Verificar en Vercel Domains que ambos dominios muestran 'Valid Configuration' con check verde.",
             "parentId": "undefined"
           }
         ],
@@ -2360,7 +2360,7 @@
         "title": "Implementar panel de administración con login y dashboard",
         "description": "Crear layout protegido /admin, página de login, dashboard con métricas, y navegación a secciones de gestión",
         "details": "En `apps/web/app/[locale]/admin/`: crear `layout.tsx` con middleware que verifica cookie de sesión (JWT), redirige a /admin/login si no autenticado. Agregar metadata `robots: {index: false}` para noindex. `login/page.tsx`: formulario con email, password, botón 'Iniciar sesión'. Al enviar, fetch POST a /api/auth/login, guardar CSRF token en state, redirigir a /admin/dashboard. `dashboard/page.tsx`: métricas desde el API (total de máscaras por status, total de pedidos, solicitudes pendientes, últimas ventas). Layout con sidebar: links a Máscaras, Historias, Videos, Encargos, Costos y envíos, AuditLog, Logout. Estilo: fondo claro, componentes simples sin estilo de libro (es una herramienta, no marketing). Usar HeadlessUI o shadcn/ui para componentes de formularios y tablas.",
-        "testStrategy": "Abrir /admin sin estar autenticado, verificar que redirige a /admin/login. Hacer login con credenciales del seed (admin@sc-artstudio.com / temp123). Verificar que redirige a /admin/dashboard. Verificar que el dashboard muestra métricas (aunque sean 0). Verificar que el sidebar tiene links a todas las secciones. Hacer logout y verificar que redirige a /admin/login. Intentar acceder a /admin/dashboard sin sesión y verificar que redirige. Verificar en view-source que tiene meta robots noindex.",
+        "testStrategy": "Abrir /admin sin estar autenticado, verificar que redirige a /admin/login. Hacer login con credenciales del seed (admin@scartstudios.com / temp123). Verificar que redirige a /admin/dashboard. Verificar que el dashboard muestra métricas (aunque sean 0). Verificar que el sidebar tiene links a todas las secciones. Hacer logout y verificar que redirige a /admin/login. Intentar acceder a /admin/dashboard sin sesión y verificar que redirige. Verificar en view-source que tiene meta robots noindex.",
         "priority": "high",
         "dependencies": [
           "13",
@@ -2387,7 +2387,7 @@
             ],
             "details": "En `apps/web/app/[locale]/admin/login/page.tsx`: crear página con formulario usando shadcn/ui (Input, Button, Label, Card). Campos: email (type='email', required), password (type='password', required), botón 'Iniciar sesión'. Implementar client component con useState para form data y loading state. Al submit: prevenir default, mostrar loading, fetch POST a '/api/auth/login' con {email, password}. Implementar CSRF: al montar componente, fetch GET '/api/auth/csrf' para obtener token, incluir en header X-CSRF-Token en el POST de login. Si response ok, redirigir con router.push('/[locale]/admin/dashboard'). Si error, mostrar mensaje de error usando toast de shadcn/ui. Estilo funcional: fondo claro (bg-gray-50), card centrada, sin decoraciones de libro/artísticas.",
             "status": "pending",
-            "testStrategy": "Verificar que el formulario renderiza correctamente con campos email y password. Probar submit con credenciales incorrectas y verificar mensaje de error. Probar submit con credenciales válidas (admin@sc-artstudio.com / temp123) y verificar redirección a /admin/dashboard. Verificar que CSRF token se envía en las peticiones. Verificar estado de loading durante la petición.",
+            "testStrategy": "Verificar que el formulario renderiza correctamente con campos email y password. Probar submit con credenciales incorrectas y verificar mensaje de error. Probar submit con credenciales válidas (admin@scartstudios.com / temp123) y verificar redirección a /admin/dashboard. Verificar que CSRF token se envía en las peticiones. Verificar estado de loading durante la petición.",
             "parentId": "undefined"
           },
           {
@@ -2602,21 +2602,22 @@
         "id": "36",
         "title": "[HUMANO] Fase 0: decisiones, cuentas externas y datos reales de costos",
         "description": "Guido y la familia eligen el dominio, crean las cuentas a nombre del adulto responsable, activan 2FA y entregan los datos de costos y cotizaciones (PRD Fase 0).",
-        "details": "0.1 Elegir dominio (recomendado sc-artstudio.com + scartstudio.art). Pagos: opción A (PayPal) para lanzar.\n0.1b Cita con contador de EE. UU. y de Guatemala sobre la LLC (escenario B2).\n0.2 Crear Shopify Basic, PayPal Business, Cloudflare, Railway y equipo de Vercel a nombre del adulto; Guido entra como colaborador.\n0.3 Cuentas de marca YouTube, TikTok, Instagram (profesional + página de Facebook), administradas por un adulto.\n0.4 Datos reales: materiales, horas, peso y medidas de 3 máscaras, 2 tamaños de caja.\n0.5 Cotizar envío de prueba: FedEx con cuenta, Guatex, Correos (servicio comercial).\nClaude Code solo prepara listas y se detiene esperando confirmación.",
+        "details": "0.1 Elegir dominio (recomendado scartstudios.com + scartstudio.art). Pagos: opción A (PayPal) para lanzar.\n0.1b Cita con contador de EE. UU. y de Guatemala sobre la LLC (escenario B2).\n0.2 Crear Shopify Basic, PayPal Business, Cloudflare, Railway y equipo de Vercel a nombre del adulto; Guido entra como colaborador.\n0.3 Cuentas de marca YouTube, TikTok, Instagram (profesional + página de Facebook), administradas por un adulto.\n0.4 Datos reales: materiales, horas, peso y medidas de 3 máscaras, 2 tamaños de caja.\n0.5 Cotizar envío de prueba: FedEx con cuenta, Guatex, Correos (servicio comercial).\nClaude Code solo prepara listas y se detiene esperando confirmación.",
         "testStrategy": "Todas las cuentas creadas con 2FA; hoja con datos de costos entregada; decisión de dominio registrada en CLAUDE.md.",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
             "title": "Elegir dominio y confirmar compra",
-            "description": "Seleccionar y registrar los dominios recomendados (sc-artstudio.com + scartstudio.art) a nombre del adulto responsable.",
+            "description": "Seleccionar y registrar los dominios recomendados (scartstudios.com + scartstudio.art) a nombre del adulto responsable.",
             "dependencies": [],
-            "details": "1. Revisar disponibilidad de dominios recomendados: sc-artstudio.com (principal) y scartstudio.art (alternativo/artístico).\n2. Comparar precios en registradores: Cloudflare Registrar (recomendado por precio al costo), Namecheap, Google Domains.\n3. El adulto responsable realiza la compra con su método de pago y datos personales.\n4. Activar renovación automática para evitar pérdida del dominio.\n5. Habilitar WHOIS privacy si está disponible.\n6. Documentar en CLAUDE.md los dominios adquiridos, registrador usado y fecha de expiración.\n7. Confirmar a Claude Code que los dominios están listos para configurar DNS en Cloudflare.",
-            "status": "pending",
-            "testStrategy": "Verificar que los dominios están registrados ejecutando `whois sc-artstudio.com` y `whois scartstudio.art`. Confirmar que aparecen en el dashboard del registrador con renovación automática activa.",
-            "parentId": "undefined"
+            "details": "1. Revisar disponibilidad de dominios recomendados: scartstudios.com (principal) y scartstudio.art (alternativo/artístico).\n2. Comparar precios en registradores: Cloudflare Registrar (recomendado por precio al costo), Namecheap, Google Domains.\n3. El adulto responsable realiza la compra con su método de pago y datos personales.\n4. Activar renovación automática para evitar pérdida del dominio.\n5. Habilitar WHOIS privacy si está disponible.\n6. Documentar en CLAUDE.md los dominios adquiridos, registrador usado y fecha de expiración.\n7. Confirmar a Claude Code que los dominios están listos para configurar DNS en Cloudflare.\n<info added on 2026-10-15T03:39:08.192Z>\nBasándome en el análisis del contexto de la tarea y el request del usuario, la información nueva que debe agregarse a los detalles de la subtarea es:\n\n**COMPLETADO 15-oct-2026:** Dominio adquirido = scartstudios.com (registrador: Cloudflare, WHOIS privado activado por defecto). Vencimiento: 2027-10-15. Nameservers configurados: sage.ns.cloudflare.com y zoe.ns.cloudflare.com. Zona DNS ya activa en Cloudflare. El dominio scartstudio.art no se adquirió. Referencias actualizadas en repositorio y tareas relacionadas (Task 18, 23). PENDIENTE: adulto debe confirmar activación de renovación automática en panel de Cloudflare.\n</info added on 2026-10-15T03:39:08.192Z>",
+            "status": "done",
+            "testStrategy": "Verificar que los dominios están registrados ejecutando `whois scartstudios.com` y `whois scartstudio.art`. Confirmar que aparecen en el dashboard del registrador con renovación automática activa.",
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T03:39:08.398Z"
           },
           {
             "id": 2,
@@ -2663,7 +2664,8 @@
         ],
         "complexity": 4,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Elegir dominio y confirmar compra, 2) Cita con contador US/GT sobre LLC (escenario B2), 3) Crear cuentas: Shopify, PayPal, Cloudflare, Railway, Vercel a nombre del adulto, 4) Crear cuentas de marca: YouTube, TikTok, Instagram administradas por adulto, 5) Recopilar datos reales: costos de materiales, horas, pesos/medidas de 3 máscaras, cotizaciones de empaque y envío."
+        "expansionPrompt": "Dividir en: 1) Elegir dominio y confirmar compra, 2) Cita con contador US/GT sobre LLC (escenario B2), 3) Crear cuentas: Shopify, PayPal, Cloudflare, Railway, Vercel a nombre del adulto, 4) Crear cuentas de marca: YouTube, TikTok, Instagram administradas por adulto, 5) Recopilar datos reales: costos de materiales, horas, pesos/medidas de 3 máscaras, cotizaciones de empaque y envío.",
+        "updatedAt": "2026-10-15T03:39:08.398Z"
       },
       {
         "id": "37",
@@ -2855,9 +2857,9 @@
             "dependencies": [
               3
             ],
-            "details": "En el componente `CartDrawer.tsx`, debajo del subtotal agregar el texto 'Un adulto de la familia responde los mensajes' con estilo sutil (tamaño pequeño, color gris) según la Sección 4.9 del PRD sobre protección de menor. Agregar botón prominente 'Ir al checkout' / 'Proceed to checkout' (según idioma) con estilo de acento (rosa #E8307A o naranja #F28C28), que al hacer clic obtiene el `checkoutUrl` del carrito actual via Storefront API query (`cart(id: $cartId) { checkoutUrl }`) y ejecuta `window.location.href = checkoutUrl`. El checkout debe abrir en `shop.sc-artstudio.com`. Mostrar loading spinner mientras se obtiene la URL. Si el carrito está vacío, deshabilitar el botón con texto 'Carrito vacío'. Agregar el mismo copy de protección en las notificaciones de Shopify (Fase 3.8 del PRD).",
+            "details": "En el componente `CartDrawer.tsx`, debajo del subtotal agregar el texto 'Un adulto de la familia responde los mensajes' con estilo sutil (tamaño pequeño, color gris) según la Sección 4.9 del PRD sobre protección de menor. Agregar botón prominente 'Ir al checkout' / 'Proceed to checkout' (según idioma) con estilo de acento (rosa #E8307A o naranja #F28C28), que al hacer clic obtiene el `checkoutUrl` del carrito actual via Storefront API query (`cart(id: $cartId) { checkoutUrl }`) y ejecuta `window.location.href = checkoutUrl`. El checkout debe abrir en `shop.scartstudios.com`. Mostrar loading spinner mientras se obtiene la URL. Si el carrito está vacío, deshabilitar el botón con texto 'Carrito vacío'. Agregar el mismo copy de protección en las notificaciones de Shopify (Fase 3.8 del PRD).",
             "status": "pending",
-            "testStrategy": "Verificar que el mensaje de protección de menor aparece visiblemente en el drawer del carrito. Hacer clic en 'Ir al checkout' con productos en el carrito y verificar redirección a shop.sc-artstudio.com/checkouts/... Probar que con carrito vacío el botón está deshabilitado. Verificar traducciones en inglés y español. Confirmar accesibilidad del texto de protección con screen reader.",
+            "testStrategy": "Verificar que el mensaje de protección de menor aparece visiblemente en el drawer del carrito. Hacer clic en 'Ir al checkout' con productos en el carrito y verificar redirección a shop.scartstudios.com/checkouts/... Probar que con carrito vacío el botón está deshabilitado. Verificar traducciones en inglés y español. Confirmar accesibilidad del texto de protección con screen reader.",
             "parentId": "undefined"
           }
         ],
@@ -3237,9 +3239,9 @@
             "title": "Configurar Content Security Policy (CSP) en next.config.js",
             "description": "Implementar cabecera CSP restrictiva permitiendo únicamente los dominios necesarios para el funcionamiento del sitio: Shopify (checkout y recursos), YouTube (embeds de video), TikTok (embeds), Instagram (embeds), Cloudflare R2 (imágenes) y Turnstile (captcha).",
             "dependencies": [],
-            "details": "En next.config.js, agregar la configuración de headers con la CSP. Directivas necesarias: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.shopify.com https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.shopify.com https://pub-[hash].r2.dev https://*.ytimg.com https://*.cdninstagram.com; frame-src https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com; connect-src 'self' https://*.shopify.com https://api.sc-artstudio.com; font-src 'self'. Ajustar según dominios exactos usados en producción.",
+            "details": "En next.config.js, agregar la configuración de headers con la CSP. Directivas necesarias: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.shopify.com https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.shopify.com https://pub-[hash].r2.dev https://*.ytimg.com https://*.cdninstagram.com; frame-src https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com; connect-src 'self' https://*.shopify.com https://api.scartstudios.com; font-src 'self'. Ajustar según dominios exactos usados en producción.",
             "status": "pending",
-            "testStrategy": "Ejecutar curl -I https://sc-artstudio.com y verificar que la cabecera Content-Security-Policy está presente. Abrir la página en el navegador y verificar en DevTools → Console que no hay errores de CSP. Probar que los embeds de YouTube, TikTok e Instagram cargan correctamente. Verificar que el checkout de Shopify funciona sin bloqueos.",
+            "testStrategy": "Ejecutar curl -I https://scartstudios.com y verificar que la cabecera Content-Security-Policy está presente. Abrir la página en el navegador y verificar en DevTools → Console que no hay errores de CSP. Probar que los embeds de YouTube, TikTok e Instagram cargan correctamente. Verificar que el checkout de Shopify funciona sin bloqueos.",
             "parentId": "undefined"
           },
           {
@@ -3251,7 +3253,7 @@
             ],
             "details": "En next.config.js, extender la configuración de headers. Cabeceras globales: Strict-Transport-Security: max-age=63072000; includeSubDomains; preload (2 años); Referrer-Policy: strict-origin-when-cross-origin; Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(). Para rutas /admin/*: agregar X-Frame-Options: DENY y X-Content-Type-Options: nosniff. Considerar agregar también X-XSS-Protection: 1; mode=block aunque esté deprecado, algunos scanners lo valoran. Usar el patrón source de Next.js para aplicar headers a rutas específicas.",
             "status": "pending",
-            "testStrategy": "Ejecutar curl -I https://sc-artstudio.com y verificar presencia de HSTS, Referrer-Policy, Permissions-Policy. Ejecutar curl -I https://sc-artstudio.com/admin y verificar X-Frame-Options: DENY. Intentar cargar /admin en un iframe desde otro dominio y confirmar que es bloqueado. Usar https://securityheaders.com para validación inicial.",
+            "testStrategy": "Ejecutar curl -I https://scartstudios.com y verificar presencia de HSTS, Referrer-Policy, Permissions-Policy. Ejecutar curl -I https://scartstudios.com/admin y verificar X-Frame-Options: DENY. Intentar cargar /admin en un iframe desde otro dominio y confirmar que es bloqueado. Usar https://securityheaders.com para validación inicial.",
             "parentId": "undefined"
           },
           {
@@ -3275,7 +3277,7 @@
               2,
               3
             ],
-            "details": "Ir a https://securityheaders.com y analizar https://sc-artstudio.com. Revisar cada cabecera marcada en rojo o amarillo. Problemas comunes a resolver: CSP sin report-uri (agregar report-uri si se desea monitoreo), falta de X-Content-Type-Options (agregar: nosniff), Permissions-Policy incompleta (agregar todas las directivas recomendadas). Después de cada corrección, redesplegar y re-analizar. Documentar la nota final alcanzada en docs/seguridad.md. Si no se alcanza A+, documentar qué cabeceras están pendientes y por qué (ej: CSP requiere unsafe-inline por framework). Meta mínima: nota A.",
+            "details": "Ir a https://securityheaders.com y analizar https://scartstudios.com. Revisar cada cabecera marcada en rojo o amarillo. Problemas comunes a resolver: CSP sin report-uri (agregar report-uri si se desea monitoreo), falta de X-Content-Type-Options (agregar: nosniff), Permissions-Policy incompleta (agregar todas las directivas recomendadas). Después de cada corrección, redesplegar y re-analizar. Documentar la nota final alcanzada en docs/seguridad.md. Si no se alcanza A+, documentar qué cabeceras están pendientes y por qué (ej: CSP requiere unsafe-inline por framework). Meta mínima: nota A.",
             "status": "pending",
             "testStrategy": "Captura de pantalla de securityheaders.com mostrando nota A o superior. Verificar manualmente que los embeds de video (YouTube, TikTok, Instagram) siguen funcionando después de las correcciones. Verificar que el checkout de Shopify completa correctamente. Documentar cualquier excepción necesaria en la CSP.",
             "parentId": "undefined"
@@ -3526,7 +3528,7 @@
             ],
             "details": "Proceso de copia segura:\n\n1. **Crear estructura de directorios** en ~/Developer/_plantillas/stack-web-mea/ si no existe\n2. **Copiar y generalizar** cada archivo:\n   - Reemplazar 'sc-artstudio' → '{{PROJECT_NAME}}' o placeholder genérico\n   - Reemplazar URLs específicas → placeholders\n   - Eliminar cualquier referencia a Scarlett o datos de cliente\n3. **Archivos a copiar**:\n   - apps/api/middleware/* (todos los middlewares de seguridad)\n   - .github/workflows/* (CI/CD pipelines)\n   - apps/api/scripts/backup-db.ts, restore-db.ts\n   - apps/web/components/base/* (componentes genéricos)\n   - CLAUDE.md genérico (sin referencias a Scarlett)\n   - .taskmaster/CLAUDE.md\n   - .env.example (solo con placeholders, SIN valores reales)\n   - .gitignore, configs de eslint/prettier/tsconfig\n4. **NO copiar nunca**: .env, node_modules/, cualquier archivo con datos de cliente, prisma/migrations con datos específicos\n5. **Verificación post-copia**: ejecutar gitleaks en el directorio destino",
             "status": "pending",
-            "testStrategy": "Verificar con `gitleaks detect --source ~/Developer/_plantillas/stack-web-mea/` que no hay secretos. Buscar con grep que no existan referencias a 'Scarlett', 'sc-artstudio.com', ni correos/nombres de clientes específicos. Confirmar que .env no fue copiado.",
+            "testStrategy": "Verificar con `gitleaks detect --source ~/Developer/_plantillas/stack-web-mea/` que no hay secretos. Buscar con grep que no existan referencias a 'Scarlett', 'scartstudios.com', ni correos/nombres de clientes específicos. Confirmar que .env no fue copiado.",
             "parentId": "undefined"
           },
           {
@@ -3549,7 +3551,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T03:28:38.115Z",
+      "lastModified": "2026-10-15T03:39:08.398Z",
       "taskCount": 49,
       "completedCount": 2,
       "tags": [

@@ -6,7 +6,7 @@ const csp = [
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://cdn.shopify.com https://*.r2.dev https://i.ytimg.com",
   "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com",
-  "connect-src 'self' https://*.myshopify.com https://api.sc-artstudio.com",
+  "connect-src 'self' https://*.myshopify.com https://api.scartstudios.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self' https://*.myshopify.com",
