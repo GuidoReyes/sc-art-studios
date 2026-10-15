@@ -11,7 +11,7 @@
 
 ## Cuentas e infraestructura
 - Vercel (equipo `guidoreyes-projects`), Railway y Cloudflare: se usan las cuentas existentes de Guido; se crean proyectos nuevos dentro de ellas.
-- Dominio: **`scartstudios.com`** (comprado en Cloudflare Registrar el 15-oct-2026, vence 15-oct-2027; nameservers `sage`/`zoe.ns.cloudflare.com`). El PRD dice `sc-artstudio.com`: siempre usar `scartstudios.com` (`api.`, `shop.`, etc.).
+- Dominio: **`scartstudios.com`** (comprado en Cloudflare Registrar el 15-oct-2026, vence 15-oct-2027, renovación automática activada; nameservers `sage`/`zoe.ns.cloudflare.com`). El PRD dice `sc-artstudio.com`: siempre usar `scartstudios.com` (`api.`, `shop.`, etc.).
 
 ## Monorepo
 - npm workspaces: `@sc-art-studio/web`, `@sc-art-studio/api`, `@sc-art-studio/shared`. Para depender de shared usar `"@sc-art-studio/shared": "*"` (npm no soporta `workspace:*`).

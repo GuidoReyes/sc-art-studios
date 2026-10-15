@@ -2,7 +2,7 @@
   "master": {
     "tasks": [
       {
-        "id": "1",
+        "id": 1,
         "title": "Completar configuración del repositorio Git y protecciones",
         "description": "Inicializar Git, crear repositorio privado en GitHub, activar protecciones de rama main, Dependabot, secret scanning y push protection",
         "details": "Ejecutar: `git init -b main`, configurar user.name y user.email, hacer commit inicial. Usar `gh repo create sc-art-studio --private --source . --remote origin --push`. Activar protecciones con gh CLI o desde GitHub Settings: rama main protegida (sin force-push ni borrado), Dependabot alerts, security updates, secret scanning y push protection. Verificar con `git remote -v` y `gh repo view --web`.",
@@ -68,7 +68,7 @@
         "updatedAt": "2026-10-14T21:34:15.299Z"
       },
       {
-        "id": "2",
+        "id": 2,
         "title": "Completar estructura de monorepo con plantilla MEA",
         "description": "Crear estructura de carpetas apps/web, apps/api, packages/shared siguiendo el patrón de MEA International",
         "details": "Crear directorios: `mkdir -p apps/web apps/api packages/shared`. En cada directorio crear `package.json` inicial con el nombre del workspace, scripts básicos y dependencias comunes. Configurar workspace root con `package.json` que incluya `\"workspaces\": [\"apps/*\", \"packages/*\"]`. Actualizar `.gitignore` para incluir: `.env`, `.env.*` (excepto `.env.example`), `node_modules`, `.next`, `dist`, `*.pem`, `*.key`, `*.sql`, `.DS_Store`, archivos de Next.js (`.next/`, `out/`), archivos de build (`dist/`, `build/`). Crear `README.md` del proyecto explicando la estructura del monorepo.",
@@ -146,7 +146,7 @@
         "updatedAt": "2026-10-15T03:28:38.115Z"
       },
       {
-        "id": "3",
+        "id": 3,
         "title": "Completar CLAUDE.md y AGENTS.md con reglas del proyecto",
         "description": "Expandir CLAUDE.md y crear AGENTS.md con stack técnico, capas de seguridad (Sección 4.8), protección de menor (4.9), convenciones de commits y regla de datos configurables",
         "details": "En `CLAUDE.md`: agregar stack (Next.js/Express/Prisma/Shopify/R2), las 13 capas de seguridad de la Sección 4.8, reglas de protección de la menor (4.9), convención de commits en español con conventional commits, y la regla crítica: 'Todo precio, tarifa o costo es configurable en la base de datos, nunca hardcoded'. Crear `AGENTS.md` con lista de agentes disponibles (planner, code-reviewer, tdd-guide, security-reviewer) y cuándo usarlos. Agregar referencias a las secciones del PRD para consulta rápida.",
@@ -224,7 +224,7 @@
         "expansionPrompt": "Dividir en: 1) Documentar stack técnico completo (Next.js/Express/Prisma/Shopify/R2), 2) Escribir las 13 capas de seguridad de Sección 4.8 de forma clara y accionable, 3) Documentar reglas de protección de menor (Sección 4.9), 4) Definir convención de commits en español con conventional commits, 5) Crear AGENTS.md con lista de agentes y cuándo usarlos."
       },
       {
-        "id": "4",
+        "id": 4,
         "title": "Configurar zona DNS en Cloudflare y nameservers",
         "description": "[HUMANO] Comprar dominio scartstudios.com en Vercel, crear zona en Cloudflare, cambiar nameservers en Vercel a los de Cloudflare",
         "details": "[HUMANO] Ejecutar `vercel domains buy scartstudios.com` (confirmar precio US$11.25/año antes de aceptar). Opcional: comprar también `scartstudio.art` como secundario. Crear zona en Cloudflare para scartstudios.com. En Vercel → Domains → Settings del dominio, cambiar nameservers a los dos que indique Cloudflare (usualmente ns1.cloudflare.com y ns2.cloudflare.com). Esperar propagación DNS (15 min - 48 h). Verificar con `dig NS scartstudios.com` que responde los NS de Cloudflare. Anotar dominio principal en `CLAUDE.md` y `.env.example` como `DOMAIN=scartstudios.com`.",
@@ -275,7 +275,7 @@
         "expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio scartstudios.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS."
       },
       {
-        "id": "5",
+        "id": 5,
         "title": "Configurar proyecto Railway y base de datos MySQL",
         "description": "[HUMANO] Autenticar Railway CLI, crear proyecto sc-art-studio, agregar servicio MySQL",
         "details": "[HUMANO] Instalar Railway CLI si no está: `brew install railway`. Ejecutar `railway login` y autenticar con GitHub. Ejecutar `railway init` (nombre: \"sc-art-studio\"). Ejecutar `railway add --database mysql` para crear el servicio MySQL. Railway generará automáticamente la variable `DATABASE_URL`. Copiar el valor de `DATABASE_URL` a `.env` local (NUNCA commitear). Anotar en `CLAUDE.md` el nombre del proyecto Railway para referencia futura. Verificar conexión con `railway run -- echo $DATABASE_URL` (debe mostrar la URL de MySQL).",
@@ -326,7 +326,7 @@
         "expansionPrompt": "Dividir en: 1) Instalar Railway CLI y autenticar con GitHub, 2) Crear proyecto sc-art-studio y agregar servicio MySQL, 3) Obtener DATABASE_URL, guardar en .env local y verificar conexión."
       },
       {
-        "id": "6",
+        "id": 6,
         "title": "Scaffold del backend Express con TypeScript en apps/api",
         "description": "Configurar proyecto Express + TypeScript con estructura base, middleware de seguridad (Helmet, CORS, rate limiting), logger Pino y scripts de dev/build/start",
         "details": "En `apps/api/`: instalar dependencias: `express`, `typescript`, `@types/express`, `@types/node`, `tsx`, `helmet`, `cors`, `express-rate-limit`, `pino`, `pino-http`, `dotenv`, `zod`. Crear `tsconfig.json` con target ES2022, module NodeNext, strict true, outDir dist. Crear `src/index.ts` con servidor Express básico en puerto 8080. Configurar Helmet con CSP restrictiva, CORS limitado a dominios propios (variable `FRONTEND_URL`), rate limiting general (100 req/15 min) y estricto para rutas sensibles. Configurar Pino para logs estructurados JSON sin datos personales. Scripts en `package.json`: `dev` (tsx watch), `build` (tsc), `start` (node dist/index.js). Crear `/health` endpoint que responde 200 con `{status: 'ok', timestamp: Date.now()}`.",
@@ -432,7 +432,7 @@
         "expansionPrompt": "Dividir en: 1) Inicializar proyecto TypeScript con dependencias (express, typescript, @types/*, tsx, dotenv, zod), 2) Configurar tsconfig.json con target ES2022 y strict mode, 3) Configurar Helmet con CSP restrictiva y CORS limitado a dominios propios, 4) Implementar rate limiting general (100 req/15min) y estricto para rutas sensibles, 5) Configurar logger Pino para logs JSON estructurados, 6) Crear endpoint /health con respuesta JSON, 7) Configurar scripts dev/build/start en package.json."
       },
       {
-        "id": "7",
+        "id": 7,
         "title": "Configurar Prisma con schema base y migración inicial",
         "description": "Instalar Prisma, crear schema.prisma con los 13 modelos de la Sección 4.4, configurar para MySQL, crear migración inicial",
         "details": "En `apps/api/`: instalar `prisma`, `@prisma/client`. Ejecutar `npx prisma init --datasource-provider mysql`. En `prisma/schema.prisma` definir los 13 modelos: Mask, MaskImage, Story, Video, CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, SocialAccount, AdminUser, AuditLog. Usar tipos Prisma correctos: Decimal para precios/pesos, DateTime para fechas, Json para arrays de países. Enum para status: `enum MaskStatus {AVAILABLE, RESERVED, SOLD, COMMISSION_EXAMPLE, DRAFT}`, `enum VideoSource {MANUAL, SYNC}`, etc. Agregar relaciones: Mask ↔ MaskImage (1:N), Mask ↔ Video (1:N), Story → Mask (N:1 opcional), etc. Ejecutar `npx prisma migrate dev --name init` para crear la migración inicial. Generar cliente con `npx prisma generate`. Agregar script en package.json: `prisma:migrate:deploy` para producción.",
@@ -522,7 +522,7 @@
         "expansionPrompt": "Dividir en: 1) Instalar Prisma y ejecutar prisma init para MySQL, 2) Definir modelos core: Mask, MaskImage, Story, Video con relaciones, 3) Definir modelos de comercio: CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, 4) Definir modelos de admin: SocialAccount, AdminUser, AuditLog con enums de status, 5) Configurar tipos correctos (Decimal, DateTime, Json) y relaciones entre modelos, 6) Ejecutar migración inicial y verificar con Prisma Studio."
       },
       {
-        "id": "8",
+        "id": 8,
         "title": "Crear script de seed con datos iniciales",
         "description": "Crear prisma/seed.ts con zonas de envío, tarifas FedEx verificadas (Sección 6.4), PackagingProfile de ejemplo, CostSettings iniciales y 4 máscaras DRAFT",
         "details": "Crear `apps/api/prisma/seed.ts`. Insertar con Prisma Client: (1) ShippingZone: zona C (US/CA/MX), zona E (Europa), zona F (Australia). (2) ShippingRate: tarifas FedEx International Economy de la tabla 6.4 (zona C: 1kg=$138.80, 2kg=$179.60, 5kg=$337.00; zona E: 2kg=$241.30; zona F: 2kg=$277.00), con carrier='FEDEX', service='International Economy', validFrom=hoy, source='Guía FedEx GT 2026'. (3) PackagingProfile: nombre='Estándar', innerCm='25x20x15', outerLengthCm=30, outerWidthCm=25, outerHeightCm=20, packagingWeightGrams=200, costGtq=45 (marcado como SUPUESTO en descripción). (4) CostSettings (1 fila): fxUsdGtq=7.645, gatewayPct=7.4 (PayPal), gatewayFixedUsd=0.30, shopifyThirdPartyPct=2.0, monthlyFixedUsd=54.94, expectedUnitsPerMonth=8, laborRateGtqPerHour=25, targetMarginPct=40, volumetricDivisor=5000, usImportDutyPct=10, updatedAt=now, updatedBy='seed'. (5) Mask (4): Jaguar Dorado, Lobo Florido, Venado Rosa, Cebra Mágica, todas con status=DRAFT, priceUsd/Gtq en NULL, sin shopifyProductId. Agregar script en package.json: `prisma:seed` que ejecuta tsx prisma/seed.ts.",
@@ -597,7 +597,7 @@
         "expansionPrompt": "Dividir en: 1) Crear seed.ts con configuración de Prisma Client, 2) Insertar ShippingZones (zona C: US/CA/MX, zona E: Europa, zona F: Australia), 3) Insertar ShippingRates con tarifas FedEx verificadas de Sección 6.4, 4) Insertar PackagingProfile y CostSettings con valores de Sección 6.2, 5) Insertar 4 Masks en estado DRAFT (Jaguar Dorado, Lobo Florido, Venado Rosa, Cebra Mágica)."
       },
       {
-        "id": "9",
+        "id": 9,
         "title": "Implementar endpoints públicos del API: GET /api/masks y GET /api/masks/:slug",
         "description": "Crear rutas públicas para listar máscaras y obtener detalle de una máscara por slug, con validación Zod y caché",
         "details": "En `apps/api/src/routes/`: crear `masks.ts`. Endpoint GET `/api/masks?status=&animal=`: query con Zod (status: enum MaskStatus opcional, animal: string opcional), filtrar con Prisma where, incluir relaciones (images), ordenar por publishedAt desc, responder JSON. Endpoint GET `/api/masks/:slug`: params con Zod (slug: string), buscar con Prisma findUnique, incluir images, videos, story (si existe), responder 404 si no existe. Middleware de rate limiting específico: 60 req/min por IP. Agregar header Cache-Control: public, max-age=60, s-maxage=300 para CDN. Registrar rutas en src/index.ts con prefijo `/api`. Crear tipos compartidos en `packages/shared/types.ts` para MaskListResponse y MaskDetailResponse.",
@@ -671,7 +671,7 @@
         "expansionPrompt": "Dividir en: 1) Crear router de Express para rutas de máscaras, 2) Implementar GET /api/masks con filtros Zod (status, animal), paginación y ordenamiento, 3) Implementar GET /api/masks/:slug con validación y relaciones (images, videos, story), 4) Agregar headers Cache-Control para CDN (max-age=60, s-maxage=300), 5) Crear tipos compartidos en packages/shared para MaskListResponse y MaskDetailResponse."
       },
       {
-        "id": "10",
+        "id": 10,
         "title": "Implementar endpoints públicos del API: GET /api/stories, GET /api/videos",
         "description": "Crear rutas públicas para listar historias y videos con paginación, validación Zod y caché",
         "details": "En `apps/api/src/routes/`: crear `stories.ts` y `videos.ts`. GET `/api/stories`: query Zod (limit=10, offset=0), Prisma findMany con take/skip, orderBy publishedAt desc, incluir mask (opcional), responder {stories, total}. GET `/api/stories/:slug`: buscar por slug, 404 si no existe. GET `/api/videos?maskId=`: query Zod (maskId: string opcional), filtrar por maskId si existe, orderBy publishedAt desc, incluir mask y story, responder {videos, total}. Rate limiting: 60 req/min. Cache-Control: max-age=120. Tipos compartidos en packages/shared.",
@@ -734,7 +734,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar GET /api/stories con paginación (limit, offset), 2) Implementar GET /api/stories/:slug con lookup por slug, 3) Implementar GET /api/videos con filtro opcional por maskId, 4) Agregar tipos compartidos y headers de caché."
       },
       {
-        "id": "11",
+        "id": 11,
         "title": "Implementar endpoint POST /api/custom-requests con validación y subida a R2",
         "description": "Crear ruta para solicitudes de máscaras personalizadas con validación Zod, Cloudflare Turnstile, y presigned URL para subir foto de referencia a R2",
         "details": "Instalar `@cloudflare/workers-types` y SDK de R2 (AWS S3 compatible). Crear `apps/api/src/routes/customRequests.ts`. POST `/api/custom-requests`: body Zod (name, email, whatsapp, country ISO, idea, colors, size, use, desiredDate, hasReference bool, turnstileToken). Validar Turnstile con fetch a Cloudflare API usando TURNSTILE_SECRET. Si hasReference=true, generar presigned URL de R2 para que el frontend suba la imagen (PUT) usando credenciales R2 (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET). Crear registro en CustomRequest con status=NEW, guardar referenceR2Key si aplica. Responder {id, uploadUrl} o {id}. Rate limiting estricto: 5 req/15min por IP. En `.env.example` agregar variables R2 y TURNSTILE_SECRET.",
@@ -823,7 +823,7 @@
         "expansionPrompt": "Dividir en: 1) Configurar cliente S3 compatible para Cloudflare R2, 2) Implementar validación con Zod del formulario de encargo personalizado, 3) Integrar verificación de Cloudflare Turnstile con fetch al API de Cloudflare, 4) Generar presigned URL para subida de imagen de referencia a R2, 5) Crear registro en CustomRequest con manejo de errores, 6) Agregar rate limiting estricto (5 req/15min por IP)."
       },
       {
-        "id": "12",
+        "id": 12,
         "title": "Implementar endpoint POST /api/shipping/quote para cotización de envío",
         "description": "Crear ruta para cotizar envío por país y peso, calculando peso facturable (real vs volumétrico) y precio al cliente sin pérdida",
         "details": "Crear `apps/api/src/routes/shipping.ts`. POST `/api/shipping/quote`: body Zod ({country: ISO string, maskId?: string} | {country: ISO string, weightGrams: number, lengthCm, widthCm, heightCm}). Si maskId, buscar Mask y PackagingProfile; calcular peso y dimensiones empacadas. Calcular peso volumétrico: (L × W × H) / volumetricDivisor (desde CostSettings). Peso facturable = max(peso real empacado, peso volumétrico). Buscar ShippingZone del country. Buscar ShippingRates de esa zona donde maxWeightKg >= peso facturable, orderBy maxWeightKg asc (la tarifa más ajustada). Calcular precio al cliente: costUsd / (1 - gatewayPct/100) para cubrir comisiones. Responder {options: [{carrier, service, deliveryDays, costUsd, chargeUsd, isEstimate}]}. Rate limiting: 20 req/min.",
@@ -897,7 +897,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar cálculo de peso volumétrico con fórmula (L×W×H)/divisor, 2) Implementar lógica de peso facturable: max(peso real empacado, volumétrico), 3) Buscar zona de envío por código de país ISO, 4) Calcular precio al cliente para cubrir comisiones de pasarela, 5) Construir respuesta con múltiples opciones de carrier/servicio."
       },
       {
-        "id": "13",
+        "id": 13,
         "title": "Implementar autenticación de admin con argon2id y JWT",
         "description": "Crear sistema de login seguro para AdminUser con hash argon2id, JWT en cookie httpOnly, CSRF token, y bloqueo tras intentos fallidos",
         "details": "Instalar `argon2`, `jsonwebtoken`, `cookie-parser`, `csurf` (o implementar CSRF manualmente). Crear modelo AdminUser en seed: email='admin@scartstudios.com', passwordHash=await argon2.hash('temp123'), role='OWNER'. Crear `apps/api/src/routes/auth.ts`. POST `/api/auth/login`: body Zod (email, password). Buscar AdminUser, verificar con argon2.verify. Implementar bloqueo: tabla LoginAttempt (email, failedCount, lockedUntil). Si 5 intentos fallidos en 15 min, bloquear por 15 min. Si correcto, generar JWT (expiración 15 min) con {userId, role}, firmar con JWT_SECRET. Guardar en cookie httpOnly, Secure (solo HTTPS), SameSite=Lax, path=/admin. Generar CSRF token y devolverlo en body. Actualizar lastLoginAt. POST `/api/auth/logout`: limpiar cookie. Middleware `requireAdmin` que verifica JWT y CSRF en requests subsecuentes. Registrar en AuditLog cada login exitoso.",
@@ -986,7 +986,7 @@
         "expansionPrompt": "Dividir en: 1) Crear AdminUser en seed con password hasheado con argon2id, 2) Implementar POST /api/auth/login con verificación argon2 y generación JWT, 3) Implementar sistema de bloqueo tras 5 intentos fallidos con tabla LoginAttempt, 4) Configurar cookies httpOnly/Secure/SameSite con refresh token, 5) Implementar generación y validación de CSRF token, 6) Crear middleware requireAdmin y registrar logins en AuditLog."
       },
       {
-        "id": "14",
+        "id": 14,
         "title": "Crear endpoints CRUD de admin para masks, stories, videos",
         "description": "Implementar rutas protegidas de admin para crear, actualizar, listar y eliminar máscaras, historias y videos, con validación y audit log",
         "details": "Proteger todas con middleware `requireAdmin`. Crear `apps/api/src/routes/admin/masks.ts`: GET `/api/admin/masks` (lista todas, incluye DRAFT), POST `/api/admin/masks` (body: nameEs/En, animal, descriptionEs/En, storyEs/En, materialsCostGtq, laborHours, weightGrams, dims, packagingProfileId), PUT `/api/admin/masks/:id`, DELETE `/api/admin/masks/:id` (solo si no vendida). Similar para `stories.ts` y `videos.ts`. Validar con Zod. Registrar cada acción en AuditLog: {userId, action: 'CREATE_MASK', entity: 'Mask', entityId, diff: JSON del cambio, createdAt}. Responder JSON con el recurso creado/actualizado. Rate limiting: 30 req/min por usuario autenticado.",
@@ -1065,7 +1065,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar CRUD completo para /api/admin/masks con validación Zod, 2) Implementar CRUD para /api/admin/stories y /api/admin/videos, 3) Agregar lógica de negocio: no permitir eliminar máscara SOLD, 4) Registrar cada acción en AuditLog con diff del cambio, 5) Aplicar middleware requireAdmin y rate limiting por usuario."
       },
       {
-        "id": "15",
+        "id": 15,
         "title": "Implementar motor de costos y precios (F7) en POST /api/admin/pricing/suggest",
         "description": "Crear endpoint que calcula costo unitario y sugiere precio de venta por máscara según fórmulas de Sección 6.1-6.3",
         "details": "Crear `apps/api/src/routes/admin/pricing.ts`. POST `/api/admin/pricing/suggest`: body Zod (materialsCostGtq, laborHours, packagingProfileId). Cargar CostSettings. Calcular: costoFijoPorPieza = (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth. CostoUnitarioGtq = materialsCostGtq + (laborHours × laborRateGtqPerHour) + packagingProfile.costGtq + costoFijoPorPieza. CostoUnitarioUsd = costoUnitarioGtq / fxUsdGtq. Calcular precio mínimo: P = (costoUnitarioUsd + gatewayFixedUsd) / (1 - (gatewayPct + shopifyThirdPartyPct)/100 - targetMarginPct/100). Sugerir 3 precios: con márgenes 30%, 40%, 50%. Devolver {costBreakdown: {materials, labor, packaging, fixed, totalGtq, totalUsd}, suggestedPrices: [{margin, priceUsd, profitUsd, profitGtq}], targetPrice: {...}}. Formato Decimal con 2 decimales.",
@@ -1129,7 +1129,7 @@
         "expansionPrompt": "Dividir en: 1) Cargar CostSettings y PackagingProfile desde DB, 2) Implementar fórmula de costo fijo por pieza: (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth, 3) Calcular costo unitario: materiales + labor + empaque + fijo, 4) Calcular precios sugeridos para márgenes 30%, 40%, 50% usando fórmula P = (costo + fixed) / (1 - %comisiones - margen)."
       },
       {
-        "id": "16",
+        "id": 16,
         "title": "Configurar cuenta Shopify Basic y obtener tokens API",
         "description": "[HUMANO] Crear cuenta Shopify plan Basic, configurar moneda USD, mercados, idiomas, instalar canal Headless y crear app personalizada para Admin API",
         "details": "[HUMANO] Registrarse en Shopify (a nombre del adulto responsable). Plan Basic: US$29/mes anual o US$39/mes mensual. Configurar: moneda de tienda = USD, mercados = US, CA, MX, EU, GT, idiomas = inglés (default) y español. Ir a Sales Channels → instalar 'Headless' channel. Copiar Storefront API Access Token (público, sin permisos admin). Ir a Settings → Apps and sales channels → Develop apps → Create app 'SC Art Studio Backend'. Configurar permisos: read_products, write_products, read_inventory, write_inventory, read_orders, write_orders, read_draft_orders, write_draft_orders, read_files, write_files. Instalar la app y copiar Admin API Access Token (secreto). Agregar ambos tokens a `.env` local y Railway: SHOPIFY_STORE_DOMAIN='<tienda>.myshopify.com', SHOPIFY_STOREFRONT_TOKEN='<público>', SHOPIFY_ADMIN_TOKEN='<secreto>'. Verificar en Shopify que la app está instalada.",
@@ -1193,7 +1193,7 @@
         "expansionPrompt": "Dividir en: 1) [HUMANO] Registrar cuenta Shopify Basic y configurar moneda/mercados/idiomas, 2) Instalar canal Headless y obtener Storefront API token, 3) Crear app personalizada con permisos Admin API requeridos, 4) Guardar tokens en .env local y Railway (nunca en código)."
       },
       {
-        "id": "17",
+        "id": 17,
         "title": "Activar PayPal como proveedor de pagos en Shopify",
         "description": "[HUMANO] Crear cuenta PayPal Business, conectarla como proveedor en Shopify, hacer compra de prueba de US$1 y reembolsarla",
         "details": "[HUMANO] Crear cuenta PayPal Business (a nombre del adulto responsable, verificar identidad según PayPal). En Shopify: Settings → Payments → Add payment method → PayPal. Conectar cuenta PayPal. Configurar comisiones esperadas (PayPal cobra 5.40% + US$0.30 en internacional; Shopify cobra 2% adicional por proveedor externo en plan Basic). Crear producto de prueba oculto 'Test Order' con precio US$1.00, inventario 1. Hacer compra real de prueba en el storefront de Shopify pasando por todo el checkout. Confirmar que el pago llega a la cuenta PayPal. En Shopify Orders, procesar reembolso del US$1.00. Verificar que el reembolso llega al comprador. Eliminar el producto de prueba o marcarlo como no disponible.",
@@ -1244,7 +1244,7 @@
         "expansionPrompt": "Dividir en: 1) [HUMANO] Crear cuenta PayPal Business y conectar en Shopify, 2) Crear producto de prueba y hacer compra real de $1 USD, 3) Procesar reembolso y documentar comisiones reales vs esperadas."
       },
       {
-        "id": "18",
+        "id": 18,
         "title": "Configurar dominio shop.scartstudios.com para checkout de Shopify",
         "description": "[HUMANO] Conectar subdominio shop en Shopify, crear CNAME en Cloudflare con DNS only, verificar certificado SSL",
         "details": "[HUMANO] En Shopify: Settings → Domains → Connect existing domain → 'shop.scartstudios.com'. Shopify mostrará un CNAME record a crear (algo como 'shops.myshopify.com'). En Cloudflare: DNS → Add record → CNAME, name='shop', target=<lo que indique Shopify>, Proxy status = DNS only (nube gris). Guardar. Volver a Shopify y hacer 'Verify connection'. Esperar a que Shopify emita el certificado SSL para shop.scartstudios.com (puede tardar unos minutos a 1 hora). Verificar que https://shop.scartstudios.com redirige al checkout de Shopify y tiene candado verde (HTTPS válido).",
@@ -1296,7 +1296,7 @@
         "expansionPrompt": "Dividir en: 1) Conectar dominio shop en Shopify Domains, 2) Crear CNAME en Cloudflare con DNS only (nube gris), 3) Verificar SSL y hacer compra de prueba desde el subdominio."
       },
       {
-        "id": "19",
+        "id": 19,
         "title": "Implementar integración con Shopify Admin API: crear y actualizar productos",
         "description": "Crear servicios en backend para productCreate y productUpdate usando Shopify Admin GraphQL API, subir imágenes y configurar inventario",
         "details": "Instalar `@shopify/shopify-api` o usar fetch directo. Crear `apps/api/src/services/shopify.ts` con funciones: `createProduct({title, descriptionHtml, vendor='SC Art Studio', productType='Máscara', priceUsd, images: [{src}], inventoryQuantity=1})` → mutation productCreate en Admin API. Guardar productId y variantId devueltos. `updateProduct(productId, {title, description, price, images})` → mutation productUpdate. `uploadProductImages(productId, imageUrls)` → mutation productCreateMedia. `setInventory(inventoryItemId, locationId, available=1)` → mutation inventorySetQuantities. Todas las funciones deben manejar errores de Shopify (rate limit, auth, validación) y loguear con Pino. Configurar headers: X-Shopify-Access-Token. Testear con credenciales reales en .env.",
@@ -1376,7 +1376,7 @@
         "expansionPrompt": "Dividir en: 1) Configurar cliente de Shopify Admin GraphQL API con autenticación, 2) Implementar mutation productCreate con todos los campos requeridos, 3) Implementar mutation productUpdate y productCreateMedia para imágenes, 4) Implementar inventorySetQuantities para configurar stock, 5) Agregar manejo de errores de Shopify (rate limit 429, auth 401, validación)."
       },
       {
-        "id": "20",
+        "id": 20,
         "title": "Implementar endpoint POST /api/admin/masks/:id/publish para publicar máscara en Shopify",
         "description": "Crear ruta de admin que crea/actualiza producto en Shopify, sube imágenes a Shopify desde R2, guarda IDs, revalida frontend y genera plantilla de redes sociales",
         "details": "En `apps/api/src/routes/admin/masks.ts`: POST `/api/admin/masks/:id/publish`. Cargar Mask con imágenes. Validar que tiene precio, nombre, imágenes. Si no tiene shopifyProductId: llamar shopify.createProduct con datos en inglés (nameEn, storyEn como description HTML, priceUsd, images desde R2 con URLs públicas). Guardar shopifyProductId, shopifyVariantId. Si ya tiene shopifyProductId: llamar shopify.updateProduct. Subir/actualizar imágenes con productCreateMedia. Configurar inventario = 1. Actualizar mask.status = AVAILABLE, mask.publishedAt = now. Llamar webhook de revalidación del frontend: POST a FRONTEND_URL/api/revalidate?secret=REVALIDATE_SECRET&path=/mascaras&path=/mascaras/{slug}. Generar plantilla de redes: {es: '🎨 Nueva máscara: {nameEs}. {shortStory}. 👉 {url}?utm_source=instagram&utm_medium=social #MáscarasGuatemala #ArtePopular', en: similar}. Devolver {success, shopifyProductId, socialTemplate}. Registrar en AuditLog.",
@@ -1465,7 +1465,7 @@
         "expansionPrompt": "Dividir en: 1) Validar que la máscara tiene precio, nombre e imágenes antes de publicar, 2) Crear o actualizar producto en Shopify usando servicios de tarea 19, 3) Subir imágenes a Shopify desde R2, 4) Actualizar mask.status=AVAILABLE, guardar shopifyProductId, 5) Llamar webhook de revalidación del frontend, 6) Generar plantilla de texto para redes sociales con UTM."
       },
       {
-        "id": "21",
+        "id": 21,
         "title": "Implementar webhooks de Shopify: orders/paid, products/update, inventory_levels/update",
         "description": "Crear ruta POST /webhooks/shopify que verifica HMAC, procesa eventos de pedidos pagados (marcar máscara SOLD), actualización de productos y niveles de inventario",
         "details": "Crear `apps/api/src/routes/webhooks.ts`. POST `/webhooks/shopify`: raw body (usar express.raw para verificar HMAC). Leer header X-Shopify-Hmac-Sha256 y X-Shopify-Topic. Verificar HMAC: calcular hash HMAC-SHA256 del body con SHOPIFY_WEBHOOK_SECRET (configurar en Shopify app), comparar con header. Si no coincide, responder 401. Si coincide, parsear JSON del body según topic. `orders/paid`: leer line_items, buscar Mask por shopifyProductId, actualizar status=SOLD, crear Order (shopifyOrderId, maskId, totalUsd, shippingCountry, status='PAID'). Enviar notificación por correo/WhatsApp al adulto (implementar con Resend o servicio de correo). `products/update`: actualizar priceUsd del Mask si cambió en Shopify. `inventory_levels/update`: si inventario llegó a 0, marcar máscara RESERVED o SOLD según lógica. Responder 200 en menos de 5 segundos. Si procesamiento demora, usar cola (opcional: BullMQ). Registrar evento en logs.",
@@ -1542,7 +1542,7 @@
         "expansionPrompt": "Dividir en: 1) Configurar ruta POST /webhooks/shopify con express.raw para verificación HMAC, 2) Implementar verificación HMAC-SHA256 con SHOPIFY_WEBHOOK_SECRET, 3) Manejar orders/paid: marcar máscara SOLD, crear Order, notificar, 4) Manejar products/update e inventory_levels/update para sincronización, 5) Implementar idempotencia guardando webhook IDs procesados."
       },
       {
-        "id": "22",
+        "id": 22,
         "title": "Desplegar backend en Railway con variables de entorno",
         "description": "Configurar servicio Railway para apps/api, agregar todas las variables de entorno, configurar Root Directory, deploy, verificar health endpoint",
         "details": "En Railway: crear nuevo Service en el proyecto sc-art-studio. Conectar con GitHub repo (branch main). Settings → Root Directory = 'apps/api'. Settings → Build Command = 'npm install && npm run build && npx prisma generate'. Start Command = 'npx prisma migrate deploy && npm start'. Variables: copiar de .env local todas las que no sean DATABASE_URL (esa ya existe). Agregar: JWT_SECRET (generar con openssl rand -base64 32), SHOPIFY_STORE_DOMAIN, SHOPIFY_STOREFRONT_TOKEN (no es secreto pero útil en backend), SHOPIFY_ADMIN_TOKEN, SHOPIFY_WEBHOOK_SECRET (crear en Shopify app), R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET, TURNSTILE_SECRET, FRONTEND_URL (será https://scartstudios.com), REVALIDATE_SECRET (generar random). Deploy. Esperar a que termine el build y arranque. Railway asignará una URL pública (algo.up.railway.app). Verificar logs: debe ejecutar migraciones y arrancar sin errores.",
@@ -1620,7 +1620,7 @@
         "expansionPrompt": "Dividir en: 1) Crear servicio Railway conectado a GitHub, 2) Configurar Root Directory, Build Command y Start Command, 3) Agregar todas las variables de entorno (JWT_SECRET, SHOPIFY_*, R2_*, etc.), 4) Verificar que migrations se ejecutan al arrancar, 5) Probar endpoint /health y verificar logs."
       },
       {
-        "id": "23",
+        "id": 23,
         "title": "Configurar dominio api.scartstudios.com en Railway y DNS",
         "description": "[HUMANO] Agregar custom domain api.scartstudios.com en Railway, crear CNAME en Cloudflare con DNS only, verificar conexión",
         "details": "[HUMANO] En Railway: Service del API → Settings → Custom Domain → 'api.scartstudios.com'. Railway mostrará un CNAME target (algo como <id>.up.railway.app). En Cloudflare: DNS → Add record → CNAME, name='api', target=<target de Railway>, Proxy status = DNS only (nube gris, como en MEA). Guardar. Esperar propagación DNS (1-10 min). Verificar con `dig api.scartstudios.com` que resuelve al CNAME de Railway. Railway emitirá certificado SSL automáticamente. Verificar que https://api.scartstudios.com/health responde 200 con HTTPS válido. Actualizar FRONTEND_URL y webhook de Shopify si usaban la URL temporal de Railway.",
@@ -1671,7 +1671,7 @@
         "expansionPrompt": "Dividir en: 1) Agregar custom domain en Railway Settings, 2) Crear CNAME en Cloudflare con DNS only, 3) Verificar HTTPS y actualizar webhooks de Shopify."
       },
       {
-        "id": "24",
+        "id": 24,
         "title": "Configurar respaldo automático diario de MySQL a R2",
         "description": "Crear script de respaldo que exporta MySQL a SQL cifrado y lo sube a R2, configurar cron diario en Railway, retención 7/4/6",
         "details": "Crear `apps/api/scripts/backup-db.ts`. Usar `mysqldump` (verificar que Railway lo tiene disponible; si no, usar Prisma raw query para exportar) para exportar toda la base de datos. Cifrar el archivo SQL con `age` (instalar en Railway) usando una clave pública (AGE_PUBLIC_KEY en variables). Subir a R2 en carpeta `backups/` con nombre `backup-YYYY-MM-DD.sql.age`. Implementar lógica de retención: listar archivos en R2, mantener últimos 7 diarios, luego agrupar por semana y mantener 4 semanales, luego agrupar por mes y mantener 6 mensuales, borrar el resto. Ejecutar con node. En Railway: Settings → Cron Jobs → agregar job diario a las 3 AM UTC con comando `node dist/scripts/backup-db.js`. Crear variable AGE_PUBLIC_KEY (generar par de claves age en la Mac, guardar la privada fuera del repo). Documentar en docs/seguridad.md cómo restaurar: descargar de R2, descifrar con clave privada, importar a MySQL local.",
@@ -1746,7 +1746,7 @@
         "expansionPrompt": "Dividir en: 1) Crear script backup-db.ts que exporta MySQL (mysqldump o Prisma raw query), 2) Implementar cifrado con age usando AGE_PUBLIC_KEY, 3) Subir archivo cifrado a R2 con nombre backup-YYYY-MM-DD.sql.age, 4) Implementar lógica de retención: 7 diarios, 4 semanales, 6 mensuales, 5) Configurar cron job en Railway y documentar proceso de restauración."
       },
       {
-        "id": "25",
+        "id": 25,
         "title": "Scaffold del frontend Next.js con App Router y TypeScript en apps/web",
         "description": "Crear proyecto Next.js 14+ con App Router, TypeScript, Tailwind CSS, tokens de diseño, fuentes Google (Bagel Fat One, Nunito), i18n con next-intl",
         "details": "En `apps/web/`: ejecutar `npx create-next-app@latest . --typescript --tailwind --app --no-src-dir`. Instalar `next-intl` para i18n. Crear estructura: `app/[locale]/(marketing)/page.tsx` para rutas públicas, `app/[locale]/admin/layout.tsx` para admin. Configurar `next.config.js`: i18n locales ['en', 'es'], defaultLocale 'en', domains para Vercel. Configurar Tailwind: en `tailwind.config.ts` agregar tokens de diseño de Sección 3 como variables CSS en `globals.css`: --color-ink: #1B1B1B, --color-cream: #FFF6E8, --color-pink: #E8307A, --color-purple: #6B3FA0, --color-turquoise: #1FA6A0, --color-orange: #F28C28. Configurar fuentes con next/font/google: Bagel Fat One (weight 400) para display, Nunito (weights 400/600/800) para body. Aplicar en layout.tsx. Crear componente Hello World en / que use las fuentes y colores para verificar. Scripts: `dev`, `build`, `start`, `lint`.",
@@ -1821,7 +1821,7 @@
         "expansionPrompt": "Dividir en: 1) Crear proyecto Next.js 14+ con create-next-app y configuración TypeScript/Tailwind, 2) Configurar next-intl para i18n con locales en/es, 3) Configurar tokens de diseño en globals.css (colores ink, cream, pink, purple, turquoise, orange), 4) Configurar fuentes Bagel Fat One y Nunito con next/font/google, 5) Crear estructura de rutas app/[locale]/(marketing) y app/[locale]/admin."
       },
       {
-        "id": "26",
+        "id": 26,
         "title": "Crear componentes reutilizables base del diseño",
         "description": "Implementar componentes Header, Footer, MaskCard, StatusPill, PriceTag (USD/GTQ), SectionBlock con paleta, WhatsAppButton, SocialLinks según especificaciones de Sección 3",
         "details": "En `apps/web/components/`: crear componentes con TypeScript y Tailwind. `Header`: nav con logo 'SC Art Studio' (texto con fuente Bagel Fat One), links (Máscaras, Personalizada, Historias, Videos, Contacto), selector de idioma (banderas US/GT), carrito icon con contador (de Shopify). Responsive: menú hamburguesa en móvil. `Footer`: logo, links legales (Privacidad, Términos, Envíos), SocialLinks, copyright. `MaskCard`: imagen (next/image con fill, object-cover, aspect-square), nombre, animal, StatusPill, PriceTag. `StatusPill`: badge con color según status (AVAILABLE=green, SOLD=gray, RESERVED=yellow). `PriceTag`: muestra USD y GTQ (si country=GT). `SectionBlock`: div con fondo de color de la paleta (prop color: 'cream' | 'pink' | etc), padding, border radius. `WhatsAppButton`: botón verde con ícono WhatsApp, link a wa.me con mensaje prellenado. `SocialLinks`: iconos de YouTube, TikTok, Instagram con links. Usar heroicons o lucide-react para íconos. Crear Storybook opcional para cada componente.",
@@ -1908,7 +1908,7 @@
         "expansionPrompt": "Dividir en: 1) Crear Header con logo, nav, selector de idioma y carrito, 2) Crear Footer con logo, links legales, SocialLinks y copyright, 3) Crear MaskCard con imagen, nombre, StatusPill y PriceTag, 4) Crear StatusPill y PriceTag (USD/GTQ), 5) Crear SectionBlock, WhatsAppButton y SocialLinks, 6) Crear página de prueba para verificar todos los componentes."
       },
       {
-        "id": "27",
+        "id": 27,
         "title": "Implementar integración con Shopify Storefront API en el frontend",
         "description": "Crear servicios en frontend para queries GraphQL a Storefront API: obtener productos, crear carrito, agregar líneas, checkout",
         "details": "En `apps/web/lib/shopify.ts`: funciones con fetch a Shopify Storefront API (endpoint: https://<tienda>.myshopify.com/api/2024-01/graphql.json, headers: X-Shopify-Storefront-Access-Token). `getProducts(ids?: string[])`: query products. `getProductByHandle(handle: string)`: query productByHandle. `createCart()`: mutation cartCreate. `addCartLines(cartId, lines)`: mutation cartLinesAdd. `getCart(cartId)`: query cart. Guardar cartId en cookie o localStorage. Tipos TypeScript generados con @shopify/hydrogen o manual desde schema. Manejar errores de red y de GraphQL. Rate limiting del lado de Shopify: manejar 429. Cachear queries de productos con SWR o React Query.",
@@ -1985,7 +1985,7 @@
         "expansionPrompt": "Dividir en: 1) Crear cliente de Storefront API con fetch y token público, 2) Implementar queries: getProducts, getProductByHandle, 3) Implementar mutations: cartCreate, cartLinesAdd, getCart, 4) Persistir cartId en cookie o localStorage, 5) Agregar caché con SWR o React Query y manejo de errores."
       },
       {
-        "id": "28",
+        "id": 28,
         "title": "Implementar páginas públicas: Home (/), Catálogo (/mascaras), Ficha (/mascaras/[slug])",
         "description": "Crear páginas principales del sitio con ISR, fetching de datos del API backend y Shopify, SEO metadata, JSON-LD",
         "details": "En `apps/web/app/[locale]/(marketing)/`: crear `page.tsx` (Home): hero con video corto (placeholder o YouTube embed), sección 'Máscaras destacadas' (fetch de máscaras con featured=true del API backend, renderizar MaskCard), sección 'Conoce a Scarlett' (texto + foto), sección 'Últimos videos' (fetch de /api/videos), sección 'Cómo comprar' (pasos). `mascaras/page.tsx` (Catálogo): fetch de /api/masks con filtros (query params: status, animal), renderizar grid de MaskCard, filtros en sidebar. `mascaras/[slug]/page.tsx` (Ficha): fetch de /api/masks/:slug y de Shopify productByHandle (unir por shopifyProductId), galería de fotos (carousel con next/image), medidas (cm y pulgadas), peso, materiales, historia (storyEs/En según locale), video embebido (si existe), ShippingEstimator (componente propio), botón 'Comprar' (addToCart), botón 'Quiero una parecida' (link a /personalizada?ref=slug). ISR con revalidate: 60s. Metadata dinámica: title, description, og:image (primera foto de la máscara). JSON-LD de tipo Product (schema.org). Usar generateStaticParams para SSG de máscaras en build.",
@@ -2089,7 +2089,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar Home con hero, máscaras destacadas, sección Scarlett, videos y cómo comprar, 2) Implementar Catálogo con grid de MaskCard y filtros (status, animal), 3) Implementar Ficha con galería carousel, medidas, historia, video embebido, 4) Integrar ShippingEstimator en ficha, 5) Agregar botones Comprar y 'Quiero una parecida', 6) Configurar ISR con revalidate y generateStaticParams, 7) Implementar metadata dinámica, JSON-LD Product y og:image."
       },
       {
-        "id": "29",
+        "id": 29,
         "title": "Implementar componente ShippingEstimator y página /envios",
         "description": "Crear componente que cotiza envío en tiempo real desde el API, y página informativa de envíos, aranceles y políticas",
         "details": "En `apps/web/components/ShippingEstimator.tsx`: form con select de país (lista de ~20 países principales: US, CA, MX, ES, DE, etc), botón 'Cotizar'. Al enviar, fetch POST a /api/shipping/quote con {country, maskId} (prop). Mostrar opciones: carrier, service, deliveryDays, chargeUsd, isEstimate. Agregar nota: 'Aranceles de importación pueden aplicar (pagados por el comprador al recibir)'. Link a /envios. En `apps/web/app/[locale]/(marketing)/envios/page.tsx`: página estática con contenido de Sección 6.4 y 6.5. Secciones: 'Tiempos de entrega por zona' (tabla), 'Quién paga aranceles' (explicación de DDU vs DDP, nota de exención de minimis suspendida, enlace a Zonos), 'Empaque' (descripción, foto del empaque si hay), 'Política de reembolso por daño' (fotos al recibir, formulario de reclamo). Metadata SEO. Última actualización visible: leer de variable o archivo.",
@@ -2150,7 +2150,7 @@
         "expansionPrompt": "Dividir en: 1) Crear ShippingEstimator con select de país y fetch a /api/shipping/quote, 2) Mostrar opciones de envío con carrier, precio y nota de aranceles, 3) Crear página /envios con contenido de Sección 6.4-6.5 (tiempos, aranceles DDU, empaque), 4) Agregar metadata SEO y fecha de última actualización."
       },
       {
-        "id": "30",
+        "id": 30,
         "title": "Implementar página /personalizada con formulario de encargos y Cloudflare Turnstile",
         "description": "Crear formulario de máscaras personalizadas con validación client-side, subida de foto de referencia a R2, integración con Turnstile anti-spam",
         "details": "En `apps/web/app/[locale]/(marketing)/personalizada/page.tsx`: formulario con campos: nombre, email, whatsapp (con validación de formato internacional), país (select), idea/animal, colores, tamaño (pequeño/mediano/grande), uso (pared/disfraz/regalo/otro), foto de referencia (file input, opcional), fecha deseada (date picker), captcha Turnstile. Validación client-side con Zod (misma schema que en backend). Al enviar: si hay foto, hacer fetch a /api/custom-requests con hasReference=true para obtener uploadUrl, subir foto a R2 con PUT (presigned URL), luego enviar formulario completo a /api/custom-requests con turnstileToken. Mostrar mensaje de éxito: 'Solicitud recibida. Te contactaremos en 24-48 horas por WhatsApp y correo'. Sección superior: 'Ejemplos de encargos anteriores' (galería de 3-4 máscaras con status=COMMISSION_EXAMPLE). Instalar `@marsidev/react-turnstile` para el widget. Agregar NEXT_PUBLIC_TURNSTILE_SITE_KEY en .env y Vercel.",
@@ -2227,7 +2227,7 @@
         "expansionPrompt": "Dividir en: 1) Crear formulario con campos: nombre, email, whatsapp, país, idea, colores, tamaño, uso, fecha deseada, 2) Agregar input de archivo para foto de referencia con preview, 3) Integrar widget Turnstile con @marsidev/react-turnstile, 4) Implementar flujo: obtener uploadUrl, subir foto a R2, enviar formulario, 5) Agregar galería de ejemplos (máscaras COMMISSION_EXAMPLE) y mensaje de éxito."
       },
       {
-        "id": "31",
+        "id": 31,
         "title": "Implementar páginas /historias, /videos, /sobre-scarlett con contenido editorial",
         "description": "Crear páginas de contenido: listado de historias, listado de videos, página de About con BookViewer del prototipo",
         "details": "En `apps/web/app/[locale]/(marketing)/`: `historias/page.tsx`: fetch de /api/stories, renderizar grid de StoryCard (imagen, título, excerpt, fecha, link a slug). `historias/[slug]/page.tsx`: fetch de /api/stories/:slug, renderizar contenido completo (bodyEs/En como MDX o HTML con componentes React), vincular máscara si existe. `videos/page.tsx`: fetch de /api/videos, renderizar grid de VideoCard con thumbnail, título, plataforma (ícono YouTube/TikTok/Instagram), embed al hacer clic (modal con iframe). Filtrar por maskId si viene en query. `sobre-scarlett/page.tsx`: hero con foto de Scarlett (sin datos personales sensibles), texto 'Artista guatemalteca de 11 años', su historia (sin grado escolar ni ubicación específica), implementar BookViewer (componente que simula páginas de libro con flecha, portar desde el prototipo Mascarlet - modo libro). Metadata SEO para cada página.",
@@ -2288,7 +2288,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar /historias con grid de StoryCard y página de detalle /historias/[slug], 2) Implementar /videos con VideoCard y embed modal para YouTube/TikTok/Instagram, 3) Implementar /sobre-scarlett con BookViewer portado del prototipo HTML, 4) Verificar que NO se muestran datos sensibles de la menor (Sección 4.9)."
       },
       {
-        "id": "32",
+        "id": 32,
         "title": "Desplegar frontend en Vercel con dominios y variables de entorno",
         "description": "[HUMANO] Conectar repo a Vercel, configurar Root Directory apps/web, agregar dominios scartstudios.com y www, configurar variables, deploy, crear registros DNS",
         "details": "[HUMANO] En Vercel: Import Git Repository → seleccionar sc-art-studio. Framework: Next.js, Root Directory: apps/web. Variables de entorno: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN, NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN, API_URL='https://api.scartstudios.com', REVALIDATE_SECRET (mismo que en Railway), NEXT_PUBLIC_TURNSTILE_SITE_KEY. Deploy. Esperar a que termine. Vercel asignará URL temporal (.vercel.app). Agregar dominios: scartstudios.com (apex) y www.scartstudios.com. Vercel mostrará registros DNS a crear. En Cloudflare: agregar registros EXACTOS que Vercel indica (usualmente A y AAAA para apex, CNAME para www), con Proxy status = DNS only (nube gris, como en MEA). Esperar propagación (5-30 min). Vercel emitirá certificados SSL. Verificar que https://scartstudios.com carga el sitio. Configurar redirección 308 de www a apex (o viceversa, según preferencia) en Vercel Domains. Si se compró scartstudio.art, agregarlo también y redirigir a principal.",
@@ -2356,7 +2356,7 @@
         "expansionPrompt": "Dividir en: 1) Importar repo en Vercel con Root Directory apps/web, 2) Configurar variables de entorno (SHOPIFY_*, API_URL, REVALIDATE_SECRET, etc.), 3) Agregar dominios apex y www en Vercel, 4) Crear registros DNS en Cloudflare con DNS only y configurar redirección www."
       },
       {
-        "id": "33",
+        "id": 33,
         "title": "Implementar panel de administración con login y dashboard",
         "description": "Crear layout protegido /admin, página de login, dashboard con métricas, y navegación a secciones de gestión",
         "details": "En `apps/web/app/[locale]/admin/`: crear `layout.tsx` con middleware que verifica cookie de sesión (JWT), redirige a /admin/login si no autenticado. Agregar metadata `robots: {index: false}` para noindex. `login/page.tsx`: formulario con email, password, botón 'Iniciar sesión'. Al enviar, fetch POST a /api/auth/login, guardar CSRF token en state, redirigir a /admin/dashboard. `dashboard/page.tsx`: métricas desde el API (total de máscaras por status, total de pedidos, solicitudes pendientes, últimas ventas). Layout con sidebar: links a Máscaras, Historias, Videos, Encargos, Costos y envíos, AuditLog, Logout. Estilo: fondo claro, componentes simples sin estilo de libro (es una herramienta, no marketing). Usar HeadlessUI o shadcn/ui para componentes de formularios y tablas.",
@@ -2432,7 +2432,7 @@
         "expansionPrompt": "Dividir en: 1) Crear layout protegido /admin con middleware de verificación de sesión, 2) Implementar /admin/login con formulario y manejo de CSRF, 3) Crear /admin/dashboard con métricas (total máscaras por status, pedidos, solicitudes), 4) Agregar sidebar con navegación a todas las secciones, 5) Configurar metadata robots noindex para admin."
       },
       {
-        "id": "34",
+        "id": 34,
         "title": "Implementar gestión de máscaras en admin: lista, crear, editar, publicar",
         "description": "Crear páginas de admin para CRUD de máscaras, con formulario móvil-optimizado, cálculo de precio en vivo, y botón Publicar que sube a Shopify",
         "details": "En `apps/web/app/[locale]/admin/`: `mascaras/page.tsx`: tabla de máscaras (GET /api/admin/masks) con columnas: miniatura, nombre, animal, status, precio, acciones (Editar, Publicar, Eliminar). Filtros por status. `mascaras/nueva/page.tsx`: formulario (móvil primero): sección 'Fotos' (subida múltiple a R2 con drag & drop, vista previa), sección 'Información' (nameEs/En, animal, descriptionEs/En, storyEs/En con textarea grande o editor MDX simple), sección 'Medidas y peso' (lengthCm, widthCm, heightCm, weightGrams), sección 'Costos' (materialsCostGtq, laborHours, packagingProfileId select). Al cambiar costos, fetch en vivo a /api/admin/pricing/suggest y mostrar desglose y precios sugeridos (3 opciones + target). Admin elige precio o lo ajusta manualmente (priceUsd input). Botón 'Guardar borrador' (POST /api/admin/masks, status=DRAFT). Botón 'Publicar ahora' (POST /api/admin/masks y luego POST /api/admin/masks/:id/publish). Mostrar plantilla de redes sociales al publicar. `mascaras/[id]/editar/page.tsx`: similar, con datos precargados (GET /api/admin/masks/:id). Botón 'Eliminar' solo si status != SOLD.",
@@ -2533,7 +2533,7 @@
         "expansionPrompt": "Dividir en: 1) Crear tabla de máscaras con filtros y acciones, 2) Implementar formulario de nueva máscara móvil-first con subida de fotos a R2, 3) Agregar campos de información: nombre es/en, animal, descripción, historia, medidas, peso, 4) Integrar cálculo de precio en vivo con /api/admin/pricing/suggest, 5) Mostrar desglose de costos y 3 precios sugeridos (30/40/50%), 6) Implementar botón Publicar que llama /api/admin/masks/:id/publish, 7) Mostrar plantilla de redes sociales al publicar."
       },
       {
-        "id": "35",
+        "id": 35,
         "title": "Configurar CI/CD en GitHub Actions: lint, typecheck, tests, audit, deploy",
         "description": "Crear workflow de CI que ejecuta en cada push: ESLint, TypeScript check, tests (si hay), npm audit, y bloquea merge si falla; integrar con Vercel y Railway deploys",
         "details": "Crear `.github/workflows/ci.yml`: trigger en push y pull_request a main. Jobs: (1) 'lint': checkout, setup node 20, npm ci en root (workspaces), ejecutar eslint en apps/web y apps/api. (2) 'typecheck': ejecutar tsc --noEmit en ambos apps. (3) 'test': ejecutar npm test en apps/api (si hay tests con Vitest). (4) 'audit': ejecutar npm audit --audit-level=high en root, fallar si encuentra vulnerabilidades high o critical. (5) 'build': ejecutar npm run build en apps/api y apps/web, verificar que compilan. Todos los jobs deben pasar para que el check sea green. Configurar branch protection en GitHub: require status checks (ci) antes de merge a main. Vercel y Railway ya tienen deploys automáticos configurados; este workflow es adicional para verificar calidad. Anotar en `CLAUDE.md` que el CI debe pasar antes de cada deploy.",
@@ -2599,7 +2599,7 @@
         "expansionPrompt": "Dividir en: 1) Crear workflow ci.yml con jobs paralelos: lint, typecheck, test, 2) Agregar job de npm audit con nivel high, 3) Agregar job de build para verificar compilación, 4) Configurar branch protection en GitHub para requerir checks."
       },
       {
-        "id": "36",
+        "id": 36,
         "title": "[HUMANO] Fase 0: decisiones, cuentas externas y datos reales de costos",
         "description": "Guido y la familia eligen el dominio, crean las cuentas a nombre del adulto responsable, activan 2FA y entregan los datos de costos y cotizaciones (PRD Fase 0).",
         "details": "0.1 Elegir dominio (recomendado scartstudios.com + scartstudio.art). Pagos: opción A (PayPal) para lanzar.\n0.1b Cita con contador de EE. UU. y de Guatemala sobre la LLC (escenario B2).\n0.2 Crear Shopify Basic, PayPal Business, Cloudflare, Railway y equipo de Vercel a nombre del adulto; Guido entra como colaborador.\n0.3 Cuentas de marca YouTube, TikTok, Instagram (profesional + página de Facebook), administradas por un adulto.\n0.4 Datos reales: materiales, horas, peso y medidas de 3 máscaras, 2 tamaños de caja.\n0.5 Cotizar envío de prueba: FedEx con cuenta, Guatex, Correos (servicio comercial).\nClaude Code solo prepara listas y se detiene esperando confirmación.",
@@ -2613,7 +2613,7 @@
             "title": "Elegir dominio y confirmar compra",
             "description": "Seleccionar y registrar los dominios recomendados (scartstudios.com + scartstudio.art) a nombre del adulto responsable.",
             "dependencies": [],
-            "details": "1. Revisar disponibilidad de dominios recomendados: scartstudios.com (principal) y scartstudio.art (alternativo/artístico).\n2. Comparar precios en registradores: Cloudflare Registrar (recomendado por precio al costo), Namecheap, Google Domains.\n3. El adulto responsable realiza la compra con su método de pago y datos personales.\n4. Activar renovación automática para evitar pérdida del dominio.\n5. Habilitar WHOIS privacy si está disponible.\n6. Documentar en CLAUDE.md los dominios adquiridos, registrador usado y fecha de expiración.\n7. Confirmar a Claude Code que los dominios están listos para configurar DNS en Cloudflare.\n<info added on 2026-10-15T03:39:08.192Z>\nBasándome en el análisis del contexto de la tarea y el request del usuario, la información nueva que debe agregarse a los detalles de la subtarea es:\n\n**COMPLETADO 15-oct-2026:** Dominio adquirido = scartstudios.com (registrador: Cloudflare, WHOIS privado activado por defecto). Vencimiento: 2027-10-15. Nameservers configurados: sage.ns.cloudflare.com y zoe.ns.cloudflare.com. Zona DNS ya activa en Cloudflare. El dominio scartstudio.art no se adquirió. Referencias actualizadas en repositorio y tareas relacionadas (Task 18, 23). PENDIENTE: adulto debe confirmar activación de renovación automática en panel de Cloudflare.\n</info added on 2026-10-15T03:39:08.192Z>",
+            "details": "1. Revisar disponibilidad de dominios recomendados: scartstudios.com (principal) y scartstudio.art (alternativo/artístico).\n2. Comparar precios en registradores: Cloudflare Registrar (recomendado por precio al costo), Namecheap, Google Domains.\n3. El adulto responsable realiza la compra con su método de pago y datos personales.\n4. Activar renovación automática para evitar pérdida del dominio.\n5. Habilitar WHOIS privacy si está disponible.\n6. Documentar en CLAUDE.md los dominios adquiridos, registrador usado y fecha de expiración.\n7. Confirmar a Claude Code que los dominios están listos para configurar DNS en Cloudflare.\n<info added on 2026-10-15T03:39:08.192Z>\nBasándome en el análisis del contexto de la tarea y el request del usuario, la información nueva que debe agregarse a los detalles de la subtarea es:\n\n**COMPLETADO 15-oct-2026:** Dominio adquirido = scartstudios.com (registrador: Cloudflare, WHOIS privado activado por defecto). Vencimiento: 2027-10-15. Nameservers configurados: sage.ns.cloudflare.com y zoe.ns.cloudflare.com. Zona DNS ya activa en Cloudflare. El dominio scartstudio.art no se adquirió. Referencias actualizadas en repositorio y tareas relacionadas (Task 18, 23). PENDIENTE: adulto debe confirmar activación de renovación automática en panel de Cloudflare.\n</info added on 2026-10-15T03:39:08.192Z>\n<info added on 2026-10-15T03:40:02.885Z>\n**ACTUALIZACIÓN 15-oct-2026:** Guido confirmó activación de renovación automática de scartstudios.com en panel de Cloudflare. Subtarea cerrada sin pendientes.\n</info added on 2026-10-15T03:40:02.885Z>",
             "status": "done",
             "testStrategy": "Verificar que los dominios están registrados ejecutando `whois scartstudios.com` y `whois scartstudio.art`. Confirmar que aparecen en el dashboard del registrador con renovación automática activa.",
             "parentId": "undefined",
@@ -2668,7 +2668,7 @@
         "updatedAt": "2026-10-15T03:39:08.398Z"
       },
       {
-        "id": "37",
+        "id": 37,
         "title": "Escribir docs/seguridad.md y configurar gitleaks como pre-commit",
         "description": "Documentar respuesta a incidentes, rotación de secretos y restauración de respaldos (Capas 2 y 13), y bloquear secretos antes de cada commit.",
         "details": "docs/seguridad.md: contactos, cómo rotar cada secreto (Shopify, JWT, R2, Turnstile, DB), modo mantenimiento, restaurar el último respaldo, aviso a clientes si hay fuga, registro mensual de prueba de restauración. Hook pre-commit con gitleaks (husky o lefthook). Verificar que .gitignore cubre .env*, *.pem, *.key, *.sql, .DS_Store.",
@@ -2727,7 +2727,7 @@
         "expansionPrompt": "Dividir en: 1) Crear docs/seguridad.md con procedimiento de rotación de secretos, 2) Documentar proceso de restauración de respaldos, 3) Configurar gitleaks como hook pre-commit con husky, 4) Verificar que .gitignore cubre .env*, *.pem, *.key, *.sql."
       },
       {
-        "id": "38",
+        "id": 38,
         "title": "Internacionalización en/es con next-intl",
         "description": "Rutas /en y /es, detección por Accept-Language y selector visible de idioma (PRD 4.2).",
         "details": "next-intl con middleware de locale, mensajes en messages/en.json y messages/es.json, selector en Header, hreflang en metadata. Todos los textos de componentes vienen de los mensajes.",
@@ -2791,7 +2791,7 @@
         "expansionPrompt": "Dividir en: 1) Configurar next-intl middleware con detección de locale por Accept-Language, 2) Crear archivos messages/en.json y messages/es.json con todas las traducciones, 3) Agregar selector de idioma en Header con banderas US/GT, 4) Configurar hreflang en metadata para SEO."
       },
       {
-        "id": "39",
+        "id": 39,
         "title": "Carrito con Storefront API y redirección al checkout de Shopify",
         "description": "cartCreate/cartLinesAdd/cartLinesRemove, estado del carrito persistido por cartId y botón que lleva a cart.checkoutUrl (PRD 4.5).",
         "details": "Server actions o route handlers que llaman Storefront API; cartId en cookie httpOnly; drawer de carrito; bloquear agregar si la máscara está SOLD o RESERVED; copy 'Un adulto de la familia responde los mensajes'.",
@@ -2868,7 +2868,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar server actions o route handlers para operaciones de carrito, 2) Persistir cartId en cookie httpOnly, 3) Crear drawer/modal de carrito con lista de productos y totales, 4) Bloquear agregar si máscara está SOLD o RESERVED, 5) Agregar copy 'Un adulto de la familia responde los mensajes' y botón checkout."
       },
       {
-        "id": "40",
+        "id": 40,
         "title": "Admin: gestión de encargos personalizados (F4)",
         "description": "Lista por estado, cotizar, link de pago del anticipo 50%, Draft Order del saldo, número de guía (PRD 5.5).",
         "details": "Endpoints admin de CustomRequest + POST /api/admin/custom-requests/:id/draft-order (Shopify draftOrderCreate + draftOrderInvoiceSend). Transiciones de estado validadas (NEW→QUOTED→DEPOSIT_PAID→IN_PROGRESS→BALANCE_PAID→SHIPPED→CLOSED/REJECTED). AuditLog en cada cambio. UI móvil en /admin/encargos.",
@@ -2944,7 +2944,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar lista de encargos con filtros por estado, 2) Implementar flujo de cotización y envío de quote al cliente, 3) Crear endpoint para Draft Order de anticipo 50% y saldo con Shopify, 4) Validar transiciones de estado (NEW→QUOTED→DEPOSIT_PAID→...→CLOSED), 5) Agregar campos de tracking y notas con registro en AuditLog."
       },
       {
-        "id": "41",
+        "id": 41,
         "title": "Admin: historias y videos con oEmbed",
         "description": "Pegar URL de YouTube/TikTok/Instagram, resolver oEmbed, guardar título y miniatura, vincular a máscara o historia (PRD 5.6, 7.1).",
         "details": "Servicio oEmbed con timeout y reintentos limitados; editor de historias con texto enriquecido sanitizado (sanitize-html); portada subida a R2 con sharp sin EXIF.",
@@ -3006,7 +3006,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar servicio oEmbed con soporte para YouTube/TikTok/Instagram, 2) Crear formulario para pegar URL y resolver metadatos automáticamente, 3) Implementar editor de historias con sanitización de HTML, 4) Agregar vinculación de videos/historias a máscaras."
       },
       {
-        "id": "42",
+        "id": 42,
         "title": "Admin: pantalla 'Costos y envíos' (CostSettings, ShippingRate, PackagingProfile)",
         "description": "Editar parámetros del motor de costos y tarifas con fuente y fecha; aviso si los aranceles no se revisan en 60 días (PRD 5.7, 6.5).",
         "details": "CostSettings versionado (nueva fila por cambio, updatedBy). ShippingRate con source, validFrom/validTo, isEstimate. Banner si updatedAt de usImportDutyPct > 60 días.",
@@ -3070,7 +3070,7 @@
         "expansionPrompt": "Dividir en: 1) Crear formulario de edición de CostSettings con versionado (nueva fila por cambio), 2) Implementar CRUD de ShippingRates con source, validFrom/validTo, isEstimate, 3) Implementar CRUD de PackagingProfiles, 4) Agregar banner de aviso si usImportDutyPct no se revisa en 60 días."
       },
       {
-        "id": "43",
+        "id": 43,
         "title": "Fase 6: tarifas reales, peso facturable, empaque y certificado fitosanitario",
         "description": "Cargar cotizaciones reales, calcular max(peso real empacado, volumétrico) con divisor configurable, definir el empaque estándar y confirmar requisitos con VISAR/MAGA.",
         "details": "6.1 Cargar tarifas de Fase 0.5 con source/validFrom. 6.2 Peso facturable con volumetricDivisor de CostSettings, redondeo al medio kilo superior. 6.3 Completar /envios (tiempos, aranceles DDU, no retornables salvo daño). 6.4 PackagingProfile real. 6.5 [HUMANO] Llamar a VISAR (1557) y anotar el resultado en CLAUDE.md; habilitar destinos (Canadá, Australia) solo tras confirmar.",
@@ -3143,7 +3143,7 @@
         "expansionPrompt": "Dividir en: 1) Cargar tarifas reales de Fase 0.5 con source y validFrom, 2) Implementar cálculo de peso facturable con redondeo al medio kilo superior, 3) Completar página /envios con tiempos, aranceles DDU, política de no retorno, 4) Definir PackagingProfile real con datos de empaque, 5) [HUMANO] Llamar a VISAR/MAGA y documentar requisito fitosanitario."
       },
       {
-        "id": "44",
+        "id": 44,
         "title": "SEO y rendimiento: metadata, JSON-LD, sitemap, OG y Lighthouse ≥ 90",
         "description": "Metadata por página, Product y Organization JSON-LD, sitemap, robots.txt, OG con foto de la máscara, /admin noindex (PRD 4.7 / 4.6).",
         "details": "generateMetadata con hreflang; app/sitemap.ts y robots.ts; imágenes OG dinámicas; Vercel Analytics; UTM en enlaces de redes.",
@@ -3223,7 +3223,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar generateMetadata con hreflang en todas las páginas, 2) Agregar JSON-LD Product en fichas y Organization en home, 3) Crear app/sitemap.ts y app/robots.ts, 4) Configurar imágenes OG dinámicas para máscaras, 5) Auditar con Lighthouse y optimizar hasta score ≥90."
       },
       {
-        "id": "45",
+        "id": 45,
         "title": "Cabeceras de seguridad en Next.js y firewall de Vercel",
         "description": "CSP limitada a Shopify, YouTube, TikTok, Instagram, R2 y Turnstile; X-Frame-Options DENY en admin; reglas de firewall para /admin y /api (Capa 4 y 5).",
         "details": "Headers en next.config o proxy; HSTS; Referrer-Policy strict-origin-when-cross-origin; Permissions-Policy restrictiva; reglas de Vercel Firewall (rate limit /api, restricción por país opcional en /admin).",
@@ -3288,7 +3288,7 @@
         "expansionPrompt": "Dividir en: 1) Configurar CSP en next.config permitiendo solo dominios necesarios (Shopify, YouTube, TikTok, Instagram, R2, Turnstile), 2) Agregar cabeceras HSTS, X-Frame-Options DENY en admin, Referrer-Policy, Permissions-Policy, 3) Configurar reglas de firewall en Vercel para /admin y /api, 4) Verificar nota A+ en securityheaders.com."
       },
       {
-        "id": "46",
+        "id": 46,
         "title": "Agente semanal de ciberseguridad y alertas (Capas 8 y 10)",
         "description": "Tarea programada que revisa npm audit, cabeceras, certificados, último respaldo y admins activos, y envía un reporte; alertas por 5xx, logins fallidos, webhooks y respaldos.",
         "details": "Cron en Railway; reporte por correo (Resend) o Telegram; logs pino sin datos personales ni tokens.",
@@ -3355,7 +3355,7 @@
         "expansionPrompt": "Dividir en: 1) Crear script de auditoría que revisa npm audit, certificados, último respaldo, admins activos, 2) Implementar envío de reporte por correo con Resend o Telegram, 3) Configurar cron semanal en Railway, 4) Agregar alertas por 5xx repetidos, logins fallidos, webhooks fallidos."
       },
       {
-        "id": "47",
+        "id": 47,
         "title": "Fase 7: sincronización de YouTube y plan editorial",
         "description": "Cron diario que lee los últimos videos del canal con YouTube Data API v3 (source=SYNC) e historias iniciales (PRD 7.2–7.4).",
         "details": "Guardar Video con externalId único; Guido solo los vincula a una máscara. Historias iniciales revisadas por un adulto y conforme a la Sección 4.9 (sin escuela, grado, ciudad ni apellido). Plantilla de texto para redes con UTM.",
@@ -3417,7 +3417,7 @@
         "expansionPrompt": "Dividir en: 1) Implementar cron diario que lee últimos videos con YouTube Data API v3, 2) Guardar videos con source=SYNC y externalId único, 3) Crear UI para vincular videos a máscaras, 4) Verificar historias iniciales cumplen Sección 4.9 (sin datos sensibles)."
       },
       {
-        "id": "48",
+        "id": 48,
         "title": "Fase 8: legales, QA final y lanzamiento",
         "description": "Privacidad, términos y devoluciones; QA móvil/escritorio en/es; pruebas de webhooks; respaldo verificado; lanzamiento con 6–8 máscaras.",
         "details": "Páginas /privacidad, /terminos, /devoluciones, /faq, /contacto con WhatsAppButton. [HUMANO] revisión por adulto responsable y, si es posible, abogado. Métricas semanales: visitas, conversión, ventas por país, envío real vs. cobrado, utilidad por pieza. Calcular el punto de equilibrio de la opción B con costos reales.",
@@ -3498,7 +3498,7 @@
         "expansionPrompt": "Dividir en: 1) Crear páginas /privacidad, /terminos, /devoluciones, /faq, /contacto, 2) [HUMANO] Revisión legal de textos por adulto responsable, 3) QA completo: móvil/escritorio, en/es, webhooks, respaldos, 4) Configurar métricas semanales (Vercel Analytics, UTM), 5) Lanzar con 6-8 máscaras y calcular punto de equilibrio."
       },
       {
-        "id": "49",
+        "id": 49,
         "title": "Fase 9: actualizar la plantilla stack-web-mea",
         "description": "Copiar a ~/Developer/_plantillas/stack-web-mea/ lo reutilizable (middlewares, CI, respaldos, componentes base, CLAUDE.md genérico) y registrar en CHANGELOG.md.",
         "details": "Nunca copiar .env, datos de clientes ni contenido de Scarlett. Commit y push al repo privado plantilla-stack-web-mea.",
@@ -3556,7 +3556,9 @@
       "completedCount": 2,
       "tags": [
         "master"
-      ]
+      ],
+      "created": "2026-10-15T03:39:53.914Z",
+      "description": "Tasks for master context"
     }
   }
 }
