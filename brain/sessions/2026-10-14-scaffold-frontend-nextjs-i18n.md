@@ -7,6 +7,7 @@ title: "Scaffold del frontend Next.js 16 con i18n, tokens y fuentes (tarea 25)"
 tags: [task-master, nextjs, next-intl, tailwind, fuentes, i18n, lighthouse, csp]
 status: active
 related:
+  - 2026-10-14-i18n-hreflang-sitemap-404
   - 2026-10-14-repo-publico-monorepo-y-dominio
   - 2026-10-14-gitleaks-pre-commit-y-plan-incidentes
 sources:
@@ -46,6 +47,7 @@ Tarea 25: base del frontend en `apps/web` con App Router, next-intl (en/es), tok
 - Quitar la sección de paleta de la home cuando exista el diseño real (cargar el skill `frontend-design`).
 
 ## Cross-refs
+- [[2026-10-14-i18n-hreflang-sitemap-404]] — tarea 38: completa hreflang, sitemap, 404 traducido y claves tipadas sobre este scaffold
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — base del monorepo y CSP de la plantilla sobre la que se construyó el frontend
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — el modo mantenimiento allí documentado se implementará en este proxy.ts; riesgo CSP anotado en el mismo docs/seguridad.md
 

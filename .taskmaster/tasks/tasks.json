@@ -2753,7 +2753,7 @@
         "dependencies": [
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2761,9 +2761,10 @@
             "description": "Instalar next-intl y configurar el middleware de internacionalización que detecte automáticamente el idioma preferido del navegador mediante Accept-Language header.",
             "dependencies": [],
             "details": "1. Instalar dependencias: `npm install next-intl`. 2. Crear `apps/web/i18n.ts` con configuración de locales soportados (`en`, `es`) y locale por defecto (`en`). 3. Crear `apps/web/middleware.ts` usando `createMiddleware` de next-intl con: locales=['en','es'], defaultLocale='en', localeDetection=true (usa Accept-Language). 4. Configurar `next.config.ts` con el plugin de next-intl. 5. Reestructurar `app/` a `app/[locale]/` moviendo todas las rutas existentes dentro del segmento dinámico de locale. 6. Crear `apps/web/i18n/request.ts` para configurar getRequestConfig con carga dinámica de mensajes. El middleware redirigirá automáticamente `/mascaras` a `/en/mascaras` o `/es/mascaras` según Accept-Language.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Visitar `/` con Accept-Language: en-US debe redirigir a `/en`; con Accept-Language: es-GT debe redirigir a `/es`. Verificar que rutas sin locale prefix redirigen correctamente. Probar con curl: `curl -H 'Accept-Language: es' -I http://localhost:3000/`.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:20:26.217Z"
           },
           {
             "id": 2,
@@ -2773,9 +2774,10 @@
               1
             ],
             "details": "1. Crear directorio `apps/web/messages/`. 2. Crear `en.json` con estructura de namespaces: Common (nav, buttons), Home (hero, featured), Masks (catalog, filters, card), Custom (form labels), Stories, Videos, About, Shipping (rates, calculator), Contact, Footer, Errors (404, 500). 3. Crear `es.json` con la misma estructura y traducciones en español. 4. Incluir textos del PRD: 'Hecho a mano en Guatemala'/'Handmade in Guatemala', 'Ordena la tuya'/'Order yours', filtros de categoría, estados de disponibilidad (DISPONIBLE/AVAILABLE, VENDIDA/SOLD, EN PROCESO/IN PROGRESS). 5. Crear hook `useTranslations` helper para uso consistente. 6. Actualizar todos los componentes existentes para usar `useTranslations()` en lugar de strings hardcodeados. 7. Configurar validación de tipos TypeScript para las claves de traducción.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que no existan strings hardcodeados en componentes usando grep. Cambiar idioma y confirmar que todos los textos cambian. Probar que claves faltantes en un idioma muestren warning en desarrollo.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:20:26.223Z"
           },
           {
             "id": 3,
@@ -2786,9 +2788,10 @@
               2
             ],
             "details": "1. Crear componente `apps/web/components/LanguageSelector.tsx` con dropdown o toggle. 2. Mostrar bandera de EE.UU. (🇺🇸) para inglés y bandera de Guatemala (🇬🇹) para español, usando emojis o SVGs optimizados. 3. Usar `usePathname`, `useRouter` y `Link` de next-intl/navigation para cambio de idioma preservando la ruta actual. 4. Integrar en `Header.tsx` con estilos consistentes (botón píldora, borde negro 4px según design system del PRD). 5. Guardar preferencia en cookie `NEXT_LOCALE` para persistencia entre sesiones. 6. Agregar aria-label y accesibilidad: 'Change language'/'Cambiar idioma'. 7. Animación suave en hover/click siguiendo el design system (transiciones 200ms). 8. Responsive: en móvil mostrar solo bandera, en desktop bandera + código de idioma (EN/ES).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Click en selector cambia de /en/mascaras a /es/mascaras sin perder estado de página. Refrescar mantiene idioma seleccionado. Verificar accesibilidad con screen reader. Probar en móvil y desktop.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:20:26.230Z"
           },
           {
             "id": 4,
@@ -2798,14 +2801,16 @@
               1
             ],
             "details": "1. En `apps/web/app/[locale]/layout.tsx` configurar metadata base con alternates.languages usando generateMetadata. 2. Crear función helper `getAlternateLanguages(pathname)` que retorne: { 'en': 'https://dominio.com/en' + pathname, 'es': 'https://dominio.com/es' + pathname, 'x-default': 'https://dominio.com/en' + pathname }. 3. Implementar en generateMetadata de cada página dinámica (máscaras, historias). 4. Agregar canonical URL correcto por locale. 5. Configurar Open Graph locale: og:locale='en_US' o 'es_GT'. 6. Actualizar sitemap.xml para incluir URLs de ambos idiomas con hreflang. 7. Verificar que el HTML renderizado incluya: `<link rel='alternate' hreflang='en' href='...' />` y `<link rel='alternate' hreflang='es' href='...' />`. 8. Agregar x-default apuntando a versión en inglés como fallback.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Inspeccionar HTML de cualquier página y verificar presencia de tags hreflang para en, es y x-default. Validar con Google Search Console o herramienta de validación hreflang. Verificar sitemap incluye ambas versiones de cada URL.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:20:26.243Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Configurar next-intl middleware con detección de locale por Accept-Language, 2) Crear archivos messages/en.json y messages/es.json con todas las traducciones, 3) Agregar selector de idioma en Header con banderas US/GT, 4) Configurar hreflang en metadata para SEO."
+        "expansionPrompt": "Dividir en: 1) Configurar next-intl middleware con detección de locale por Accept-Language, 2) Crear archivos messages/en.json y messages/es.json con todas las traducciones, 3) Agregar selector de idioma en Header con banderas US/GT, 4) Configurar hreflang en metadata para SEO.",
+        "updatedAt": "2026-10-15T04:20:26.243Z"
       },
       {
         "id": "39",
@@ -3568,9 +3573,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T04:01:11.916Z",
+      "lastModified": "2026-10-15T04:20:26.243Z",
       "taskCount": 49,
-      "completedCount": 4,
+      "completedCount": 5,
       "tags": [
         "master"
       ]
