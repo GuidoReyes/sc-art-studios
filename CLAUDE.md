@@ -15,3 +15,7 @@
 
 ## Monorepo
 - npm workspaces: `@sc-art-studio/web`, `@sc-art-studio/api`, `@sc-art-studio/shared`. Para depender de shared usar `"@sc-art-studio/shared": "*"` (npm no soporta `workspace:*`).
+
+## Memoria del proyecto (brain)
+- Wiki en `brain/` (reglas en `brain/CLAUDE.md`). Al cerrar cada sesión de trabajo ejecutar `/brain ingest` para registrar lo hecho; `/brain query <pregunta>` para consultar el historial y `/brain lint` para revisar el wiki.
+- El repo es público: en `brain/` nunca van secretos ni datos personales (ver la sección Privacidad de `brain/CLAUDE.md`).
