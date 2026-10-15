@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-14
-**Total de nodos:** 3 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 4 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -25,7 +25,7 @@
 
 ### frontend
 
-*(vacío)*
+- [[2026-10-14-scaffold-frontend-nextjs-i18n]] — Tarea 25: Next 16 + next-intl (URLs /es/mascaras…), Tailwind 4 tokens, fuentes, rutas marketing/admin, Lighthouse 98/100
 
 ### infra
 

@@ -1761,7 +1761,7 @@
         "dependencies": [
           "2"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1769,9 +1769,10 @@
             "description": "Inicializar el proyecto Next.js en apps/web usando create-next-app con las opciones de TypeScript, Tailwind CSS y App Router. Configurar la estructura base del monorepo.",
             "dependencies": [],
             "details": "1. Crear directorio apps/web si no existe: `mkdir -p apps/web`\n2. Ejecutar: `cd apps/web && npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --eslint --import-alias \"@/*\"`\n3. Verificar que se genera: app/layout.tsx, app/page.tsx, tailwind.config.ts, tsconfig.json, next.config.js\n4. Verificar package.json tiene scripts: dev, build, start, lint\n5. Ejecutar `npm run dev` para confirmar que el servidor inicia en localhost:3000\n6. Limpiar contenido por defecto de page.tsx y globals.css manteniendo imports de Tailwind",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm run dev` en apps/web y verificar que http://localhost:3000 carga sin errores. Verificar que `npm run build` compila correctamente. Confirmar que TypeScript está activo ejecutando `npx tsc --noEmit`.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:01:11.898Z"
           },
           {
             "id": 2,
@@ -1781,9 +1782,10 @@
               1
             ],
             "details": "1. Instalar: `npm install next-intl`\n2. Crear middleware.ts en la raíz con configuración de locales ['en', 'es'] y defaultLocale 'en'\n3. Crear carpeta messages/ con archivos en.json y es.json con estructura base de traducciones\n4. Crear i18n.ts con función getRequestConfig para cargar mensajes\n5. Actualizar next.config.js con plugin de next-intl usando createNextIntlPlugin\n6. Reestructurar app/ para usar [locale]: mover layout.tsx y page.tsx a app/[locale]/\n7. Configurar NextIntlClientProvider en layout.tsx\n8. Agregar generateStaticParams para locales en layout.tsx\n9. Configurar metadata con alternates hreflang para SEO",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Navegar a http://localhost:3000/en y http://localhost:3000/es y verificar que ambas rutas cargan. Verificar que / redirige a /en (defaultLocale). Inspeccionar que los mensajes se cargan correctamente usando useTranslations().",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:01:11.905Z"
           },
           {
             "id": 3,
@@ -1793,9 +1795,10 @@
               1
             ],
             "details": "1. En globals.css agregar :root con variables CSS:\n   --color-ink: #1B1B1B;\n   --color-cream: #FFF6E8;\n   --color-pink: #E8307A;\n   --color-purple: #6B3FA0;\n   --color-turquoise: #1FA6A0;\n   --color-orange: #F28C28;\n2. En tailwind.config.ts extender theme.colors con referencias a las variables:\n   colors: {\n     ink: 'var(--color-ink)',\n     cream: 'var(--color-cream)',\n     pink: 'var(--color-pink)',\n     purple: 'var(--color-purple)',\n     turquoise: 'var(--color-turquoise)',\n     orange: 'var(--color-orange)'\n   }\n3. Configurar background por defecto como cream y texto como ink\n4. Crear componente de prueba para verificar que bg-pink, text-purple, etc. funcionan",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear un div de prueba en page.tsx con clases bg-pink text-cream y verificar visualmente que aplica #E8307A de fondo y #FFF6E8 de texto. Usar DevTools para inspeccionar que las variables CSS están definidas en :root.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:01:11.909Z"
           },
           {
             "id": 4,
@@ -1805,9 +1808,10 @@
               1
             ],
             "details": "1. En app/[locale]/layout.tsx importar de next/font/google:\n   - Bagel_Fat_One con weight: '400', subsets: ['latin'], variable: '--font-display'\n   - Nunito con weights: ['400', '600', '800'], subsets: ['latin'], variable: '--font-body'\n2. Aplicar ambas variables CSS al className del body: `${bagelFatOne.variable} ${nunito.variable}`\n3. En tailwind.config.ts extender fontFamily:\n   fontFamily: {\n     display: ['var(--font-display)', 'cursive'],\n     body: ['var(--font-body)', 'sans-serif']\n   }\n4. Configurar font-body como fuente base en globals.css\n5. Crear clases utilitarias font-display para títulos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Agregar un h1 con class='font-display' y un p con class='font-body' en page.tsx. Verificar en DevTools que h1 usa 'Bagel Fat One' y p usa 'Nunito'. Verificar que las fuentes se cargan sin FOUT (flash of unstyled text) gracias a next/font.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:01:11.913Z"
           },
           {
             "id": 5,
@@ -1817,14 +1821,16 @@
               2
             ],
             "details": "1. Crear estructura de carpetas:\n   - app/[locale]/(marketing)/page.tsx - Landing principal\n   - app/[locale]/(marketing)/layout.tsx - Layout con Header/Footer\n   - app/[locale]/(marketing)/masks/page.tsx - Catálogo de máscaras\n   - app/[locale]/(marketing)/custom/page.tsx - Máscaras personalizadas\n   - app/[locale]/(marketing)/stories/page.tsx - Historias\n   - app/[locale]/(marketing)/contact/page.tsx - Contacto\n   - app/[locale]/admin/layout.tsx - Layout admin (sin Header público)\n   - app/[locale]/admin/page.tsx - Dashboard admin placeholder\n2. En (marketing)/layout.tsx preparar slots para Header y Footer\n3. En admin/layout.tsx preparar estructura diferente para panel admin\n4. Crear componente Hello World en / usando fuentes y colores para verificar integración completa\n5. Agregar metadata básica en cada page.tsx",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Navegar a http://localhost:3000/en, /en/masks, /en/admin y verificar que cada ruta carga su página. Verificar que /en y /en/masks comparten layout de marketing. Verificar que /en/admin tiene layout diferente. El Hello World debe mostrar fuente Bagel Fat One en el título y colores del sistema de diseño.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T04:01:11.916Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear proyecto Next.js 14+ con create-next-app y configuración TypeScript/Tailwind, 2) Configurar next-intl para i18n con locales en/es, 3) Configurar tokens de diseño en globals.css (colores ink, cream, pink, purple, turquoise, orange), 4) Configurar fuentes Bagel Fat One y Nunito con next/font/google, 5) Crear estructura de rutas app/[locale]/(marketing) y app/[locale]/admin."
+        "expansionPrompt": "Dividir en: 1) Crear proyecto Next.js 14+ con create-next-app y configuración TypeScript/Tailwind, 2) Configurar next-intl para i18n con locales en/es, 3) Configurar tokens de diseño en globals.css (colores ink, cream, pink, purple, turquoise, orange), 4) Configurar fuentes Bagel Fat One y Nunito con next/font/google, 5) Crear estructura de rutas app/[locale]/(marketing) y app/[locale]/admin.",
+        "updatedAt": "2026-10-15T04:01:11.916Z"
       },
       {
         "id": "26",
@@ -3562,9 +3568,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T03:51:32.956Z",
+      "lastModified": "2026-10-15T04:01:11.916Z",
       "taskCount": 49,
-      "completedCount": 3,
+      "completedCount": 4,
       "tags": [
         "master"
       ]

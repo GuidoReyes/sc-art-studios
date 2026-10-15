@@ -21,3 +21,6 @@
 
 ## [2026-10-14 21:51] ingest | 2026-10-14-gitleaks-pre-commit-y-plan-incidentes
 - Cross-refs: [[2026-10-14-repo-publico-monorepo-y-dominio]], [[2026-10-14-reglas-claude-md-y-agents-md]] (bidireccionales)
+
+## [2026-10-14 22:01] ingest | 2026-10-14-scaffold-frontend-nextjs-i18n
+- Cross-refs: [[2026-10-14-repo-publico-monorepo-y-dominio]], [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] (bidireccionales)
