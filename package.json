@@ -11,6 +11,9 @@
   "scripts": {
     "dev:web": "npm run dev -w apps/web",
     "dev:api": "npm run dev -w apps/api",
+    "db:up": "docker compose --env-file apps/api/.env up -d --wait",
+    "db:down": "docker compose --env-file apps/api/.env down",
+    "db:logs": "docker compose --env-file apps/api/.env logs -f mysql",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",

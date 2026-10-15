@@ -79,6 +79,8 @@ chore: actualizar dependencias de producción
 
 ## Cuentas e infraestructura
 - Vercel (equipo `guidoreyes-projects`), Railway y Cloudflare: se usan las cuentas existentes de Guido; se crean proyectos nuevos dentro de ellas.
+- Railway: proyecto **`sc-art-studio`** (workspace de Guido, entorno `production`, región sfo) con servicio `MySQL` (8.4, volumen persistente, **sin proxy público**). El repo está enlazado con `railway link`. La API usará `DATABASE_URL=${{MySQL.MYSQL_URL}}`.
+- Base de datos local: MySQL 8.4 en Docker (`npm run db:up`, credenciales en `apps/api/.env`). Nunca copiar credenciales de producción a la Mac.
 - Dominio: **`scartstudios.com`** (comprado en Cloudflare Registrar el 15-oct-2026, vence 15-oct-2027, renovación automática activada; nameservers `sage`/`zoe.ns.cloudflare.com`). El PRD dice `sc-artstudio.com`: siempre usar `scartstudios.com` (`api.`, `shop.`, etc.).
 
 ## Monorepo

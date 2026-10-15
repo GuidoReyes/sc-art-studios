@@ -37,6 +37,9 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 
 **Capa 7 — Base de datos y respaldos**
 - Usuario de base de datos con privilegios mínimos para la app; la base de Railway sin acceso público salvo el que use la app (red privada de Railway).
+  - Estado (15-oct-2026): MySQL 8.4 en Railway (proyecto `sc-art-studio`, entorno `production`) **sin proxy TCP público**; solo `mysql.railway.internal`. No activar el proxy público: si hace falta una consulta manual, usar `railway ssh` / `railway connect` y cerrarlo al terminar.
+  - Pendiente (al desplegar la API, tareas 6–7): crear un usuario de la app con `SELECT, INSERT, UPDATE, DELETE` y los permisos de migración sobre su base, y dejar de usar `root`.
+  - En desarrollo se usa MySQL en Docker (`docker-compose.yml`, solo `127.0.0.1`); las credenciales de producción nunca se copian a la Mac.
 - Respaldo automático diario de MySQL a Google Drive con Service Account (mismo sistema que MEA) y copia semanal a R2. Retención: 7 diarios, 4 semanales, 6 mensuales. Cifrar los respaldos (gpg o `age`) antes de subirlos.
 - Prueba de restauración una vez al mes en una base local; resultado anotado en `docs/seguridad.md`.
 

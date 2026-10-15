@@ -1,0 +1,25 @@
+# MySQL local para desarrollo (producción vive en Railway, solo red privada).
+# Las credenciales salen de apps/api/.env (gitignored): npm run db:up
+services:
+  mysql:
+    image: mysql:8.4 # misma serie que Railway (mysql:8)
+    container_name: sc-art-studio-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: sc_art_studio
+      MYSQL_USER: sc_app
+      MYSQL_PASSWORD: ${LOCAL_MYSQL_PASSWORD:?falta LOCAL_MYSQL_PASSWORD en apps/api/.env}
+      MYSQL_ROOT_PASSWORD: ${LOCAL_MYSQL_ROOT_PASSWORD:?falta LOCAL_MYSQL_ROOT_PASSWORD en apps/api/.env}
+    ports:
+      - "127.0.0.1:3306:3306" # solo accesible desde esta Mac
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql-data:

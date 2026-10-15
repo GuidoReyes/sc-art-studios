@@ -35,6 +35,7 @@ scripts/             backup-mysql.sh, pre-commit.sh (gitleaks)
 ```bash
 npm install          # instala los 3 workspaces
 npm run dev:web      # frontend en http://localhost:3000
+npm run db:up        # MySQL local en Docker (necesita apps/api/.env)
 npm run dev:api      # API (necesita apps/api/.env, ver .env.example)
 npm run typecheck    # TypeScript en todos los workspaces
 npm test             # pruebas
@@ -42,6 +43,14 @@ npm run audit        # npm audit --audit-level=high
 ```
 
 Variables de entorno: copiar `.env.example` a `apps/api/.env` y `apps/web/.env.local`. Nunca subir valores reales.
+
+## Base de datos
+- **Desarrollo:** MySQL 8.4 en Docker (`docker-compose.yml`), solo en `127.0.0.1:3306`. Requiere Docker Desktop.
+  1. Copiar `apps/api/.env.example` a `apps/api/.env` y generar `LOCAL_MYSQL_PASSWORD` y `LOCAL_MYSQL_ROOT_PASSWORD` con `openssl rand -hex 24`.
+  2. `DATABASE_URL=mysql://sc_app:<LOCAL_MYSQL_PASSWORD>@127.0.0.1:3306/sc_art_studio`
+  3. `npm run db:up` (parar con `npm run db:down`; los datos quedan en el volumen `mysql-data`).
+  4. Los scripts de `docker/mysql/init/` solo corren con el volumen vacío; para reiniciar la base desde cero: `docker compose --env-file apps/api/.env down -v` (borra los datos locales).
+- **Producción:** MySQL en Railway (proyecto `sc-art-studio`), solo red privada. La API recibe `DATABASE_URL=${{MySQL.MYSQL_URL}}` como variable de Railway y aplica migraciones al arrancar (`prisma migrate deploy`).
 
 ## Cómo contribuir
 1. Tomar la siguiente tarea con Task Master (`task-master next`).
