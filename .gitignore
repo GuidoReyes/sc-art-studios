@@ -51,3 +51,8 @@ backups/
 .railway/
 *.tsbuildinfo
 next-env.d.ts
+
+# Más archivos sensibles (tarea 37)
+*.pfx
+credentials.json
+secrets/

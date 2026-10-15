@@ -14,7 +14,8 @@
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "audit": "npm audit --audit-level=high"
+    "audit": "npm audit --audit-level=high",
+    "prepare": "husky || true"
   },
   "allowScripts": {
     "@prisma/client@5.22.0": true,
@@ -22,5 +23,8 @@
     "argon2@0.41.1": true,
     "esbuild@0.28.2": true,
     "prisma@5.22.0": true
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }

@@ -76,15 +76,95 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 - [ ] CI con audit y gitleaks en verde; `main` protegida
 - [ ] Plan de incidentes escrito abajo
 
-## Plan de incidentes (llenar por proyecto)
+## Barrera de secretos en el repo (capa 2)
+El repo es **público**. Hay tres barreras, en este orden:
+1. **Local — hook pre-commit:** husky ejecuta `scripts/pre-commit.sh`, que corre `gitleaks git --pre-commit --staged`. Se instala solo con `npm install` (script `prepare`). Requiere `brew install gitleaks`; sin gitleaks, el commit falla a propósito.
+2. **GitHub — push protection y secret scanning:** rechazan el push si detectan un secreto conocido.
+3. **CI — gitleaks-action** sobre todo el historial en cada push y PR.
+
+Falsos positivos: agregar el valor exacto en `[allowlist]` de `.gitleaks.toml` con un comentario del porqué. Nunca saltarse el hook con `git commit --no-verify`.
+
+## Plan de incidentes
+> No publicar aquí teléfonos, correos personales ni direcciones (repo público). Los datos de contacto viven en el gestor de contraseñas compartido de la familia.
+
 | Paso | Quién | Cómo |
 |---|---|---|
-| Detectar y avisar | | |
-| Rotar secretos | | Vercel, Railway, plataforma de comercio, R2, JWT |
-| Modo mantenimiento | | |
-| Restaurar respaldo | | `scripts/backup-mysql.sh` (inverso con `age -d`) |
-| Avisar a clientes | | |
+| Detectar y avisar | Quien lo detecte → responsable técnico (Guido) | Alertas por correo, aviso de GitHub secret scanning o reporte del agente semanal. Avisar por WhatsApp al adulto responsable del negocio. |
+| Contener | Responsable técnico | Modo mantenimiento (abajo) si hay datos de clientes en riesgo o el sitio está comprometido. |
+| Rotar secretos | Responsable técnico | Sección "Rotación de secretos". Si no se sabe cuál se filtró, rotar **todos**. |
+| Restaurar respaldo | Responsable técnico | Sección "Restauración de respaldos". |
+| Avisar a clientes | Adulto responsable del negocio | Plantilla de aviso (abajo), dentro de las 72 h de confirmada una fuga de datos personales. |
+| Cerrar | Responsable técnico | Anotar el incidente en `brain/` (sin datos personales) y qué se cambió para que no se repita. |
+
+### Contactos de emergencia (roles)
+| Rol | Para qué | Dónde está el contacto |
+|---|---|---|
+| Responsable técnico (Guido) | Código, infraestructura, secretos | Gestor de contraseñas |
+| Adulto responsable del negocio | Shopify, PayPal, banco, aviso a clientes | Gestor de contraseñas |
+| Soporte Shopify / PayPal / Cloudflare / Vercel / Railway | Cuentas comprometidas, cargos sospechosos | Panel de cada proveedor → Help/Support |
+
+### Modo mantenimiento
+Pendiente de implementar en el frontend (tarea del frontend): variable `MAINTENANCE_MODE=true` en Vercel que hace que el middleware de Next.js responda una página estática con estado 503. Mientras no exista:
+1. **Frontend:** en Vercel → proyecto → Deployments, hacer *Instant Rollback* a un despliegue sano, o *Pause Project* (Settings → General) si el sitio entero está comprometido.
+2. **API:** en Railway → servicio API → Settings, quitar el dominio público `api.scartstudios.com` o bajar las réplicas a 0. Así se corta el acceso sin borrar la base.
+3. **Shopify:** si el problema es el checkout, activar la contraseña de la tienda (Online Store → Preferences → Password protection).
+4. Salir del modo mantenimiento solo después de rotar secretos y verificar (checklist post-rotación).
+
+## Rotación de secretos
+Cada 6 meses o **de inmediato** si se filtra. Generar valores aleatorios con `openssl rand -base64 48`. Actualizar primero el valor nuevo en el proveedor, después en Railway/Vercel, redesplegar, verificar y recién entonces revocar el viejo.
+
+| Secreto (variable) | Dónde se genera | Dónde se actualiza | Efecto |
+|---|---|---|---|
+| `JWT_SECRET`, `JWT_REFRESH_SECRET` | `openssl rand -base64 48` | Railway (API) | Cierra todas las sesiones del admin |
+| `SHOPIFY_ADMIN_TOKEN` | Shopify Admin → Settings → Apps → app propia → API credentials. Si el token no se puede regenerar, desinstalar y reinstalar la app (o crear una nueva) — confirmar en la doc vigente de Shopify | Railway (API) | La API pierde acceso a Shopify hasta actualizarlo |
+| `SHOPIFY_WEBHOOK_SECRET` | Credenciales de la misma app (client secret) | Railway (API) | Los webhooks firmados con el secreto viejo se rechazan |
+| `NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN` | Shopify → app/canal Headless → Storefront API → nuevo token y borrar el viejo | Vercel (web) | Es público por diseño; rotar solo si hay abuso |
+| `TURNSTILE_SECRET` (`NEXT_PUBLIC_TURNSTILE_SITE_KEY` no cambia) | Cloudflare → Turnstile → widget → *Rotate secret key* | Railway (API) | Formularios fallan si no se actualiza |
+| Claves de R2 (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, al crearse) | Cloudflare → R2 → Manage API tokens → crear token nuevo con permisos mínimos y borrar el viejo | Railway (API) y remoto de rclone | Subidas y respaldos a R2 fallan si no se actualiza |
+| `DATABASE_URL` | Conectado a MySQL: `ALTER USER '<usuario-app>'@'%' IDENTIFIED BY '<nueva>';` (o nueva variable en el servicio MySQL de Railway) | Railway (API, como referencia a la variable del servicio MySQL) | La API se cae hasta redesplegar con la URL nueva |
+| `REVALIDATE_SECRET` | `openssl rand -base64 48` | Vercel (web) y Railway (API) | La revalidación del catálogo falla hasta igualar ambos |
+| Llave de respaldos (`AGE_RECIPIENT`) | `age-keygen -o nueva.txt` | Donde corre `scripts/backup-mysql.sh` | **Guardar la llave privada vieja**: se necesita para descifrar respaldos anteriores |
+| Tokens de cuentas (GitHub, Vercel, Railway, Cloudflare, CLI) | Panel de cada cuenta → Tokens / Sessions → revocar | `vercel login`, `railway login`, `gh auth login` de nuevo | Cierra sesiones de CLI |
+
+### Checklist post-rotación
+- [ ] `curl -s https://api.scartstudios.com/health` responde 200
+- [ ] Login del admin funciona (y las sesiones viejas quedaron cerradas si se rotó JWT)
+- [ ] Catálogo carga productos de Shopify; un checkout de prueba llega a PayPal
+- [ ] Un formulario público pasa Turnstile
+- [ ] Webhook de prueba de Shopify llega y valida HMAC
+- [ ] Siguiente respaldo programado termina bien
+- [ ] Secretos viejos revocados en cada proveedor
+- [ ] Fecha de rotación anotada en `brain/` (sin valores)
+
+## Restauración de respaldos
+`scripts/backup-mysql.sh` genera `sc-art-studio-AAAAMMDD-HHMMSS.sql.gz.age` (dump de MySQL → gzip → cifrado con `age`) y lo sube con rclone a Google Drive (diario) y R2 (semanal). Retención: 7 diarios, 4 semanales, 6 mensuales.
+
+**Llave privada de `age`:** nunca en el repo ni en Railway. Se guarda en el gestor de contraseñas y en una copia offline (USB cifrado). Sin ella los respaldos son irrecuperables.
+
+**Objetivo de recuperación:** sitio operando en ≤ 2 h (RTO), con pérdida máxima de 24 h de datos (RPO, respaldo diario). Los pedidos y pagos viven en Shopify, no en esta base.
+
+1. **Listar respaldos:** `rclone ls gdrive:respaldos/sc-art-studio` (o el remoto de R2).
+2. **Descargar** el más reciente (o el de la fecha anterior al incidente):
+   `rclone copy gdrive:respaldos/sc-art-studio/sc-art-studio-AAAAMMDD-HHMMSS.sql.gz.age ./restaurar/`
+3. **Descifrar y descomprimir:**
+   `age -d -i ~/ruta/llave-age.txt restaurar/<archivo>.sql.gz.age | gunzip > restaurar/restored.sql`
+4. **Verificar integridad:** `tail -1 restaurar/restored.sql` debe mostrar `-- Dump completed`; `grep -c 'CREATE TABLE' restaurar/restored.sql` debe coincidir con las tablas del schema de Prisma.
+5. **Probar en una base temporal:** `mysql -e 'CREATE DATABASE restore_test'` y `mysql restore_test < restaurar/restored.sql`; revisar conteos de `AdminUser`, `CostSettings` y `AuditLog`.
+6. **Producción** (requiere confirmación humana): crear una base nueva en Railway, importar ahí, cambiar `DATABASE_URL` del servicio API a la nueva y redesplegar. No sobrescribir la base actual: queda como evidencia hasta cerrar el incidente.
+7. **Post-restauración:** login del admin, catálogo, formulario de encargo y `npx prisma migrate status` sin migraciones pendientes.
+8. **Limpiar:** borrar `restaurar/` (está fuera de Git por `*.sql` y `*.age`, pero no dejar dumps en disco).
+
+## Plantilla de aviso a clientes
+> **Asunto:** Aviso de seguridad de SC Art Studio
+>
+> Hola, te escribimos porque el [fecha] detectamos un acceso no autorizado a [sistema afectado]. Los datos que pudieron verse afectados son: [nombre, correo, dirección de envío…]. **No guardamos datos de tarjetas**: los pagos los procesan Shopify y PayPal.
+>
+> Lo que hicimos: [cerramos el acceso, cambiamos todas las claves, restauramos…]. Lo que te recomendamos: [estar atento a correos sospechosos que digan venir de nosotros…].
+>
+> Si tienes dudas, responde este correo. Un adulto de la familia responde los mensajes.
 
 ## Registro de restauraciones de prueba
-| Fecha | Respaldo usado | Resultado | Persona |
-|---|---|---|---|
+Una vez al mes, pasos 1 a 5 de "Restauración de respaldos" en una base local. Anotar aquí:
+
+| Fecha (AAAA-MM-DD) | Respaldo usado | Tablas / filas verificadas | Resultado | Persona (rol) |
+|---|---|---|---|---|

@@ -29,6 +29,7 @@ scripts/             backup-mysql.sh, pre-commit.sh (gitleaks)
 
 ## Requisitos
 - Node.js 22 o superior, npm 10 o superior.
+- gitleaks (`brew install gitleaks`): el hook pre-commit (husky, se instala con `npm install`) bloquea commits con secretos.
 
 ## Comandos
 ```bash
