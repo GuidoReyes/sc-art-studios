@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-14
-**Total de nodos:** 1 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 2 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -21,7 +21,7 @@
 
 ### docs
 
-*(vacío)*
+- [[2026-10-14-reglas-claude-md-y-agents-md]] — Tarea 3: stack, 13 capas de seguridad, protección de la menor, commits y agentes en CLAUDE.md/AGENTS.md
 
 ### frontend
 

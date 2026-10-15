@@ -6,7 +6,8 @@ slug: repo-publico-monorepo-y-dominio
 title: "Repo público, monorepo base, CI verde y dominio"
 tags: [github, monorepo, ci, gitleaks, dominio, cloudflare, task-master]
 status: active
-related: []
+related:
+  - 2026-10-14-reglas-claude-md-y-agents-md
 sources:
   - repo:.taskmaster/tasks/tasks.json
   - repo:CLAUDE.md
@@ -40,6 +41,7 @@ Arranque del proyecto con Task Master (`task-master next`). Se ejecutaron la tar
 - Tarea #36 [HUMANO]: 36.2 (contadores, LLC), 36.3 (Shopify y PayPal con 2FA), 36.4 (redes sociales), 36.5 (costos reales).
 
 ## Cross-refs
+- [[2026-10-14-reglas-claude-md-y-agents-md]] — tarea 3, que amplía el CLAUDE.md creado en esta sesión
 
 ## Fuentes
 - [[sources#tasks]]

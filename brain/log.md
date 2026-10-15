@@ -15,3 +15,6 @@
 ## [2026-10-14 21:45] ingest | 2026-10-14-repo-publico-monorepo-y-dominio
 - Primer nodo: sesión del 14-15 oct 2026 (tareas 1, 2, 36.1, fix CI)
 - Cross-refs: ninguna (primer nodo)
+
+## [2026-10-14 21:47] ingest | 2026-10-14-reglas-claude-md-y-agents-md
+- Cross-refs: [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccional)
