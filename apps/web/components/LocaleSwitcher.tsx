@@ -17,7 +17,7 @@ export function LocaleSwitcher() {
       hrefLang={otherLocale}
       lang={otherLocale}
       title={t("label")}
-      className="rounded-full border-4 border-ink bg-orange px-4 py-1 text-ink"
+      className="rounded-full border-4 border-ink bg-orange px-4 py-1 text-ink transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-ink"
     >
       {t("switchTo")}
     </Link>

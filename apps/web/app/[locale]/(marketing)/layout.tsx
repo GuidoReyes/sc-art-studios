@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 import { setRequestLocale } from "next-intl/server";
+import { asLocale } from "@/i18n/routing";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 type Props = { children: ReactNode; params: Promise<{ locale: string }> };
 
 export default async function MarketingLayout({ children, params }: Props) {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   // Cada layout se renderiza por separado: sin esto, next-intl lee cabeceras y la página deja de ser estática.
   setRequestLocale(locale);
 

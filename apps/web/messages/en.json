@@ -43,5 +43,19 @@
     "purple": "Purple",
     "turquoise": "Turquoise",
     "orange": "Orange"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "This page doesn't exist or has moved.",
+    "backHome": "Back to home"
+  },
+  "Masks": {
+    "status": {
+      "available": "Available",
+      "sold": "Sold",
+      "inProgress": "In progress"
+    },
+    "handmade": "Handmade in Guatemala",
+    "orderYours": "Order yours"
   }
 }

@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { Bagel_Fat_One, Nunito } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { asLocale, routing } from "@/i18n/routing";
+import { OG_LOCALES, SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
 const bagel = Bagel_Fat_One({ weight: "400", subsets: ["latin"], variable: "--font-bagel", display: "swap" });
@@ -17,11 +18,18 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = asLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "Metadata" });
   return {
+    metadataBase: new URL(SITE_URL),
     title: { default: t("title"), template: "%s · SC Art Studio" },
     description: t("description"),
+    openGraph: {
+      siteName: "SC Art Studio",
+      type: "website",
+      locale: OG_LOCALES[locale],
+      alternateLocale: routing.locales.filter((l) => l !== locale).map((l) => OG_LOCALES[l]),
+    },
   };
 }
 

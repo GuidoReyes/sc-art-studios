@@ -43,5 +43,19 @@
     "purple": "Morado",
     "turquoise": "Turquesa",
     "orange": "Naranja"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "description": "Esta página no existe o cambió de lugar.",
+    "backHome": "Volver al inicio"
+  },
+  "Masks": {
+    "status": {
+      "available": "Disponible",
+      "sold": "Vendida",
+      "inProgress": "En proceso"
+    },
+    "handmade": "Hecho a mano en Guatemala",
+    "orderYours": "Ordena la tuya"
   }
 }
