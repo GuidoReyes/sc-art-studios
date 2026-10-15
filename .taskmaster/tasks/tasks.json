@@ -9,7 +9,7 @@
         "testStrategy": "Verificar que el último commit aparece en GitHub con el mismo hash que en local. Confirmar en GitHub Settings que las protecciones están activas (Dependabot, secret scanning, branch protection).",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -43,10 +43,10 @@
               2
             ],
             "details": "1. Crear ruleset de protección de rama usando gh CLI:\n   ```\n   gh api repos/{owner}/sc-art-studio/rulesets -X POST -f name='main-protection' -f target='branch' -f enforcement='active' --input - <<EOF\n   {\n     \"conditions\": {\"ref_name\": {\"include\": [\"refs/heads/main\"], \"exclude\": []}},\n     \"rules\": [\n       {\"type\": \"deletion\"},\n       {\"type\": \"non_fast_forward\"}\n     ]\n   }\n   EOF\n   ```\n2. Alternativamente, si gh api no está disponible, ir a GitHub Settings → Branches → Add branch protection rule:\n   - Branch name pattern: main\n   - Marcar: 'Do not allow force pushes'\n   - Marcar: 'Do not allow deletions'\n3. Verificar con: `gh api repos/{owner}/sc-art-studio/rulesets` o revisar en Settings",
-            "status": "deferred",
+            "status": "done",
             "testStrategy": "Intentar hacer force-push a main: `git push --force origin main` - debe ser rechazado. Verificar reglas activas: `gh api repos/{owner}/sc-art-studio/rulesets` o ir a GitHub → Settings → Rules → Rulesets y confirmar que 'main-protection' existe y está activo con las reglas de deletion y non_fast_forward.",
             "parentId": "undefined",
-            "updatedAt": "2026-10-14T15:21:25.227Z"
+            "updatedAt": "2026-10-14T21:34:15.291Z"
           },
           {
             "id": 4,
@@ -56,16 +56,16 @@
               2
             ],
             "details": "1. Habilitar Dependabot alerts:\n   `gh api repos/{owner}/sc-art-studio/vulnerability-alerts -X PUT`\n2. Habilitar Dependabot security updates:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.dependabot_security_updates.status='enabled'`\n3. Habilitar secret scanning:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.secret_scanning.status='enabled'`\n4. Habilitar push protection:\n   `gh api repos/{owner}/sc-art-studio -X PATCH -f security_and_analysis.secret_scanning_push_protection.status='enabled'`\n5. Nota: Algunas características requieren GitHub Advanced Security (disponible en repos públicos o con plan Enterprise). Si el repo es privado sin plan enterprise, secret scanning puede no estar disponible.\n6. Verificar estado de todas las configuraciones: `gh api repos/{owner}/sc-art-studio --jq '.security_and_analysis'`",
-            "status": "review",
+            "status": "done",
             "testStrategy": "Ejecutar `gh api repos/{owner}/sc-art-studio --jq '.security_and_analysis'` y verificar que cada sección muestra status='enabled'. Ir a GitHub → Settings → Code security and analysis y confirmar visualmente que Dependabot alerts, Dependabot security updates están habilitados. Para secret scanning y push protection, verificar disponibilidad según el plan de GitHub. Crear archivo de prueba con un secret falso para verificar que push protection lo detecta.",
             "parentId": "undefined",
-            "updatedAt": "2026-10-14T15:21:27.244Z"
+            "updatedAt": "2026-10-14T21:34:15.299Z"
           }
         ],
         "complexity": 3,
         "recommendedSubtasks": 4,
         "expansionPrompt": "Dividir en: 1) Inicializar Git y configurar user.name/email, 2) Crear repositorio privado en GitHub con gh CLI, 3) Activar protecciones de rama main (branch protection rules), 4) Habilitar Dependabot alerts, secret scanning y push protection. Incluir verificación de cada paso con comandos específicos.",
-        "updatedAt": "2026-10-14T15:21:27.244Z"
+        "updatedAt": "2026-10-14T21:34:15.299Z"
       },
       {
         "id": "2",
@@ -77,7 +77,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -142,7 +142,8 @@
         ],
         "complexity": 4,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear estructura de directorios apps/web, apps/api, packages/shared, 2) Configurar package.json raíz con workspaces npm, 3) Crear package.json inicial para apps/web con scripts básicos, 4) Crear package.json inicial para apps/api con scripts básicos, 5) Actualizar .gitignore con todas las exclusiones requeridas (.env, node_modules, .next, dist, etc.) y crear README.md del proyecto."
+        "expansionPrompt": "Dividir en: 1) Crear estructura de directorios apps/web, apps/api, packages/shared, 2) Configurar package.json raíz con workspaces npm, 3) Crear package.json inicial para apps/web con scripts básicos, 4) Crear package.json inicial para apps/api con scripts básicos, 5) Actualizar .gitignore con todas las exclusiones requeridas (.env, node_modules, .next, dist, etc.) y crear README.md del proyecto.",
+        "updatedAt": "2026-10-15T03:28:38.115Z"
       },
       {
         "id": "3",
@@ -2634,7 +2635,7 @@
             "dependencies": [
               1
             ],
-            "details": "1. **Shopify Basic** ($39/mes): Crear cuenta en shopify.com, plan Basic, a nombre del adulto. Agregar a Guido como Staff con permisos de 'Full access' (sin billing). Activar 2FA.\n2. **PayPal Business**: Crear cuenta Business en paypal.com a nombre del adulto. Verificar identidad. Conectar método de retiro (cuenta bancaria). Activar 2FA.\n3. **Cloudflare**: Crear cuenta gratuita en cloudflare.com. Agregar dominios adquiridos. Activar 2FA. Invitar a Guido como miembro del equipo.\n4. **Railway**: Crear cuenta en railway.app (autenticar con GitHub del adulto o crear uno). Crear equipo 'sc-art-studio'. Agregar a Guido al equipo. Activar 2FA.\n5. **Vercel**: Crear cuenta en vercel.com. Crear equipo 'sc-art-studio'. Plan Hobby es gratis. Agregar a Guido al equipo. Activar 2FA.\n6. Documentar todas las cuentas creadas en un documento seguro (no en el repo).",
+            "details": "1. **Shopify Basic** ($39/mes): Crear cuenta en shopify.com, plan Basic, a nombre del adulto. Agregar a Guido como Staff con permisos de 'Full access' (sin billing). Activar 2FA.\n2. **PayPal Business**: Crear cuenta Business en paypal.com a nombre del adulto. Verificar identidad. Conectar método de retiro (cuenta bancaria). Activar 2FA.\n3. **Cloudflare**: Crear cuenta gratuita en cloudflare.com. Agregar dominios adquiridos. Activar 2FA. Invitar a Guido como miembro del equipo.\n4. **Railway**: Crear cuenta en railway.app (autenticar con GitHub del adulto o crear uno). Crear equipo 'sc-art-studio'. Agregar a Guido al equipo. Activar 2FA.\n5. **Vercel**: Crear cuenta en vercel.com. Crear equipo 'sc-art-studio'. Plan Hobby es gratis. Agregar a Guido al equipo. Activar 2FA.\n6. Documentar todas las cuentas creadas en un documento seguro (no en el repo).\n<info added on 2026-10-15T03:22:18.308Z>\nDecisión 2026-10-14: Vercel, Railway y Cloudflare usan las cuentas existentes de Guido (no se crean nuevas). Vercel: equipo 'guidoreyes-projects' (CLI autenticado). Railway: logueado como ghreyes.montenegro@gmail.com (CLI autenticado). Cloudflare: cuenta existente, wrangler aún no instalado (se instala cuando haga falta DNS/R2). Se crean proyectos nuevos 'sc-art-studio' dentro de esas cuentas cuando lleguen las tareas técnicas. Pendiente en esta subtarea: solo Shopify Basic y PayPal Business a nombre del adulto responsable, con 2FA. Nota: si luego se requiere que la titularidad sea del adulto, Vercel/Railway permiten transferir proyectos y Cloudflare permite mover la zona.\n</info added on 2026-10-15T03:22:18.308Z>",
             "status": "pending",
             "testStrategy": "Verificar acceso a cada plataforma con las credenciales del adulto. Confirmar que 2FA está activo en todas (Shopify, PayPal, Cloudflare, Railway, Vercel). Verificar que Guido tiene acceso como colaborador en cada una. Captura de pantalla del dashboard de cada servicio.",
             "parentId": "undefined"
@@ -3548,9 +3549,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-14T15:21:27.247Z",
+      "lastModified": "2026-10-15T03:28:38.115Z",
       "taskCount": 49,
-      "completedCount": 0,
+      "completedCount": 2,
       "tags": [
         "master"
       ]

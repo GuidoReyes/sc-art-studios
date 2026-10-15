@@ -5,11 +5,13 @@
 @./.taskmaster/CLAUDE.md
 
 ## Repositorio y protecciones de GitHub
-- Repo: https://github.com/GuidoReyes/sc-art-studios (privado). Usar el nombre `sc-art-studios` en todos los comandos `gh` (el PRD dice `sc-art-studio`).
-- Cuenta de GitHub en plan **Free** (14-oct-2026). Por eso:
-  - Activo: Dependabot alerts y Dependabot security updates.
-  - **No disponible**: protección de rama / rulesets en `main` (HTTP 403, requiere GitHub Pro) y secret scanning + push protection (HTTP 422, requiere GitHub Secret Protection).
-- Compensación mientras tanto:
-  - Nunca `git push --force` ni borrar `main`. No reescribir historia ya subida.
-  - gitleaks como hook de pre-commit (tarea 37) cumple el papel de push protection.
-  - Si se pasa a GitHub Pro: activar protección de `main` (sin force-push ni borrado) y volver a intentar secret scanning.
+- Repo: https://github.com/GuidoReyes/sc-art-studios (**público** desde 14-oct-2026). Usar el nombre `sc-art-studios` en todos los comandos `gh` (el PRD dice `sc-art-studio`).
+- Activo: ruleset `main-protection` (sin force-push ni borrado de `main`), Dependabot alerts y security updates, secret scanning y push protection.
+- Al ser público, todo lo que se suba es visible: nunca secretos, datos personales ni datos de clientes. gitleaks en pre-commit (tarea 37) como segunda barrera.
+
+## Cuentas e infraestructura
+- Vercel (equipo `guidoreyes-projects`), Railway y Cloudflare: se usan las cuentas existentes de Guido; se crean proyectos nuevos dentro de ellas.
+- Dominio **provisional** `sc-artstudio.com` en `.env.example`, `next.config.mjs` y `docs/seguridad.md` hasta que se compre (tarea 36.1). Si cambia, reemplazarlo en esos archivos.
+
+## Monorepo
+- npm workspaces: `@sc-art-studio/web`, `@sc-art-studio/api`, `@sc-art-studio/shared`. Para depender de shared usar `"@sc-art-studio/shared": "*"` (npm no soporta `workspace:*`).

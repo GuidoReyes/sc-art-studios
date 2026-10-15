@@ -1,0 +1,62 @@
+// Schema base reutilizable. Agregar los modelos propios del proyecto debajo.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" // o "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  EDITOR
+}
+
+model AdminUser {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String // argon2id, nunca texto plano
+  role         Role       @default(EDITOR)
+  failedLogins Int        @default(0)
+  lockedUntil  DateTime?
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  audits       AuditLog[]
+}
+
+model AuditLog {
+  id        String    @id @default(cuid())
+  userId    String?
+  user      AdminUser? @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String?
+  diff      Json?
+  ip        String?
+  createdAt DateTime  @default(now())
+
+  @@index([entity, entityId])
+}
+
+// Parámetros de negocio configurables (precios, comisiones, tipo de cambio). Nunca fijos en el código.
+model CostSettings {
+  id                    String   @id @default(cuid())
+  fxUsdLocal            Decimal  @db.Decimal(10, 4)
+  gatewayPct            Decimal  @db.Decimal(6, 4)
+  gatewayFixedUsd       Decimal  @db.Decimal(10, 2)
+  platformThirdPartyPct Decimal  @db.Decimal(6, 4)
+  monthlyFixedUsd       Decimal  @db.Decimal(10, 2)
+  expectedUnitsPerMonth Int
+  targetMarginPct       Decimal  @db.Decimal(6, 4)
+  source                String   // de dónde salió cada número y cuándo
+  updatedBy             String?
+  updatedAt             DateTime @updatedAt
+  createdAt             DateTime @default(now())
+}
+
+model ProcessedWebhook {
+  id         String   @id // ID del webhook del proveedor, evita procesar repetidos
+  topic      String
+  receivedAt DateTime @default(now())
+}

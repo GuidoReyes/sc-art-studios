@@ -41,3 +41,13 @@ coverage/
 *.sql.gz
 *.sql.age
 *.sql.gpg
+
+# Plantilla stack-web-mea
+build/
+*.p12
+*.age
+backups/
+.vercel/
+.railway/
+*.tsbuildinfo
+next-env.d.ts
