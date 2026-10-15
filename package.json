@@ -14,7 +14,7 @@
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "audit": "npm audit --audit-level=high",
+    "audit": "npm audit --omit=dev --audit-level=high && npm audit --audit-level=critical",
     "prepare": "husky || true"
   },
   "allowScripts": {

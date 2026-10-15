@@ -37,7 +37,7 @@
 6. **Integraciones:** webhooks de Shopify con HMAC (`apps/api/src/lib/webhooks.ts`) y rechazo de repetidos (guardar ID procesado); APIs externas con timeout y reintentos limitados; nunca loguear tokens.
 7. **Base de datos y respaldos:** usuario de DB con privilegios mínimos; respaldo diario cifrado (`age`/gpg) a Google Drive y semanal a R2 (retención 7 diarios / 4 semanales / 6 mensuales); prueba de restauración mensual anotada en `docs/seguridad.md`.
 8. **Auditoría y alertas:** `AuditLog` de toda acción del admin (quién, qué, cuándo, antes/después); logs pino sin datos personales ni tokens; alertas por correo (5xx repetidos, logins fallidos, webhook o respaldo fallido).
-9. **Cadena de suministro:** Dependabot, `npm audit --audit-level=high` en CI, `package-lock.json` versionado, `main` protegida; si el CI falla no se despliega.
+9. **Cadena de suministro:** Dependabot, `npm run audit` en CI (producción bloquea desde `high`, desarrollo desde `critical`), `package-lock.json` versionado, `main` protegida; si el CI falla no se despliega.
 10. **Agente de ciberseguridad:** tarea semanal que revisa `npm audit`, cabeceras (`curl -I`), certificados, último respaldo y cuentas admin activas, y envía reporte.
 11. **Equipo:** Mac con FileVault y bloqueo automático. **Claude nunca ejecuta comandos destructivos en producción** (migraciones que borran datos, `DROP`, borrar buckets, `git push --force`, borrar `main`) sin confirmación humana.
 12. **Privacidad y protección de la menor:** ver sección siguiente.

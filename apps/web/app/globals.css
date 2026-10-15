@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Tokens de diseño (PRD §3). Uso: bg-pink, text-ink, font-display… */
+@theme {
+  --color-ink: #1b1b1b;
+  --color-cream: #fff6e8;
+  --color-pink: #e8307a;
+  --color-purple: #6b3fa0;
+  --color-turquoise: #1fa6a0;
+  --color-orange: #f28c28;
+
+  --font-display: var(--font-bagel), ui-rounded, system-ui, sans-serif;
+  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}

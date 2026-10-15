@@ -12,6 +12,8 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-      - run: npm audit --audit-level=high
+      # Capa 9: lo que se despliega bloquea desde "high"; las herramientas de desarrollo, desde "critical".
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm audit --audit-level=critical
       - uses: gitleaks/gitleaks-action@v2
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }

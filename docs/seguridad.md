@@ -23,6 +23,7 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 - HTTPS en todo (Vercel y Railway emiten certificados). HSTS.
 - Helmet en Express; en Next.js, cabeceras `Content-Security-Policy` (permitir solo la plataforma de comercio, YouTube, TikTok, Instagram, R2 y Turnstile), `X-Frame-Options: DENY` en admin, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` restrictiva.
 - CORS del API limitado a los dominios propios.
+- **Riesgo aceptado (oct-2026):** la CSP de producción mantiene `'unsafe-inline'` en `script-src` porque las páginas son estáticas y no pueden llevar nonces por petición. Revisar antes de integrar Shopify y Turnstile: pasar a CSP con nonces desde `proxy.ts` (vuelve dinámicas las páginas) o mantener el riesgo documentado. `'unsafe-eval'` solo se permite en desarrollo.
 
 **Capa 5 — Perímetro y abuso**
 - Rate limiting en el API (general y más estricto en login, formularios y cotizador de envío).
@@ -46,7 +47,7 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 
 **Capa 9 — Cadena de suministro del código**
 - Dependabot y `npm audit` en CI; versiones exactas en `package-lock.json`.
-- GitHub Actions: lint, typecheck, tests y `npm audit --audit-level=high` en cada push; si falla, no se despliega.
+- GitHub Actions: lint, typecheck, tests y `npm audit` en cada push; si falla, no se despliega. Dependencias de producción bloquean desde `high` (`--omit=dev`); el árbol completo, desde `critical`. Motivo: `braces` (vía `eslint-config-next`, solo desarrollo) tiene un advisory `high` sin versión corregida (oct-2026). Revisar cuando salga el arreglo.
 - Rama `main` protegida (ver README, paso 5).
 
 **Capa 10 — Agente de ciberseguridad (como en MEA)**

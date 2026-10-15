@@ -1,0 +1,47 @@
+{
+  "Metadata": {
+    "title": "SC Art Studio — Máscaras artesanales de Guatemala",
+    "description": "Máscaras únicas pintadas a mano en Guatemala, con envío a Estados Unidos."
+  },
+  "Nav": {
+    "skip": "Saltar al contenido",
+    "label": "Navegación principal",
+    "masks": "Máscaras",
+    "custom": "Personalizada",
+    "stories": "Historias",
+    "contact": "Contacto"
+  },
+  "LocaleSwitcher": {
+    "label": "Cambiar idioma",
+    "switchTo": "English"
+  },
+  "Home": {
+    "title": "SC Art Studio",
+    "tagline": "Máscaras únicas, pintadas a mano en Guatemala.",
+    "cta": "Ver las máscaras",
+    "palette": "Nuestros colores"
+  },
+  "Pages": {
+    "masks": "Máscaras",
+    "custom": "Máscaras personalizadas",
+    "stories": "Historias",
+    "contact": "Contacto",
+    "comingSoon": "Muy pronto."
+  },
+  "Footer": {
+    "adultNotice": "Un adulto de la familia responde los mensajes.",
+    "location": "Hecho en Guatemala"
+  },
+  "Admin": {
+    "title": "Panel de administración",
+    "placeholder": "Aquí vivirá el panel de administración (protegido, sin indexar)."
+  },
+  "Palette": {
+    "ink": "Tinta",
+    "cream": "Crema",
+    "pink": "Rosa",
+    "purple": "Morado",
+    "turquoise": "Turquesa",
+    "orange": "Naranja"
+  }
+}

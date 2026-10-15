@@ -1,0 +1,47 @@
+{
+  "Metadata": {
+    "title": "SC Art Studio — Handmade masks from Guatemala",
+    "description": "One-of-a-kind hand-painted masks, made in Guatemala and shipped to the US."
+  },
+  "Nav": {
+    "skip": "Skip to content",
+    "label": "Main navigation",
+    "masks": "Masks",
+    "custom": "Custom",
+    "stories": "Stories",
+    "contact": "Contact"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "switchTo": "Español"
+  },
+  "Home": {
+    "title": "SC Art Studio",
+    "tagline": "One-of-a-kind masks, hand-painted in Guatemala.",
+    "cta": "See the masks",
+    "palette": "Our colors"
+  },
+  "Pages": {
+    "masks": "Masks",
+    "custom": "Custom masks",
+    "stories": "Stories",
+    "contact": "Contact",
+    "comingSoon": "Coming soon."
+  },
+  "Footer": {
+    "adultNotice": "An adult from the family answers all messages.",
+    "location": "Made in Guatemala"
+  },
+  "Admin": {
+    "title": "Admin panel",
+    "placeholder": "The admin panel will live here (protected, not indexed)."
+  },
+  "Palette": {
+    "ink": "Ink",
+    "cream": "Cream",
+    "pink": "Pink",
+    "purple": "Purple",
+    "turquoise": "Turquoise",
+    "orange": "Orange"
+  }
+}
