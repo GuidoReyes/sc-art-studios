@@ -290,7 +290,7 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -298,9 +298,10 @@
             "description": "Instalar Railway CLI usando Homebrew si no está instalado y completar el proceso de autenticación con la cuenta de GitHub",
             "dependencies": [],
             "details": "Verificar si Railway CLI ya está instalado ejecutando `railway --version`. Si no está instalado, ejecutar `brew install railway` para instalarlo via Homebrew. Una vez instalado, ejecutar `railway login` que abrirá el navegador para autenticar con GitHub. Confirmar que la autenticación fue exitosa verificando que `railway whoami` muestra el usuario de GitHub correcto.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `railway --version` para confirmar instalación. Ejecutar `railway whoami` para verificar que la autenticación con GitHub fue exitosa y muestra el usuario correcto.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T16:32:28.426Z"
           },
           {
             "id": 2,
@@ -310,9 +311,10 @@
               1
             ],
             "details": "Ejecutar `railway init` en el directorio del proyecto y seleccionar crear nuevo proyecto con nombre 'sc-art-studio'. Una vez creado el proyecto, ejecutar `railway add --database mysql` para agregar el servicio de base de datos MySQL. Railway provisionará automáticamente una instancia MySQL y generará las credenciales de conexión incluyendo la variable DATABASE_URL. Verificar con `railway status` que tanto el proyecto como el servicio MySQL están activos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `railway status` para verificar que el proyecto sc-art-studio existe y el servicio MySQL aparece como running. Verificar en el Railway Dashboard que el proyecto y servicio están visibles.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T16:32:30.482Z"
           },
           {
             "id": 3,
@@ -322,14 +324,16 @@
               2
             ],
             "details": "Ejecutar `railway run -- echo $DATABASE_URL` para obtener la URL de conexión MySQL generada por Railway. Copiar este valor al archivo `.env` local en la variable DATABASE_URL (formato: mysql://user:password@host:port/database). IMPORTANTE: Nunca commitear el archivo .env al repositorio. Agregar una nota en CLAUDE.md documentando el nombre del proyecto Railway (sc-art-studio) para referencia futura. Verificar la conexión parseando la URL y usando el cliente mysql: `mysql -h <host> -P <port> -u <user> -p<password>` para confirmar acceso.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `railway run -- echo $DATABASE_URL` y verificar que muestra una URL válida de MySQL. Verificar que .env contiene DATABASE_URL. Probar conexión con cliente MySQL usando las credenciales extraídas de la URL. Verificar que .env está en .gitignore.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-15T16:32:32.538Z"
           }
         ],
         "complexity": 2,
         "recommendedSubtasks": 3,
-        "expansionPrompt": "Dividir en: 1) Instalar Railway CLI y autenticar con GitHub, 2) Crear proyecto sc-art-studio y agregar servicio MySQL, 3) Obtener DATABASE_URL, guardar en .env local y verificar conexión."
+        "expansionPrompt": "Dividir en: 1) Instalar Railway CLI y autenticar con GitHub, 2) Crear proyecto sc-art-studio y agregar servicio MySQL, 3) Obtener DATABASE_URL, guardar en .env local y verificar conexión.",
+        "updatedAt": "2026-10-15T16:32:32.538Z"
       },
       {
         "id": "6",
@@ -3573,9 +3577,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T04:20:26.243Z",
+      "lastModified": "2026-10-15T16:32:32.538Z",
       "taskCount": 49,
-      "completedCount": 5,
+      "completedCount": 6,
       "tags": [
         "master"
       ]

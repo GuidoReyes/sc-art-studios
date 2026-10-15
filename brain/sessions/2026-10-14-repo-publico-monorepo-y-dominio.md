@@ -7,6 +7,7 @@ title: "Repo público, monorepo base, CI verde y dominio"
 tags: [github, monorepo, ci, gitleaks, dominio, cloudflare, task-master]
 status: active
 related:
+  - 2026-10-15-railway-mysql-y-db-local
   - 2026-10-14-scaffold-frontend-nextjs-i18n
   - 2026-10-14-gitleaks-pre-commit-y-plan-incidentes
   - 2026-10-14-reglas-claude-md-y-agents-md
@@ -43,6 +44,7 @@ Arranque del proyecto con Task Master (`task-master next`). Se ejecutaron la tar
 - Tarea #36 [HUMANO]: 36.2 (contadores, LLC), 36.3 (Shopify y PayPal con 2FA), 36.4 (redes sociales), 36.5 (costos reales).
 
 ## Cross-refs
+- [[2026-10-15-railway-mysql-y-db-local]] — tarea 5: Railway con MySQL privado y base local en Docker.
 - [[2026-10-14-scaffold-frontend-nextjs-i18n]] — tarea 25: frontend construido sobre este monorepo
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — tarea 37: gitleaks local como segunda barrera del repo público
 - [[2026-10-14-reglas-claude-md-y-agents-md]] — tarea 3, que amplía el CLAUDE.md creado en esta sesión

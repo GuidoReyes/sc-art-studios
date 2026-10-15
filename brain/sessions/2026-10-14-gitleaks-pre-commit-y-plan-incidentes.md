@@ -7,6 +7,7 @@ title: "gitleaks en pre-commit y plan de incidentes (tarea 37)"
 tags: [task-master, gitleaks, husky, secretos, respaldos, incidentes]
 status: active
 related:
+  - 2026-10-15-railway-mysql-y-db-local
   - 2026-10-14-scaffold-frontend-nextjs-i18n
   - 2026-10-14-repo-publico-monorepo-y-dominio
   - 2026-10-14-reglas-claude-md-y-agents-md
@@ -43,6 +44,7 @@ Tarea 37 (capas 2 y 13): bloquear secretos antes de cada commit y escribir cómo
 - Primera prueba de restauración cuando exista la base en Railway.
 
 ## Cross-refs
+- [[2026-10-15-railway-mysql-y-db-local]] — tarea 5: Railway con MySQL privado y base local en Docker.
 - [[2026-10-14-scaffold-frontend-nextjs-i18n]] — tarea 25: proxy.ts donde irá MAINTENANCE_MODE y riesgo CSP documentado
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — ahí se creó `.gitleaks.toml` y el repo se hizo público, lo que motiva esta barrera
 - [[2026-10-14-reglas-claude-md-y-agents-md]] — CLAUDE.md resume las 13 capas cuyo detalle operativo vive en docs/seguridad.md

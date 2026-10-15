@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-14
-**Total de nodos:** 5 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-15
+**Total de nodos:** 6 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -30,6 +30,7 @@
 
 ### infra
 
+- [[2026-10-15-railway-mysql-y-db-local]] — Tarea 5: proyecto Railway sc-art-studio con MySQL 8.4 privado (sin proxy público) y MySQL local en Docker
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — Repo público con protecciones, monorepo base (tarea 2), CI verde y dominio scartstudios.com
 
 ### negocio
