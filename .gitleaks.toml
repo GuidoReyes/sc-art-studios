@@ -1,0 +1,7 @@
+# Configuración de gitleaks (CI y pre-commit). Usa las reglas por defecto.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Valores falsos de ejemplo documentados en Task Master (prueba de la tarea 37)"
+regexes = ['''sk_live_1234567890abcdef''']
