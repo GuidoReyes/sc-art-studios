@@ -1,19 +1,21 @@
-import express from "express";
 import { env } from "./lib/env.js";
-import { applySecurity } from "./middleware/security.js";
-import { errorHandler, logger } from "./middleware/errors.js";
+import { createLogger } from "./lib/logger.js";
+import { createApp } from "./app.js";
+import { SHUTDOWN_TIMEOUT_MS } from "./config.js";
 
-const app = express();
+const logger = createLogger(env.LOG_LEVEL);
+const app = createApp({ allowedOrigins: [env.FRONTEND_URL], logger });
 
-// Los webhooks necesitan el body crudo para verificar HMAC: registrar sus rutas ANTES de express.json().
-// app.post("/webhooks/shopify", express.raw({ type: "application/json" }), shopifyWebhook);
+const server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, "API escuchando"));
 
-applySecurity(app);
-app.use(express.json({ limit: "1mb" }));
-
-app.get("/health", (_req, res) => res.json({ ok: true }));
-// app.use("/api", publicRoutes);
-// app.use("/api/admin", adminRoutes);
-
-app.use(errorHandler);
-app.listen(env.PORT, () => logger.info(`API escuchando en :${env.PORT}`));
+// Railway envía SIGTERM al redeployar: cerrar conexiones antes de salir.
+let isShuttingDown = false;
+function shutdown(signal: string) {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
+  logger.info({ signal }, "cerrando servidor");
+  server.close(() => process.exit(0));
+  setTimeout(() => process.exit(1), SHUTDOWN_TIMEOUT_MS).unref();
+}
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));

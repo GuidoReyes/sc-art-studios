@@ -36,7 +36,7 @@ scripts/             backup-mysql.sh, pre-commit.sh (gitleaks)
 npm install          # instala los 3 workspaces
 npm run dev:web      # frontend en http://localhost:3000
 npm run db:up        # MySQL local en Docker (necesita apps/api/.env)
-npm run dev:api      # API (necesita apps/api/.env, ver .env.example)
+npm run dev:api      # API en http://localhost:8080 (necesita apps/api/.env y npm run db:up)
 npm run typecheck    # TypeScript en todos los workspaces
 npm test             # pruebas
 npm run audit        # npm audit --audit-level=high

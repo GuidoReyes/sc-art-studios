@@ -27,6 +27,9 @@ Estas son las capas que se aplicaron o se planearon en MEA (fase 0 de remediaci�
 
 **Capa 5 — Perímetro y abuso**
 - Rate limiting en el API (general y más estricto en login, formularios y cotizador de envío).
+  - Valores en `apps/api/src/config.ts`: general 120/min en `/api` (holgado porque el SSR de Vercel comparte IPs), login 5/15 min, formularios 10/h, cotizador 20/min. Cuenta por IP con `trust proxy = 1` (Railway).
+  - **Decidir antes de las tareas 11 y 13:** si el login y los formularios pasan por el servidor de Next, todas las peticiones llegan con la IP de Vercel y 5 intentos fallidos bloquearían a todos. Opciones: llamar a la API desde el navegador para esas rutas, o reenviar la IP del usuario en una cabecera firmada con un secreto compartido y usarla en `keyGenerator`. Verificar en Railway que `req.ip` sea la IP real del cliente.
+  - El contador vive en memoria: con más de una réplica en Railway habría que pasarlo a un store compartido.
 - Cloudflare Turnstile en formularios públicos (encargos, contacto).
 - Como en MEA, los registros que apuntan a Vercel van con proxy de Cloudflare apagado (DNS only); la protección de esos dominios la da el firewall de Vercel. Activar en Vercel las reglas de firewall para `/admin` y `/api` (el plan Hobby permite 3 reglas; Pro, más).
 - `/admin` con `noindex`, sin enlaces públicos, y opcionalmente restringido por país o IP en el firewall de Vercel.
