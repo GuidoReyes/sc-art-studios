@@ -41,6 +41,11 @@ coverage/
 *.sql.gz
 *.sql.age
 *.sql.gpg
+# Excepción: las migraciones de Prisma sí se versionan (no traen datos)
+!apps/api/prisma/migrations/**/migration.sql
+
+# Cliente de Prisma generado (prisma generate)
+apps/api/src/generated/
 
 # Plantilla stack-web-mea
 build/

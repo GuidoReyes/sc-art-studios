@@ -1,62 +1,305 @@
-// Schema base reutilizable. Agregar los modelos propios del proyecto debajo.
+// Modelo de datos (PRD §4.4). La URL de conexión vive en prisma.config.ts (Prisma 7).
+// Precios, tarifas y comisiones se guardan aquí y nunca en el código (CLAUDE.md, datos configurables).
 generator client {
-  provider = "prisma-client-js"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
 }
 
 datasource db {
-  provider = "mysql" // o "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
 }
+
+// ───────────── Enums ─────────────
 
 enum Role {
   OWNER
   EDITOR
 }
 
+enum MaskStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  COMMISSION_EXAMPLE
+  DRAFT
+}
+
+enum VideoPlatform {
+  YOUTUBE
+  TIKTOK
+  INSTAGRAM
+}
+
+enum VideoSource {
+  MANUAL
+  SYNC
+}
+
+enum CustomRequestStatus {
+  NEW
+  QUOTED
+  DEPOSIT_PAID
+  IN_PROGRESS
+  BALANCE_PAID
+  SHIPPED
+  CLOSED
+  REJECTED
+}
+
+enum Carrier {
+  FEDEX
+  POSTAL
+  COURIER_LOCAL
+  OTHER
+}
+
+enum SocialPlatform {
+  YOUTUBE
+  TIKTOK
+  INSTAGRAM
+  FACEBOOK
+}
+
+// ───────────── Catálogo y contenido ─────────────
+
+model Mask {
+  id                 String            @id @default(cuid())
+  slug               String            @unique @db.VarChar(120)
+  nameEs             String            @db.VarChar(120)
+  nameEn             String            @db.VarChar(120)
+  animal             String            @db.VarChar(80)
+  descriptionEs      String            @db.Text
+  descriptionEn      String            @db.Text
+  storyEs            String?           @db.Text
+  storyEn            String?           @db.Text
+  status             MaskStatus        @default(DRAFT)
+  // Shopify es la fuente de verdad de precio e inventario; aquí se guarda el espejo y los IDs.
+  shopifyProductId   String?           @unique @db.VarChar(64)
+  shopifyVariantId   String?           @unique @db.VarChar(64)
+  priceUsd           Decimal?          @db.Decimal(10, 2)
+  priceGtq           Decimal?          @db.Decimal(12, 2)
+  weightGrams        Int?
+  lengthCm           Decimal?          @db.Decimal(6, 1)
+  widthCm            Decimal?          @db.Decimal(6, 1)
+  heightCm           Decimal?          @db.Decimal(6, 1)
+  materialsCostGtq   Decimal?          @db.Decimal(10, 2)
+  laborHours         Decimal?          @db.Decimal(6, 2)
+  packagingProfileId String?
+  packagingProfile   PackagingProfile? @relation(fields: [packagingProfileId], references: [id], onDelete: SetNull)
+  featured           Boolean           @default(false)
+  publishedAt        DateTime?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  images             MaskImage[]
+  stories            Story[]
+  videos             Video[]
+  orders             Order[]
+
+  @@index([status, featured])
+  @@index([animal])
+}
+
+model MaskImage {
+  id             String  @id @default(cuid())
+  maskId         String
+  mask           Mask    @relation(fields: [maskId], references: [id], onDelete: Cascade)
+  r2Key          String  @db.VarChar(512)
+  shopifyMediaId String? @db.VarChar(64)
+  altEs          String  @db.VarChar(300)
+  altEn          String  @db.VarChar(300)
+  sortOrder      Int     @default(0)
+
+  @@index([maskId, sortOrder])
+}
+
+model Story {
+  id          String    @id @default(cuid())
+  slug        String    @unique @db.VarChar(120)
+  titleEs     String    @db.VarChar(200)
+  titleEn     String    @db.VarChar(200)
+  // Texto enriquecido ya sanitizado (sanitize-html) antes de guardarse.
+  bodyEs      String    @db.MediumText
+  bodyEn      String    @db.MediumText
+  coverR2Key  String?   @db.VarChar(512)
+  maskId      String?
+  mask        Mask?     @relation(fields: [maskId], references: [id], onDelete: SetNull)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  videos      Video[]
+
+  @@index([publishedAt])
+  @@index([maskId])
+}
+
+model Video {
+  id           String        @id @default(cuid())
+  platform     VideoPlatform
+  url          String        @db.VarChar(512)
+  externalId   String        @db.VarChar(128)
+  title        String        @db.VarChar(300)
+  thumbnailUrl String?       @db.VarChar(512)
+  maskId       String?
+  mask         Mask?         @relation(fields: [maskId], references: [id], onDelete: SetNull)
+  storyId      String?
+  story        Story?        @relation(fields: [storyId], references: [id], onDelete: SetNull)
+  publishedAt  DateTime?
+  source       VideoSource   @default(MANUAL)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // La sincronización con las redes no debe duplicar el mismo video.
+  @@unique([platform, externalId])
+  @@index([maskId])
+  @@index([storyId])
+}
+
+// ───────────── Comercio ─────────────
+
+model CustomRequest {
+  id                    String              @id @default(cuid())
+  // Datos del adulto que encarga; nunca se escriben en los logs.
+  name                  String              @db.VarChar(120)
+  email                 String              @db.VarChar(254)
+  whatsapp              String?             @db.VarChar(32)
+  country               String              @db.Char(2) // ISO 3166-1 alfa-2
+  idea                  String              @db.Text
+  colors                String?             @db.VarChar(300)
+  size                  String?             @db.VarChar(100)
+  use                   String?             @db.VarChar(300)
+  referenceR2Key        String?             @db.VarChar(512)
+  desiredDate           DateTime?           @db.Date
+  status                CustomRequestStatus @default(NEW)
+  quoteUsd              Decimal?            @db.Decimal(10, 2)
+  depositUsd            Decimal?            @db.Decimal(10, 2)
+  shopifyDepositOrderId String?             @db.VarChar(64)
+  shopifyDraftOrderId   String?             @db.VarChar(64)
+  notes                 String?             @db.Text
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model ShippingZone {
+  id        String         @id @default(cuid())
+  code      String         @unique @db.VarChar(16)
+  name      String         @db.VarChar(120)
+  countries Json // arreglo de códigos ISO 3166-1 alfa-2
+  rates     ShippingRate[]
+}
+
+model ShippingRate {
+  id          String       @id @default(cuid())
+  carrier     Carrier
+  service     String       @db.VarChar(80)
+  zoneId      String
+  // Restrict: borrar una zona con tarifas dejaría al cotizador sin datos.
+  zone        ShippingZone @relation(fields: [zoneId], references: [id], onDelete: Restrict)
+  maxWeightKg Decimal      @db.Decimal(6, 2)
+  costUsd     Decimal      @db.Decimal(10, 2)
+  validFrom   DateTime
+  validTo     DateTime?
+  source      String       @db.VarChar(500) // URL o "cotización <fecha>"
+  isEstimate  Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([zoneId, carrier, maxWeightKg])
+}
+
+model PackagingProfile {
+  id                   String  @id @default(cuid())
+  name                 String  @unique @db.VarChar(80)
+  innerLengthCm        Decimal @db.Decimal(6, 1)
+  innerWidthCm         Decimal @db.Decimal(6, 1)
+  innerHeightCm        Decimal @db.Decimal(6, 1)
+  outerLengthCm        Decimal @db.Decimal(6, 1)
+  outerWidthCm         Decimal @db.Decimal(6, 1)
+  outerHeightCm        Decimal @db.Decimal(6, 1)
+  packagingWeightGrams Int
+  costGtq              Decimal @db.Decimal(10, 2)
+  masks                Mask[]
+}
+
+// Versionada: cada cambio inserta una fila nueva y la vigente es la de id más alto.
+// Los porcentajes se guardan como porcentaje (5.40 = 5.40 %), no como fracción.
+model CostSettings {
+  id                    Int        @id @default(autoincrement())
+  fxUsdGtq              Decimal    @db.Decimal(10, 4)
+  gatewayPct            Decimal    @db.Decimal(5, 2)
+  gatewayFixedUsd       Decimal    @db.Decimal(8, 2)
+  shopifyThirdPartyPct  Decimal    @db.Decimal(5, 2)
+  monthlyFixedUsd       Decimal    @db.Decimal(10, 2)
+  expectedUnitsPerMonth Int
+  laborRateGtqPerHour   Decimal    @db.Decimal(10, 2)
+  targetMarginPct       Decimal    @db.Decimal(5, 2)
+  volumetricDivisor     Int
+  usImportDutyPct       Decimal    @db.Decimal(5, 2)
+  updatedAt             DateTime   @default(now())
+  updatedById           String?
+  updatedBy             AdminUser? @relation(fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([updatedById])
+}
+
+// Espejo de pedidos de Shopify (webhook orders/paid).
+model Order {
+  id              String   @id @default(cuid())
+  shopifyOrderId  String   @unique @db.VarChar(64)
+  maskId          String?
+  mask            Mask?    @relation(fields: [maskId], references: [id], onDelete: SetNull)
+  totalUsd        Decimal  @db.Decimal(10, 2)
+  shippingCountry String?  @db.Char(2)
+  carrier         Carrier?
+  trackingNumber  String?  @db.VarChar(64)
+  status          String   @db.VarChar(40) // estado tal como lo reporta Shopify
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([maskId])
+}
+
+// ───────────── Administración ─────────────
+
+model SocialAccount {
+  id        String         @id @default(cuid())
+  platform  SocialPlatform
+  handle    String         @db.VarChar(80)
+  url       String         @db.VarChar(512)
+  managedBy String         @db.VarChar(120) // adulto responsable; la menor nunca administra cuentas
+
+  @@unique([platform, handle])
+}
+
 model AdminUser {
-  id           String     @id @default(cuid())
-  email        String     @unique
-  passwordHash String // argon2id, nunca texto plano
-  role         Role       @default(EDITOR)
-  failedLogins Int        @default(0)
+  id           String         @id @default(cuid())
+  email        String         @unique @db.VarChar(254)
+  passwordHash String         @db.VarChar(255) // argon2id, nunca texto plano
+  role         Role           @default(EDITOR)
+  failedLogins Int            @default(0)
   lockedUntil  DateTime?
   lastLoginAt  DateTime?
-  createdAt    DateTime   @default(now())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   audits       AuditLog[]
+  costSettings CostSettings[]
 }
 
 model AuditLog {
-  id        String    @id @default(cuid())
+  id        String     @id @default(cuid())
   userId    String?
-  user      AdminUser? @relation(fields: [userId], references: [id])
-  action    String
-  entity    String
-  entityId  String?
-  diff      Json?
-  ip        String?
-  createdAt DateTime  @default(now())
+  // Restrict: no se puede borrar un admin con historial; la auditoría no se pierde.
+  user      AdminUser? @relation(fields: [userId], references: [id], onDelete: Restrict)
+  action    String     @db.VarChar(80)
+  entity    String     @db.VarChar(80)
+  entityId  String?    @db.VarChar(64)
+  diff      Json? // antes/después
+  ip        String?    @db.VarChar(45)
+  createdAt DateTime   @default(now())
 
   @@index([entity, entityId])
-}
-
-// Parámetros de negocio configurables (precios, comisiones, tipo de cambio). Nunca fijos en el código.
-model CostSettings {
-  id                    String   @id @default(cuid())
-  fxUsdLocal            Decimal  @db.Decimal(10, 4)
-  gatewayPct            Decimal  @db.Decimal(6, 4)
-  gatewayFixedUsd       Decimal  @db.Decimal(10, 2)
-  platformThirdPartyPct Decimal  @db.Decimal(6, 4)
-  monthlyFixedUsd       Decimal  @db.Decimal(10, 2)
-  expectedUnitsPerMonth Int
-  targetMarginPct       Decimal  @db.Decimal(6, 4)
-  source                String   // de dónde salió cada número y cuándo
-  updatedBy             String?
-  updatedAt             DateTime @updatedAt
-  createdAt             DateTime @default(now())
-}
-
-model ProcessedWebhook {
-  id         String   @id // ID del webhook del proveedor, evita procesar repetidos
-  topic      String
-  receivedAt DateTime @default(now())
+  @@index([userId, createdAt])
 }

@@ -15,3 +15,7 @@ export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 2
 
 export const JSON_BODY_LIMIT = "1mb";
 export const SHUTDOWN_TIMEOUT_MS = 10_000;
+
+// Pool de MySQL: una sola instancia de API en Railway, tráfico bajo.
+export const DB_CONNECTION_LIMIT = 5;
+export const DB_CONNECT_TIMEOUT_MS = 5_000;
