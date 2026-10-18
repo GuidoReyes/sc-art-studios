@@ -346,7 +346,7 @@
           "2",
           "5"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -354,9 +354,10 @@
             "description": "Crear la estructura del proyecto apps/api con package.json e instalar todas las dependencias necesarias: express, typescript, @types/express, @types/node, tsx, dotenv, zod y dependencias de desarrollo.",
             "dependencies": [],
             "details": "En `apps/api/`: ejecutar `npm init -y` para crear package.json. Instalar dependencias de producción: `npm install express dotenv zod`. Instalar dependencias de desarrollo: `npm install -D typescript @types/express @types/node tsx`. Crear estructura de carpetas: `src/`, `src/middleware/`, `src/routes/`, `src/utils/`. El archivo principal será `src/index.ts`. Verificar que node_modules esté en .gitignore del monorepo.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm install` sin errores. Verificar que package.json contiene todas las dependencias listadas. Verificar que la estructura de carpetas existe con `ls -la apps/api/src/`.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:46.936Z"
           },
           {
             "id": 2,
@@ -366,9 +367,10 @@
               1
             ],
             "details": "Crear `apps/api/tsconfig.json` con: `target: ES2022` para aprovechar características modernas de JavaScript, `module: NodeNext` y `moduleResolution: NodeNext` para ESM nativo, `strict: true` para máxima seguridad de tipos, `outDir: dist` para compilación, `rootDir: src` para organización, `esModuleInterop: true`, `skipLibCheck: true`, `resolveJsonModule: true`. Agregar `include: ['src/**/*']` y `exclude: ['node_modules', 'dist']`. Configurar `declaration: true` para generar tipos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npx tsc --noEmit` para verificar que la configuración es válida. Crear un archivo TypeScript de prueba y verificar que compila correctamente a dist/.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:48.994Z"
           },
           {
             "id": 3,
@@ -379,9 +381,10 @@
               2
             ],
             "details": "Instalar dependencias: `npm install helmet cors @types/cors`. Crear `src/middleware/security.ts`. Configurar Helmet con CSP restrictiva que permita: defaultSrc 'self', scriptSrc para Shopify/YouTube/TikTok/Instagram/Turnstile, imgSrc para R2/Shopify CDN/YouTube thumbnails, frameSrc para embeds de video, connectSrc para API propia y Shopify. CORS: origin desde `process.env.FRONTEND_URL` (ej: https://scartstudios.com), credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']. Exportar como middleware configurable. Incluir X-Frame-Options: DENY para rutas admin.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Iniciar servidor y verificar cabeceras con `curl -I http://localhost:8080`. Verificar que CSP está presente. Hacer fetch desde origen no permitido y verificar que CORS bloquea la solicitud.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:51.086Z"
           },
           {
             "id": 4,
@@ -392,9 +395,10 @@
               2
             ],
             "details": "Instalar: `npm install express-rate-limit`. Crear `src/middleware/rateLimiter.ts`. Rate limiter general: windowMs: 15 * 60 * 1000 (15 min), max: 100, standardHeaders: true, legacyHeaders: false, message: { error: 'Too many requests, please try again later' }. Rate limiter estricto para rutas sensibles (login, /api/custom-requests, /api/shipping/quote): windowMs: 15 * 60 * 1000, max: 10, skipSuccessfulRequests: false. Exportar ambos limiters. Documentar en comentarios qué rutas usan cuál limiter según PRD sección 4.5.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer más de 100 peticiones en 15 minutos al endpoint general y verificar respuesta 429. Hacer más de 10 peticiones a ruta sensible de prueba y verificar bloqueo. Verificar que las cabeceras RateLimit-* están presentes.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:53.186Z"
           },
           {
             "id": 5,
@@ -405,9 +409,10 @@
               2
             ],
             "details": "Instalar: `npm install pino pino-http pino-pretty` (pino-pretty solo para dev). Crear `src/utils/logger.ts`. Configurar Pino con: level desde LOG_LEVEL env o 'info', timestamp: true, formatters para eliminar datos sensibles (passwords, tokens, emails). Crear middleware pino-http con: customLogLevel para errores 5xx como 'error', serializers personalizados que filtren req.headers.authorization, req.body.password, etc. Para desarrollo usar pino-pretty con transport condicional. Nunca loguear: tokens JWT, passwords, datos de tarjeta, emails completos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Iniciar servidor y hacer peticiones. Verificar que los logs son JSON válido con `npm run dev | jq`. Verificar que no aparecen datos sensibles en logs. Verificar que errores 5xx se loguean como 'error'.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:55.264Z"
           },
           {
             "id": 6,
@@ -419,9 +424,10 @@
               5
             ],
             "details": "Crear `src/index.ts`: importar express, dotenv/config, middlewares de security, rateLimiter, logger. Orden de middlewares: 1) pino-http logger, 2) helmet, 3) cors, 4) express.json() con limit '10kb', 5) express.urlencoded(), 6) rate limiter general. Crear GET /health que responde: { status: 'ok', timestamp: Date.now() }. Puerto desde PORT env o 8080. Log de inicio: `Server running on port ${PORT}`. Manejar errores no capturados con process.on('uncaughtException') y 'unhandledRejection' logueando y terminando gracefully. Incluir placeholder para rutas API futuras.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm run dev` y verificar que arranca sin errores en puerto 8080. GET a http://localhost:8080/health debe responder 200 con JSON correcto. Verificar timestamp es número válido.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:57.361Z"
           },
           {
             "id": 7,
@@ -432,14 +438,16 @@
               6
             ],
             "details": "Editar `apps/api/package.json`. Scripts: `dev`: 'tsx watch src/index.ts' para desarrollo con hot-reload, `build`: 'tsc' para compilar TypeScript a JavaScript en dist/, `start`: 'node dist/index.js' para producción, `typecheck`: 'tsc --noEmit' para verificación de tipos sin compilar, `lint`: preparar para eslint futuro. Agregar `type: module` si se usa ESM. En main: 'dist/index.js'. Verificar que .gitignore incluye dist/. Agregar script `clean`: 'rm -rf dist' para limpiar builds previos. Documentar uso en comentarios o README.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm run dev` y verificar hot-reload al cambiar código. Ejecutar `npm run build` y verificar que genera dist/index.js. Ejecutar `npm run start` y verificar que corre el código compilado. Verificar que /health funciona en ambos modos.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T04:40:59.455Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 7,
-        "expansionPrompt": "Dividir en: 1) Inicializar proyecto TypeScript con dependencias (express, typescript, @types/*, tsx, dotenv, zod), 2) Configurar tsconfig.json con target ES2022 y strict mode, 3) Configurar Helmet con CSP restrictiva y CORS limitado a dominios propios, 4) Implementar rate limiting general (100 req/15min) y estricto para rutas sensibles, 5) Configurar logger Pino para logs JSON estructurados, 6) Crear endpoint /health con respuesta JSON, 7) Configurar scripts dev/build/start en package.json."
+        "expansionPrompt": "Dividir en: 1) Inicializar proyecto TypeScript con dependencias (express, typescript, @types/*, tsx, dotenv, zod), 2) Configurar tsconfig.json con target ES2022 y strict mode, 3) Configurar Helmet con CSP restrictiva y CORS limitado a dominios propios, 4) Implementar rate limiting general (100 req/15min) y estricto para rutas sensibles, 5) Configurar logger Pino para logs JSON estructurados, 6) Crear endpoint /health con respuesta JSON, 7) Configurar scripts dev/build/start en package.json.",
+        "updatedAt": "2026-10-18T04:40:59.455Z"
       },
       {
         "id": "7",
@@ -3577,9 +3585,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-15T16:32:32.538Z",
+      "lastModified": "2026-10-18T04:40:59.456Z",
       "taskCount": 49,
-      "completedCount": 6,
+      "completedCount": 7,
       "tags": [
         "master"
       ]

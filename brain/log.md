@@ -30,3 +30,6 @@
 
 ## [2026-10-15 10:40] ingest | 2026-10-15-railway-mysql-y-db-local
 - Cross-refs: [[2026-10-14-repo-publico-monorepo-y-dominio]], [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] (bidireccionales)
+
+## [2026-10-17 22:40] ingest | 2026-10-17-scaffold-backend-express
+- Cross-refs: [[2026-10-15-railway-mysql-y-db-local]], [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccionales)

@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-15
-**Total de nodos:** 6 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-17
+**Total de nodos:** 7 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### backend
 
-*(vacío)*
+- [[2026-10-17-scaffold-backend-express]] — Tarea 6: Express 5 + Helmet/CORS/rate limit, Pino sin datos personales, /health, 34 pruebas (98 %)
 
 ### comercio
 

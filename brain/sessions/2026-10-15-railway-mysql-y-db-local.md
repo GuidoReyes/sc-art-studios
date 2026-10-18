@@ -7,6 +7,7 @@ title: "Railway: proyecto sc-art-studio con MySQL privado y MySQL local en Docke
 tags: [railway, mysql, docker, prisma, base-de-datos, task-master]
 status: active
 related:
+  - 2026-10-17-scaffold-backend-express
   - 2026-10-14-repo-publico-monorepo-y-dominio
   - 2026-10-14-gitleaks-pre-commit-y-plan-incidentes
 sources:
@@ -43,6 +44,7 @@ Tarea 5 [HUMANO] de Task Master. La CLI de Railway (5.68) ya estaba instalada y 
 - Respaldos diarios cifrados de la base de Railway, según el plan de docs/seguridad.md.
 
 ## Cross-refs
+- [[2026-10-17-scaffold-backend-express]] — tarea 6: scaffold del backend Express.
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — monorepo y CI sobre los que se monta la base.
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — rotación de secretos y restauración de respaldos que aplican a esta base.
 
