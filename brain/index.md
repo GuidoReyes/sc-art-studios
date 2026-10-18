@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-17
-**Total de nodos:** 7 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-18
+**Total de nodos:** 9 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,6 +13,7 @@
 
 ### backend
 
+- [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — Tarea 7: Prisma 7.10.1 + adapter MariaDB, 13 modelos y migración init, 43 pruebas (98.8 %)
 - [[2026-10-17-scaffold-backend-express]] — Tarea 6: Express 5 + Helmet/CORS/rate limit, Pino sin datos personales, /health, 34 pruebas (98 %)
 
 ### comercio
@@ -35,7 +36,7 @@
 
 ### negocio
 
-*(vacío)*
+- [[2026-10-18-guia-contadores-llc-y-stripe]] — Tarea 36.2: guía privada para contadores (LLC B2) y Stripe descartado como pasarela
 
 ### seguridad
 

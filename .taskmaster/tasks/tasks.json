@@ -460,7 +460,7 @@
           "5",
           "6"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -468,9 +468,10 @@
             "description": "Instalar las dependencias de Prisma y generar la configuración inicial del proyecto para MySQL como datasource.",
             "dependencies": [],
             "details": "En `apps/api/`: ejecutar `npm install prisma @prisma/client --save-dev` y `npm install @prisma/client`. Luego ejecutar `npx prisma init --datasource-provider mysql`. Esto creará la carpeta `prisma/` con el archivo `schema.prisma` base y actualizará `.env` con DATABASE_URL. Configurar la variable DATABASE_URL con el formato correcto para MySQL: `mysql://USER:PASSWORD@HOST:PORT/DATABASE`. Verificar que el archivo `.gitignore` incluya `.env` para no exponer credenciales.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que existe `prisma/schema.prisma` con datasource mysql configurado. Confirmar que `node_modules/@prisma/client` y `node_modules/prisma` están instalados. Verificar que `.env` contiene DATABASE_URL con formato MySQL.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.567Z"
           },
           {
             "id": 2,
@@ -480,9 +481,10 @@
               1
             ],
             "details": "En `prisma/schema.prisma` definir: 1) Modelo `Mask` con campos: id (String @id @default(uuid())), name, description, price (Decimal), status (MaskStatus enum), createdAt, updatedAt. Crear enum `MaskStatus {AVAILABLE, RESERVED, SOLD, COMMISSION_EXAMPLE, DRAFT}`. 2) Modelo `MaskImage` con relación 1:N a Mask (cada máscara puede tener múltiples imágenes), incluir campos: id, url, altText, sortOrder, maskId con @relation. 3) Modelo `Story` con relación N:1 opcional a Mask (una historia puede referenciar una máscara), campos: id, title, content, publishedAt, maskId (opcional). 4) Modelo `Video` con relación 1:N a Mask, crear enum `VideoSource {MANUAL, SYNC}`, campos: id, url, source, title, maskId.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npx prisma validate` para verificar sintaxis del schema. Revisar que las relaciones bidireccionales están correctas (Mask tiene images[], videos[], stories[] y cada modelo hijo tiene mask con @relation).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.573Z"
           },
           {
             "id": 3,
@@ -492,9 +494,10 @@
               1
             ],
             "details": "En `prisma/schema.prisma` agregar: 1) `CustomRequest` para solicitudes de máscaras personalizadas: id, customerEmail, description, referenceImages (Json para array de URLs), status (enum CustomRequestStatus), budget (Decimal opcional), createdAt. 2) `ShippingZone`: id, name, countries (Json para array de códigos ISO), isActive. 3) `ShippingRate` con relación N:1 a ShippingZone: id, zoneId, minWeight (Decimal), maxWeight (Decimal), price (Decimal), carrier. 4) `PackagingProfile`: id, name, weight (Decimal), dimensions (Json para objeto {length, width, height}). 5) `CostSettings`: id único (usar default 'default'), materialCostPercent (Decimal), laborHourlyRate (Decimal), updatedAt. 6) `Order` con relación N:1 opcional a Mask: id, maskId, customerEmail, shippingAddress (Json), totalAmount (Decimal), status (enum OrderStatus), createdAt.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npx prisma validate`. Verificar que los campos Json están bien definidos. Confirmar que los Decimal tienen precisión adecuada para monedas (@db.Decimal(10,2)).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.576Z"
           },
           {
             "id": 4,
@@ -504,9 +507,10 @@
               1
             ],
             "details": "En `prisma/schema.prisma` agregar: 1) `SocialAccount` para cuentas de redes sociales: id, platform (enum SocialPlatform {INSTAGRAM, TIKTOK, YOUTUBE}), username, accessToken (String opcional, cifrado externamente), refreshToken (String opcional), tokenExpiresAt (DateTime opcional), isActive, lastSyncAt (DateTime opcional). 2) `AdminUser` para usuarios administradores: id, email (@unique), passwordHash, name, role (enum AdminRole {SUPER_ADMIN, ADMIN, EDITOR}), lastLoginAt (DateTime opcional), createdAt, isActive. 3) `AuditLog` para registro de auditoría: id, action (String), entityType (String), entityId (String), userId (String opcional, referencia manual a AdminUser), changes (Json para before/after), ipAddress (String opcional), createdAt. Definir todos los enums restantes al inicio del schema: OrderStatus, CustomRequestStatus.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npx prisma validate`. Verificar que todos los enums están definidos correctamente. Confirmar que los campos sensibles (passwordHash, accessToken) son String y no se exponen en logs.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.581Z"
           },
           {
             "id": 5,
@@ -518,9 +522,10 @@
               4
             ],
             "details": "Revisar todo el schema para: 1) Campos Decimal: usar `@db.Decimal(10,2)` para precios y montos, `@db.Decimal(8,3)` para pesos en kg. 2) Campos DateTime: usar `@default(now())` para createdAt, `@updatedAt` para updatedAt. 3) Campos Json: documentar estructura esperada con comentarios. 4) Agregar índices con `@@index([campo])` en: MaskImage.maskId, Video.maskId, Story.maskId, ShippingRate.zoneId, Order.maskId, Order.customerEmail, AuditLog.entityType, AuditLog.createdAt. 5) Configurar onDelete en relaciones: Cascade para MaskImage/Video cuando se elimina Mask, SetNull para Story/Order. 6) Agregar `@@map('table_name')` si se prefieren nombres de tabla en snake_case.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npx prisma validate` sin errores. Revisar que todos los campos monetarios usan Decimal(10,2). Verificar que los índices están en campos usados frecuentemente en queries (especialmente foreign keys).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.584Z"
           },
           {
             "id": 6,
@@ -530,14 +535,16 @@
               5
             ],
             "details": "1) Asegurar que DATABASE_URL en `.env` apunta a una base de datos MySQL válida (puede ser local o Railway para desarrollo). 2) Ejecutar `npx prisma migrate dev --name init` para crear la migración inicial. Esto generará SQL en `prisma/migrations/<timestamp>_init/migration.sql`. 3) Ejecutar `npx prisma generate` para regenerar el cliente (ya se ejecuta automáticamente con migrate dev, pero confirmar). 4) Verificar que `node_modules/.prisma/client` contiene los tipos generados. 5) Ejecutar `npx prisma studio` y verificar que todas las 13 tablas aparecen correctamente. 6) Agregar scripts en `package.json`: `\"prisma:migrate:deploy\": \"prisma migrate deploy\"` para producción, `\"prisma:studio\": \"prisma studio\"`, `\"prisma:generate\": \"prisma generate\"`. 7) Documentar en README cómo ejecutar migraciones en desarrollo vs producción.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que `prisma/migrations/` contiene la carpeta de migración con `migration.sql`. Ejecutar `npx prisma studio` y confirmar 13 tablas visibles: Mask, MaskImage, Story, Video, CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, SocialAccount, AdminUser, AuditLog. Probar insertar un registro de prueba en Mask desde Studio. Ejecutar `npm run prisma:generate` y verificar que no hay errores.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:38:29.588Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Dividir en: 1) Instalar Prisma y ejecutar prisma init para MySQL, 2) Definir modelos core: Mask, MaskImage, Story, Video con relaciones, 3) Definir modelos de comercio: CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, 4) Definir modelos de admin: SocialAccount, AdminUser, AuditLog con enums de status, 5) Configurar tipos correctos (Decimal, DateTime, Json) y relaciones entre modelos, 6) Ejecutar migración inicial y verificar con Prisma Studio."
+        "expansionPrompt": "Dividir en: 1) Instalar Prisma y ejecutar prisma init para MySQL, 2) Definir modelos core: Mask, MaskImage, Story, Video con relaciones, 3) Definir modelos de comercio: CustomRequest, ShippingZone, ShippingRate, PackagingProfile, CostSettings, Order, 4) Definir modelos de admin: SocialAccount, AdminUser, AuditLog con enums de status, 5) Configurar tipos correctos (Decimal, DateTime, Json) y relaciones entre modelos, 6) Ejecutar migración inicial y verificar con Prisma Studio.",
+        "updatedAt": "2026-10-18T17:38:29.588Z"
       },
       {
         "id": "8",
@@ -2649,9 +2656,10 @@
             "description": "Agendar y realizar consultas con contadores en EE.UU. y Guatemala para evaluar la estructura legal LLC según el escenario B2 del PRD.",
             "dependencies": [],
             "details": "1. Identificar contador/asesor fiscal en EE.UU. con experiencia en LLCs para e-commerce (puede ser virtual, ej: Bench, Pilot, contador independiente).\n2. Identificar contador en Guatemala para entender obligaciones fiscales locales al operar desde GT vendiendo a US.\n3. Preparar preguntas clave:\n   - ¿Conviene LLC en Wyoming/Delaware vs operar como sole proprietor?\n   - ¿Cómo se declaran ingresos de PayPal/Stripe en ambos países?\n   - ¿Qué impuestos aplican en GT por ingresos del extranjero?\n   - ¿Se necesita cuenta bancaria empresarial en US?\n4. Agendar citas (idealmente en la misma semana).\n5. Documentar conclusiones y decisión tomada.\n6. Registrar en CLAUDE.md la estructura legal elegida para Fase 1.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Verificar que existe documentación escrita con las recomendaciones de ambos contadores y la decisión final sobre estructura legal (LLC o alternativa). Confirmar que se entienden las obligaciones fiscales en ambos países.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-18T17:22:43.786Z"
           },
           {
             "id": 3,
@@ -2689,7 +2697,7 @@
         "complexity": 4,
         "recommendedSubtasks": 5,
         "expansionPrompt": "Dividir en: 1) Elegir dominio y confirmar compra, 2) Cita con contador US/GT sobre LLC (escenario B2), 3) Crear cuentas: Shopify, PayPal, Cloudflare, Railway, Vercel a nombre del adulto, 4) Crear cuentas de marca: YouTube, TikTok, Instagram administradas por adulto, 5) Recopilar datos reales: costos de materiales, horas, pesos/medidas de 3 máscaras, cotizaciones de empaque y envío.",
-        "updatedAt": "2026-10-15T03:39:08.398Z"
+        "updatedAt": "2026-10-18T17:22:43.786Z"
       },
       {
         "id": "37",
@@ -3585,9 +3593,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-18T04:40:59.456Z",
+      "lastModified": "2026-10-18T17:38:29.588Z",
       "taskCount": 49,
-      "completedCount": 7,
+      "completedCount": 8,
       "tags": [
         "master"
       ]

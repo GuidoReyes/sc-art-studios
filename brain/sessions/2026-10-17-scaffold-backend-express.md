@@ -50,6 +50,7 @@ Tarea 6 de Task Master. `apps/api` ya traía de la plantilla MEA las piezas `env
 ## Cross-refs
 - [[2026-10-15-railway-mysql-y-db-local]] — base local y de Railway que usará esta API.
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — monorepo y CI.
+- [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — tarea 7: Prisma 7 y el schema que dejó pendiente esta sesión.
 
 ## Fuentes
 - repo:apps/api/src/app.ts

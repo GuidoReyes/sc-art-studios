@@ -33,3 +33,11 @@
 
 ## [2026-10-17 22:40] ingest | 2026-10-17-scaffold-backend-express
 - Cross-refs: [[2026-10-15-railway-mysql-y-db-local]], [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccionales)
+
+## [2026-10-18 11:45] ingest | 2026-10-18-prisma-7-schema-y-migracion-inicial
+- Área: backend
+- Cross-refs: [[2026-10-17-scaffold-backend-express]], [[2026-10-15-railway-mysql-y-db-local]], [[2026-10-18-guia-contadores-llc-y-stripe]] (bidireccionales)
+
+## [2026-10-18 11:45] ingest | 2026-10-18-guia-contadores-llc-y-stripe
+- Área: negocio
+- Cross-refs: [[2026-10-18-prisma-7-schema-y-migracion-inicial]], [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccionales)

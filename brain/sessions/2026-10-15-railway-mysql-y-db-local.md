@@ -47,6 +47,7 @@ Tarea 5 [HUMANO] de Task Master. La CLI de Railway (5.68) ya estaba instalada y 
 - [[2026-10-17-scaffold-backend-express]] — tarea 6: scaffold del backend Express.
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — monorepo y CI sobre los que se monta la base.
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — rotación de secretos y restauración de respaldos que aplican a esta base.
+- [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — primera migración aplicada sobre esta base local; Railway la recibe con `migrate deploy`.
 
 ## Fuentes
 - repo:docker-compose.yml
