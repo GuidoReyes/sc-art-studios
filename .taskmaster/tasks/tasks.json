@@ -239,7 +239,7 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -247,9 +247,10 @@
             "description": "Ejecutar comando de compra del dominio principal scartstudios.com en Vercel CLI y opcionalmente el dominio secundario scartstudio.art",
             "dependencies": [],
             "details": "Ejecutar `vercel domains buy scartstudios.com` en terminal. Confirmar que el precio sea aproximadamente US$11.25/año antes de aceptar la compra. Opcionalmente, ejecutar también `vercel domains buy scartstudio.art` como dominio secundario si se desea redundancia. Verificar en Vercel Dashboard → Domains que el dominio aparece como registrado y activo. Guardar comprobante de compra para registros.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `vercel domains ls` y verificar que scartstudios.com aparece en la lista de dominios. Verificar en Vercel Dashboard que el dominio tiene status 'Active' o 'Registered'.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:35:53.548Z"
           },
           {
             "id": 2,
@@ -259,9 +260,10 @@
               1
             ],
             "details": "Acceder a Cloudflare Dashboard → Add a Site → ingresar 'scartstudios.com'. Seleccionar plan Free. Cloudflare escaneará registros DNS existentes (probablemente vacíos). Continuar al paso de nameservers donde Cloudflare asignará dos nameservers (típicamente algo como ns1.cloudflare.com y ns2.cloudflare.com, pero pueden variar). Anotar exactamente los dos nameservers asignados. La zona quedará en estado 'Pending Nameserver Update' hasta completar el paso 3.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar en Cloudflare Dashboard que la zona scartstudios.com existe y muestra los dos nameservers asignados. El status debe ser 'Pending Nameserver Update' en este punto.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:35:53.554Z"
           },
           {
             "id": 3,
@@ -271,14 +273,16 @@
               2
             ],
             "details": "En Vercel Dashboard → Domains → seleccionar scartstudios.com → Settings → Nameservers, cambiar a los dos nameservers proporcionados por Cloudflare en la subtarea anterior. Guardar cambios. La propagación DNS puede tomar entre 15 minutos y 48 horas. Verificar propagación ejecutando `dig NS scartstudios.com` periódicamente hasta que devuelva los nameservers de Cloudflare. Una vez verificado, actualizar `CLAUDE.md` agregando la línea de dominio principal. Actualizar `.env.example` agregando `DOMAIN=scartstudios.com`. Verificar que Cloudflare Dashboard muestra la zona como 'Active'.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `dig NS scartstudios.com` y verificar que devuelve los nameservers de Cloudflare (ej: ns1.cloudflare.com, ns2.cloudflare.com). Verificar en Cloudflare Dashboard que el status de la zona cambió de 'Pending' a 'Active'. Confirmar que CLAUDE.md y .env.example contienen la variable DOMAIN correcta.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:35:53.559Z"
           }
         ],
         "complexity": 2,
         "recommendedSubtasks": 3,
-        "expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio scartstudios.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS."
+        "expansionPrompt": "Dividir en: 1) [HUMANO] Comprar dominio scartstudios.com en Vercel y opcionalmente scartstudio.art, 2) Crear zona en Cloudflare y obtener nameservers asignados, 3) Cambiar nameservers en Vercel y verificar propagación con dig NS.",
+        "updatedAt": "2026-10-19T15:35:53.559Z"
       },
       {
         "id": "5",
@@ -3593,9 +3597,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-18T17:38:29.588Z",
+      "lastModified": "2026-10-19T15:35:53.559Z",
       "taskCount": 49,
-      "completedCount": 8,
+      "completedCount": 9,
       "tags": [
         "master"
       ]
