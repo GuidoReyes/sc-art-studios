@@ -12,9 +12,14 @@ export const routing = defineRouting({
   pathnames: {
     "/": "/",
     "/masks": { en: "/masks", es: "/mascaras" },
+    "/masks/[slug]": { en: "/masks/[slug]", es: "/mascaras/[slug]" },
     "/custom": { en: "/custom", es: "/personalizada" },
     "/stories": { en: "/stories", es: "/historias" },
+    "/videos": "/videos",
     "/contact": { en: "/contact", es: "/contacto" },
+    "/shipping": { en: "/shipping", es: "/envios" },
+    "/privacy": { en: "/privacy", es: "/privacidad" },
+    "/terms": { en: "/terms", es: "/terminos" },
     "/admin": "/admin",
   },
 });

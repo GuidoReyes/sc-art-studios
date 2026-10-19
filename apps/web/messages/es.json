@@ -9,11 +9,16 @@
     "masks": "Máscaras",
     "custom": "Personalizada",
     "stories": "Historias",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "videos": "Videos",
+    "menu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "cart": "{count, plural, =0 {Carrito vacío} one {Carrito: # máscara} other {Carrito: # máscaras}}"
   },
   "LocaleSwitcher": {
     "label": "Cambiar idioma",
-    "switchTo": "English"
+    "switchTo": "English",
+    "flag": "🇺🇸"
   },
   "Home": {
     "title": "SC Art Studio",
@@ -26,11 +31,21 @@
     "custom": "Máscaras personalizadas",
     "stories": "Historias",
     "contact": "Contacto",
-    "comingSoon": "Muy pronto."
+    "comingSoon": "Muy pronto.",
+    "videos": "Videos",
+    "shipping": "Envíos, aranceles y tiempos",
+    "privacy": "Privacidad",
+    "terms": "Términos y condiciones"
   },
   "Footer": {
     "adultNotice": "Un adulto de la familia responde los mensajes.",
-    "location": "Hecho en Guatemala"
+    "location": "Hecho en Guatemala",
+    "legalLabel": "Información legal",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "shipping": "Envíos",
+    "socialLabel": "Redes sociales",
+    "rights": "Todos los derechos reservados."
   },
   "Admin": {
     "title": "Panel de administración",
@@ -52,10 +67,23 @@
   "Masks": {
     "status": {
       "available": "Disponible",
+      "reserved": "Reservada",
       "sold": "Vendida",
-      "inProgress": "En proceso"
+      "commissionExample": "Ejemplo de encargo"
     },
     "handmade": "Hecho a mano en Guatemala",
-    "orderYours": "Ordena la tuya"
+    "orderYours": "Ordena la tuya",
+    "askSimilar": "Pide una parecida",
+    "noPhoto": "Foto muy pronto"
+  },
+  "Price": {
+    "approxGtq": "aprox. {amount}"
+  },
+  "WhatsApp": {
+    "label": "Escríbenos por WhatsApp",
+    "newTab": "(se abre en una pestaña nueva)"
+  },
+  "Social": {
+    "visit": "SC Art Studio en {platform} (se abre en una pestaña nueva)"
   }
 }
