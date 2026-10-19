@@ -53,6 +53,7 @@ Tarea 7 de Task Master. `apps/api` traía Prisma 5.22 y un schema de plantilla c
 - [[2026-10-17-scaffold-backend-express]] — la API Express que ahora tiene cliente de DB; ahí se había dejado Prisma 7 para esta tarea.
 - [[2026-10-15-railway-mysql-y-db-local]] — el MySQL local en Docker donde se aplicó la migración y el de Railway que la recibirá.
 - [[2026-10-18-guia-contadores-llc-y-stripe]] — misma sesión; la decisión de pasarela cambia los valores de `CostSettings`, no el schema.
+- [[2026-10-19-componentes-base-del-diseno]] — StatusPill refleja MaskStatus (sin DRAFT) y PriceTag recibe el tipo de cambio de CostSettings
 
 ## Fuentes
 - [[sources#tasks]]

@@ -42,6 +42,7 @@ Tarea 38: la mayor parte (proxy con Accept-Language, mensajes, selector que cons
 
 ## Cross-refs
 - [[2026-10-14-scaffold-frontend-nextjs-i18n]] — la tarea 25 montó next-intl; esta completa SEO, 404 y tipado
+- [[2026-10-19-componentes-base-del-diseno]] — agrega /videos, /envios, /privacidad, /terminos y /mascaras/[slug] al routing y al sitemap
 
 ## Fuentes
 - [[sources#prd]]
