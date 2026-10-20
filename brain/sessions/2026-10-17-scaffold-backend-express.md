@@ -54,6 +54,7 @@ Tarea 6 de Task Master. `apps/api` ya traía de la plantilla MEA las piezas `env
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — primeras rutas públicas sobre este scaffold: usan su manejador de errores y su rate limit de /api.
 - [[2026-10-19-endpoints-publicos-historias-y-videos]] — más rutas públicas sobre este scaffold, con su manejador de errores y su rate limit.
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — el formulario de encargos usa FORM_RATE_LIMIT, el manejador de errores y los logs sin datos personales.
+- [[2026-10-20-login-admin-refresh-rotativo-csrf]] — el login del admin usa su `LOGIN_RATE_LIMIT`, cookie-parser y `lib/password.ts`.
 
 ## Fuentes
 - repo:apps/api/src/app.ts

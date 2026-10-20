@@ -965,7 +965,7 @@
         "dependencies": [
           "8"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -973,9 +973,10 @@
             "description": "Instalar dependencia argon2 y extender prisma/seed.ts para crear el usuario administrador inicial con email 'admin@scartstudios.com', password hasheado con argon2id y rol OWNER",
             "dependencies": [],
             "details": "1. Instalar dependencia: `npm install argon2 --workspace=@sc-art-studio/api`\n2. En `apps/api/prisma/seed.ts`, importar argon2: `import * as argon2 from 'argon2'`\n3. Crear AdminUser con upsert:\n   - email: 'admin@scartstudios.com'\n   - passwordHash: await argon2.hash('temp123', {type: argon2.argon2id})\n   - role: 'OWNER'\n   - createdAt: new Date()\n4. Verificar que el modelo AdminUser existe en schema.prisma con campos: id, email (unique), passwordHash, role (enum), lastLoginAt (nullable), createdAt\n5. Agregar tipos argon2 si se usa TypeScript estricto: `npm install -D @types/argon2` (si necesario)\n6. El password 'temp123' es temporal para desarrollo; documentar en README que debe cambiarse en producción",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm run prisma:seed`. Abrir Prisma Studio y verificar que existe AdminUser con email 'admin@scartstudios.com', que passwordHash es un string largo que inicia con '$argon2id$', y que role es 'OWNER'. Intentar verificar manualmente: `argon2.verify(hash, 'temp123')` debe retornar true.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:46.542Z"
           },
           {
             "id": 2,
@@ -985,9 +986,10 @@
               1
             ],
             "details": "1. Instalar dependencias: `npm install jsonwebtoken cookie-parser --workspace=@sc-art-studio/api` y tipos `npm install -D @types/jsonwebtoken @types/cookie-parser`\n2. Crear archivo `apps/api/src/routes/auth.ts` con router Express\n3. Agregar middleware cookie-parser en app principal\n4. POST `/api/auth/login`:\n   - Body Zod schema: { email: z.string().email(), password: z.string().min(1) }\n   - Buscar AdminUser por email en Prisma\n   - Si no existe, retornar 401 'Credenciales inválidas' (mensaje genérico por seguridad)\n   - Verificar password: `await argon2.verify(user.passwordHash, password)`\n   - Si falla, retornar 401 'Credenciales inválidas'\n   - Si correcto, generar JWT: `jwt.sign({userId: user.id, role: user.role}, process.env.JWT_SECRET, {expiresIn: '15m'})`\n   - Actualizar lastLoginAt del usuario\n   - Guardar JWT en cookie: `res.cookie('adminToken', token, {httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', path: '/admin', maxAge: 15*60*1000})`\n5. Agregar JWT_SECRET a .env.example y documentar que debe ser string aleatorio de 32+ caracteres",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer POST /api/auth/login con {email: 'admin@scartstudios.com', password: 'temp123'}. Verificar respuesta 200, que Set-Cookie incluye 'adminToken' con flags HttpOnly, Secure (en prod), SameSite=Lax. Decodificar JWT y confirmar que contiene userId y role con exp de 15 min. Probar con password incorrecto y verificar 401.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:48.624Z"
           },
           {
             "id": 3,
@@ -997,9 +999,10 @@
               2
             ],
             "details": "1. Agregar modelo LoginAttempt a schema.prisma:\n   - id: Int @id @default(autoincrement())\n   - email: String @db.VarChar(255)\n   - failedCount: Int @default(0)\n   - lockedUntil: DateTime?\n   - lastAttemptAt: DateTime @default(now())\n   - @@index([email])\n2. Ejecutar migración: `npx prisma migrate dev --name add_login_attempts`\n3. En POST /api/auth/login, ANTES de verificar credenciales:\n   - Buscar LoginAttempt por email\n   - Si lockedUntil > now(), retornar 429 'Cuenta bloqueada temporalmente. Intente en X minutos'\n   - Si lockedUntil < now(), resetear failedCount a 0\n4. Si login falla:\n   - Incrementar failedCount (upsert si no existe)\n   - Si failedCount >= 5, set lockedUntil = now() + 15 minutos\n   - Actualizar lastAttemptAt\n5. Si login exitoso:\n   - Eliminar o resetear registro de LoginAttempt para ese email\n6. Constantes configurables: MAX_ATTEMPTS=5, LOCKOUT_MINUTES=15 (pueden venir de env o hardcoded inicialmente)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer 5 intentos de login con password incorrecto para admin@scartstudios.com. Verificar que los primeros 5 retornan 401. El intento 6 debe retornar 429 con mensaje de bloqueo. Verificar en DB que LoginAttempt tiene failedCount=5 y lockedUntil está 15 min en el futuro. Esperar (o modificar lockedUntil en test) y verificar que el login funciona nuevamente. Hacer login exitoso y verificar que LoginAttempt se resetea.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:50.638Z"
           },
           {
             "id": 4,
@@ -1009,9 +1012,10 @@
               2
             ],
             "details": "1. Generar refresh token junto con access token en login:\n   - Access token (JWT): 15 min expiración\n   - Refresh token: string aleatorio (crypto.randomBytes(32).toString('hex')) con 7 días expiración\n2. Agregar campo refreshToken y refreshTokenExp a AdminUser en schema.prisma:\n   - refreshToken: String? @db.VarChar(64)\n   - refreshTokenExp: DateTime?\n3. En login exitoso:\n   - Generar refresh token y guardar hash en DB (argon2 o bcrypt)\n   - Set cookie 'adminRefresh': {httpOnly: true, secure: true (prod), sameSite: 'lax', path: '/api/auth/refresh', maxAge: 7*24*60*60*1000}\n4. Crear POST `/api/auth/refresh`:\n   - Leer cookie adminRefresh\n   - Verificar contra DB que es válido y no expirado\n   - Generar nuevo access token JWT\n   - Opcionalmente rotar refresh token (más seguro)\n   - Devolver nuevo access token en cookie adminToken\n5. Frontend debe llamar /refresh antes de que expire el access token\n6. En logout, invalidar ambos tokens",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer login y verificar que se setean 2 cookies: adminToken (15min) y adminRefresh (7d). Esperar o manipular expiración de adminToken. Llamar POST /api/auth/refresh con adminRefresh cookie. Verificar que devuelve nuevo adminToken válido. Verificar que refresh token rota (el viejo ya no funciona). Hacer logout y verificar que ambas cookies se borran y refresh token en DB se invalida.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:52.686Z"
           },
           {
             "id": 5,
@@ -1021,9 +1025,10 @@
               2
             ],
             "details": "1. Opción A - Manual (recomendada para control total):\n   - Generar CSRF token en login: `crypto.randomBytes(32).toString('hex')`\n   - Almacenar en sesión o DB asociado al userId\n   - Devolver en response body del login: {csrfToken: '...'}\n   - Frontend almacena en memoria (NO localStorage por seguridad)\n2. Crear middleware validateCsrf:\n   - Aplicar solo a métodos que modifican estado (POST, PUT, DELETE, PATCH)\n   - Leer header 'X-CSRF-Token'\n   - Comparar con token almacenado para el usuario (timing-safe comparison)\n   - Si no coincide, retornar 403 'CSRF token inválido'\n3. Opción B - Usar csurf package:\n   - `npm install csurf` y configurar con cookie\n   - Menos control pero más estándar\n4. CSRF token debe renovarse:\n   - En cada refresh de access token\n   - O tener su propia expiración (ej: 1 hora)\n5. Documentar que frontend debe enviar header X-CSRF-Token en todas las requests a /admin/* y /api/admin/*",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer login y verificar que response body incluye csrfToken. Hacer POST a ruta protegida SIN header X-CSRF-Token, verificar 403. Hacer mismo POST CON header X-CSRF-Token correcto, verificar que pasa. Probar con CSRF token de otra sesión, verificar 403. Verificar que GET requests no requieren CSRF token.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:54.722Z"
           },
           {
             "id": 6,
@@ -1035,14 +1040,16 @@
               5
             ],
             "details": "1. Crear middleware `requireAdmin` en `apps/api/src/middleware/auth.ts`:\n   - Leer cookie 'adminToken'\n   - Si no existe, retornar 401 'No autenticado'\n   - Verificar JWT: `jwt.verify(token, process.env.JWT_SECRET)`\n   - Si inválido o expirado, retornar 401 'Sesión expirada'\n   - Agregar user info a req: `req.adminUser = {id, role}`\n   - Llamar middleware validateCsrf para POST/PUT/DELETE\n   - Llamar next()\n2. Aplicar requireAdmin a todas las rutas `/api/admin/*`\n3. Agregar modelo AuditLog a schema.prisma si no existe:\n   - id, action (enum: LOGIN, CREATE, UPDATE, DELETE), entityType, entityId, userId, details (JSON), createdAt\n4. En login exitoso (después de generar tokens):\n   - Crear AuditLog: {action: 'LOGIN', entityType: 'AdminUser', entityId: user.id, userId: user.id, details: {ip: req.ip, userAgent: req.headers['user-agent']}}\n5. POST `/api/auth/logout`:\n   - Limpiar cookies adminToken y adminRefresh\n   - Invalidar refresh token en DB\n   - Opcionalmente registrar LOGOUT en AuditLog\n   - Retornar 200 {success: true}",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Intentar acceder a GET /api/admin/masks sin cookie, verificar 401. Hacer login, obtener cookies y CSRF. Acceder a misma ruta con cookie válida y CSRF en header, verificar 200. Verificar en DB que AuditLog tiene registro con action='LOGIN', userId correcto, y details con IP y userAgent. Hacer logout, verificar que cookies se borran. Intentar acceder nuevamente, verificar 401. Verificar que refresh token en DB está invalidado.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:45:56.709Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Dividir en: 1) Crear AdminUser en seed con password hasheado con argon2id, 2) Implementar POST /api/auth/login con verificación argon2 y generación JWT, 3) Implementar sistema de bloqueo tras 5 intentos fallidos con tabla LoginAttempt, 4) Configurar cookies httpOnly/Secure/SameSite con refresh token, 5) Implementar generación y validación de CSRF token, 6) Crear middleware requireAdmin y registrar logins en AuditLog."
+        "expansionPrompt": "Dividir en: 1) Crear AdminUser en seed con password hasheado con argon2id, 2) Implementar POST /api/auth/login con verificación argon2 y generación JWT, 3) Implementar sistema de bloqueo tras 5 intentos fallidos con tabla LoginAttempt, 4) Configurar cookies httpOnly/Secure/SameSite con refresh token, 5) Implementar generación y validación de CSRF token, 6) Crear middleware requireAdmin y registrar logins en AuditLog.",
+        "updatedAt": "2026-10-20T15:45:56.709Z"
       },
       {
         "id": "14",
@@ -3634,9 +3641,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T15:34:49.112Z",
+      "lastModified": "2026-10-20T15:45:56.709Z",
       "taskCount": 49,
-      "completedCount": 15,
+      "completedCount": 16,
       "tags": [
         "master"
       ]

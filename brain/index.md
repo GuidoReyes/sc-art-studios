@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-20
-**Total de nodos:** 15 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 16 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -46,6 +46,7 @@
 
 ### seguridad
 
+- [[2026-10-20-login-admin-refresh-rotativo-csrf]] — Tarea 13: login del admin con argon2id, JWT 15 min, refresh rotativo con detección de reuso, CSRF por sesión, bloqueo 5/15 min y AuditLog
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — Tarea 37: husky + gitleaks en pre-commit, rotación de secretos, restauración de respaldos y plan de incidentes
 
 ---

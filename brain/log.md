@@ -65,3 +65,7 @@
 ## [2026-10-20 09:40] ingest | 2026-10-20-cotizador-de-envio-sin-perdida
 - Área: backend
 - Cross-refs: [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-19-formulario-de-encargos-con-foto-segura]], [[2026-10-19-endpoints-publicos-de-mascaras]] (bidireccionales)
+
+## [2026-10-20 09:50] ingest | 2026-10-20-login-admin-refresh-rotativo-csrf
+- Área: seguridad (área nueva en el índice)
+- Cross-refs: [[2026-10-20-cotizador-de-envio-sin-perdida]], [[2026-10-17-scaffold-backend-express]], [[2026-10-18-prisma-7-schema-y-migracion-inicial]] (bidireccionales)
