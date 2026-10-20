@@ -3,6 +3,8 @@ import { createLogger } from "./lib/logger.js";
 import { createApp } from "./app.js";
 import { createPrismaClient } from "./lib/db.js";
 import { createPrismaMaskRepository } from "./repositories/masks.js";
+import { createPrismaStoryRepository } from "./repositories/stories.js";
+import { createPrismaVideoRepository } from "./repositories/videos.js";
 import { SHUTDOWN_TIMEOUT_MS } from "./config.js";
 
 const logger = createLogger(env.LOG_LEVEL);
@@ -11,6 +13,8 @@ const app = createApp({
   allowedOrigins: [env.FRONTEND_URL],
   logger,
   masks: createPrismaMaskRepository(prisma),
+  stories: createPrismaStoryRepository(prisma),
+  videos: createPrismaVideoRepository(prisma),
 });
 
 const server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, "API escuchando"));

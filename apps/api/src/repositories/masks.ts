@@ -1,5 +1,6 @@
 import type { MaskDetailDto, MaskImageDto, MaskSummaryDto, PublicMaskStatus } from "@sc-art-studio/shared";
 import type { MaskStatus, Prisma, PrismaClient } from "../generated/prisma/client.js";
+import { VIDEO_EMBED_SELECT, latestFirst, publishedBy, toIso, toVideoEmbed } from "./links.js";
 
 export interface MaskListQuery {
   status?: PublicMaskStatus;
@@ -53,23 +54,14 @@ function detailSelect(now: Date) {
     widthCm: true,
     heightCm: true,
     images: { select: IMAGE_SELECT, orderBy: { sortOrder: "asc" } },
-    videos: {
-      select: { platform: true, url: true, externalId: true, title: true, thumbnailUrl: true, publishedAt: true },
-      orderBy: { publishedAt: "desc" },
-    },
-    stories: {
-      select: { slug: true, titleEs: true, titleEn: true },
-      where: { publishedAt: { not: null, lte: now } },
-      orderBy: { publishedAt: "desc" },
-    },
+    videos: { select: VIDEO_EMBED_SELECT, orderBy: latestFirst() },
+    stories: { select: { slug: true, titleEs: true, titleEn: true }, where: publishedBy(now), orderBy: latestFirst() },
   } satisfies Prisma.MaskSelect;
 }
 
 type SummaryRow = Prisma.MaskGetPayload<{ select: typeof SUMMARY_SELECT }>;
 type DetailRow = Prisma.MaskGetPayload<{ select: ReturnType<typeof detailSelect> }>;
 type ImageRow = SummaryRow["images"][number];
-
-const ORDER_BY = [{ publishedAt: "desc" }, { createdAt: "desc" }] satisfies Prisma.MaskOrderByWithRelationInput[];
 
 function toNumber(value: Prisma.Decimal | null): number | null {
   return value === null ? null : value.toNumber();
@@ -95,7 +87,7 @@ function toSummary(row: SummaryRow): MaskSummaryDto {
     priceUsd: toNumber(row.priceUsd),
     priceGtq: toNumber(row.priceGtq),
     featured: row.featured,
-    publishedAt: row.publishedAt?.toISOString() ?? null,
+    publishedAt: toIso(row.publishedAt),
     shopifyProductId: row.shopifyProductId,
     image: row.images[0] ? toImage(row.images[0]) : null,
   };
@@ -112,7 +104,7 @@ function toDetail(row: DetailRow): MaskDetailDto {
     weightGrams: row.weightGrams,
     dimensionsCm: length != null && width != null && height != null ? { length, width, height } : null,
     images: row.images.map(toImage),
-    videos: row.videos.map((video) => ({ ...video, publishedAt: video.publishedAt?.toISOString() ?? null })),
+    videos: row.videos.map(toVideoEmbed),
     stories: row.stories.map(({ slug, titleEs, titleEn }) => ({ slug, title: { es: titleEs, en: titleEn } })),
   };
 }
@@ -125,7 +117,7 @@ export function createPrismaMaskRepository(prisma: PrismaClient, now: () => Date
         prisma.mask.findMany({
           where,
           select: SUMMARY_SELECT,
-          orderBy: ORDER_BY,
+          orderBy: latestFirst(),
           skip: (query.page - 1) * query.limit,
           take: query.limit,
         }),

@@ -11,3 +11,4 @@ export const ContactSchema = z.object({
 export type Contact = z.infer<typeof ContactSchema>;
 
 export type * from "./masks.js";
+export type * from "./content.js";
