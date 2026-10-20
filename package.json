@@ -2,7 +2,7 @@
   "name": "@sc-art-studio/root",
   "private": true,
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "workspaces": [
     "apps/*",
@@ -21,11 +21,10 @@
     "prepare": "husky || true"
   },
   "allowScripts": {
-    "@prisma/client@5.22.0": true,
-    "@prisma/engines@5.22.0": true,
-    "argon2@0.41.1": true,
+    "@prisma/engines@7.10.1": true,
+    "argon2@0.45.1": true,
     "esbuild@0.28.2": true,
-    "prisma@5.22.0": true
+    "prisma@7.10.1": true
   },
   "devDependencies": {
     "husky": "^9.1.7"
