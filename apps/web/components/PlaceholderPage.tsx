@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-type PageKey = "masks" | "custom" | "stories" | "contact";
+type PageKey = "masks" | "custom" | "stories" | "videos" | "contact" | "shipping" | "privacy" | "terms";
 
 // Página provisional hasta que cada sección tenga su tarea propia.
 export function PlaceholderPage({ titleKey }: { titleKey: PageKey }) {

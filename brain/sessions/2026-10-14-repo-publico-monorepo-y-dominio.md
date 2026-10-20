@@ -51,6 +51,7 @@ Arranque del proyecto con Task Master (`task-master next`). Se ejecutaron la tar
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — tarea 37: gitleaks local como segunda barrera del repo público
 - [[2026-10-14-reglas-claude-md-y-agents-md]] — tarea 3, que amplía el CLAUDE.md creado en esta sesión
 - [[2026-10-18-guia-contadores-llc-y-stripe]] — tarea 36.2, decisión hermana de Fase 0 (LLC y pasarela).
+- [[2026-10-19-componentes-base-del-diseno]] — misma sesión en que se cerró la tarea 4: DNS en Cloudflare ya activo por el Registrar
 
 ## Fuentes
 - [[sources#tasks]]

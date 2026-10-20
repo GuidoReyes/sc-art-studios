@@ -50,6 +50,7 @@ Tarea 25: base del frontend en `apps/web` con App Router, next-intl (en/es), tok
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — tarea 38: completa hreflang, sitemap, 404 traducido y claves tipadas sobre este scaffold
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — base del monorepo y CSP de la plantilla sobre la que se construyó el frontend
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — el modo mantenimiento allí documentado se implementará en este proxy.ts; riesgo CSP anotado en el mismo docs/seguridad.md
+- [[2026-10-19-componentes-base-del-diseno]] — tarea 26: reemplaza el Header/Footer iniciales y agrega pink-deep y shadow-sticker a los tokens
 
 ## Fuentes
 - [[sources#ci]]

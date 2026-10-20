@@ -5,14 +5,21 @@
   --color-ink: #1b1b1b;
   --color-cream: #fff6e8;
   --color-pink: #e8307a;
+  /* Rosa para fondos con texto: el de marca no pasa WCAG AA con ningún color de texto (ver lib/palette.ts). */
+  --color-pink-deep: #c2255f;
   --color-purple: #6b3fa0;
   --color-turquoise: #1fa6a0;
   --color-orange: #f28c28;
+  --color-whatsapp: #25d366;
 
   --font-display: var(--font-bagel), ui-rounded, system-ui, sans-serif;
   --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 1.5rem;
+
+  /* Sombra dura desplazada, estilo calcomanía: shadow-sticker / shadow-sticker-lg */
+  --shadow-sticker: 4px 4px 0 0 var(--color-ink);
+  --shadow-sticker-lg: 7px 7px 0 0 var(--color-ink);
 }
 
 body {

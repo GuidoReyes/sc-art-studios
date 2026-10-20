@@ -5,11 +5,12 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.ts"],
-      // index.ts/env.ts solo arrancan el servidor.
+      // index.ts/env.ts solo arrancan el servidor y seed/index.ts el seed.
       // generated/ es el cliente que escribe `prisma generate`.
       exclude: [
         "src/**/*.test.ts",
         "src/index.ts",
+        "src/seed/index.ts",
         "src/lib/env.ts",
         "src/generated/**",
       ],

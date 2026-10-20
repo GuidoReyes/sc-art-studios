@@ -9,6 +9,8 @@ export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
+    // Solo crea lo que falta (src/seed/seed.ts); en Railway, sin tsx, se usa `node dist/seed/index.js`.
+    seed: "tsx src/seed/index.ts",
   },
   datasource: {
     // `prisma generate` (CI, build) no se conecta: puede correr sin DATABASE_URL.

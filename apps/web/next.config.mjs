@@ -31,6 +31,13 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  // Fotos de producto: CDN de Shopify y Cloudflare R2 (PRD §4.6). Mismos dominios que img-src de la CSP.
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "cdn.shopify.com" },
+      { protocol: "https", hostname: "*.r2.dev" },
+    ],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

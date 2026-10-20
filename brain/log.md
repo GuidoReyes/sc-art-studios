@@ -41,3 +41,11 @@
 ## [2026-10-18 11:45] ingest | 2026-10-18-guia-contadores-llc-y-stripe
 - Área: negocio
 - Cross-refs: [[2026-10-18-prisma-7-schema-y-migracion-inicial]], [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccionales)
+
+## [2026-10-19 09:55] ingest | 2026-10-19-componentes-base-del-diseno
+- Área: frontend
+- Cross-refs: [[2026-10-14-scaffold-frontend-nextjs-i18n]], [[2026-10-14-i18n-hreflang-sitemap-404]], [[2026-10-18-prisma-7-schema-y-migracion-inicial]], [[2026-10-14-repo-publico-monorepo-y-dominio]] (bidireccionales)
+
+## [2026-10-19 19:55] ingest | 2026-10-19-seed-tarifas-fedex-y-costos
+- Área: backend
+- Cross-refs: [[2026-10-18-prisma-7-schema-y-migracion-inicial]], [[2026-10-15-railway-mysql-y-db-local]], [[2026-10-18-guia-contadores-llc-y-stripe]], [[2026-10-19-componentes-base-del-diseno]] (bidireccionales)

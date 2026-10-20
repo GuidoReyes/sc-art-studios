@@ -560,7 +560,7 @@
         "dependencies": [
           "7"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -568,9 +568,10 @@
             "description": "Crear el archivo `apps/api/prisma/seed.ts` con la configuración inicial del Prisma Client, incluyendo la importación de las librerías necesarias, la instanciación del cliente y la estructura base del script de seeding con manejo de errores y desconexión apropiada.",
             "dependencies": [],
             "details": "1. Crear el archivo `apps/api/prisma/seed.ts`.\n2. Importar PrismaClient desde '@prisma/client' y Decimal desde '@prisma/client/runtime/library' (o desde 'decimal.js' según la configuración).\n3. Instanciar el PrismaClient.\n4. Crear la función `main()` async que contendrá toda la lógica de seeding.\n5. Estructurar el try/catch con `prisma.$disconnect()` en el finally.\n6. Agregar el script en `apps/api/package.json`: `\"prisma:seed\": \"tsx prisma/seed.ts\"`.\n7. Opcionalmente configurar en `prisma/schema.prisma` el bloque `generator client { previewFeatures = [\"prismaSchemaFolder\"] }` si aplica.\n8. Usar `console.log` para mostrar progreso de cada paso del seed.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ejecutar `npm run prisma:seed` en un entorno con la base de datos vacía y verificar que el script inicia sin errores de importación y se conecta correctamente a la base de datos antes de insertar datos.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T01:51:24.629Z"
           },
           {
             "id": 2,
@@ -580,9 +581,10 @@
               1
             ],
             "details": "1. Dentro de la función `main()`, crear las zonas de envío con `prisma.shippingZone.upsert()`.\n2. Zona C: code='C', name='América del Norte', countries=['US', 'CA', 'MX'] (JSON con códigos ISO 3166-1 alpha-2).\n3. Zona E: code='E', name='Europa', countries=['ES', 'DE'] (España y Alemania según el PRD).\n4. Zona F: code='F', name='Oceanía', countries=['AU'] (Australia).\n5. Usar `where: { code: 'X' }` para el upsert y evitar duplicados en re-ejecuciones.\n6. Guardar los IDs retornados en variables (`zonaC`, `zonaE`, `zonaF`) para usarlos al insertar las tarifas.\n7. Agregar logs de confirmación: `console.log('✓ ShippingZones creadas: C, E, F')`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar en Prisma Studio que existen exactamente 3 registros en ShippingZone con los códigos C, E, F y que el campo `countries` contiene el array JSON correcto para cada zona.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T01:51:24.633Z"
           },
           {
             "id": 3,
@@ -592,9 +594,10 @@
               2
             ],
             "details": "1. Usar los IDs de las zonas creadas en la subtarea anterior.\n2. Insertar tarifas FedEx International Economy zona C:\n   - 1kg: costUsd=new Decimal('138.80'), maxWeightKg=new Decimal('1')\n   - 2kg: costUsd=new Decimal('179.60'), maxWeightKg=new Decimal('2')\n   - 5kg: costUsd=new Decimal('337.00'), maxWeightKg=new Decimal('5')\n3. Insertar tarifas zona E:\n   - 2kg: costUsd=new Decimal('241.30'), maxWeightKg=new Decimal('2')\n4. Insertar tarifas zona F:\n   - 2kg: costUsd=new Decimal('277.00'), maxWeightKg=new Decimal('2')\n5. Campos comunes: carrier='FEDEX', service='International Economy', validFrom=new Date(), validTo=null, source='Guía FedEx GT 2026 - https://www.fedex.com/content/dam/fedex/international/rates/fedex-rates-all-es-gt-2026.pdf', isEstimate=false.\n6. Usar `createMany` o múltiples `upsert` según el schema permita unique constraints.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "En Prisma Studio verificar que existen al menos 5 registros en ShippingRate con carrier='FEDEX' y service='International Economy'. Verificar que los valores Decimal son correctos (138.80, 179.60, 337.00, 241.30, 277.00) y que la fuente incluye la URL del PDF de FedEx.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T01:51:24.637Z"
           },
           {
             "id": 4,
@@ -604,9 +607,10 @@
               1
             ],
             "details": "1. PackagingProfile 'Estándar':\n   - name='Estándar (SUPUESTO)', innerCm='25x20x15', outerLengthCm=30, outerWidthCm=25, outerHeightCm=20, packagingWeightGrams=200, costGtq=new Decimal('45').\n   - Marcar en el nombre o descripción que es SUPUESTO según reglas del PRD.\n2. CostSettings (1 fila):\n   - fxUsdGtq=new Decimal('7.645') (TC verificado 13-oct-2026)\n   - gatewayPct=new Decimal('7.4') (2% Shopify + 5.4% PayPal)\n   - gatewayFixedUsd=new Decimal('0.30')\n   - shopifyThirdPartyPct=new Decimal('2.0')\n   - monthlyFixedUsd=new Decimal('54.94')\n   - expectedUnitsPerMonth=8 (SUPUESTO)\n   - laborRateGtqPerHour=new Decimal('25') (SUPUESTO)\n   - targetMarginPct=new Decimal('40')\n   - volumetricDivisor=5000\n   - usImportDutyPct=new Decimal('10') (Sección 301)\n   - updatedAt=new Date(), updatedBy='seed'.\n3. Usar upsert para ambos modelos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "En Prisma Studio verificar: 1 PackagingProfile con nombre que incluya 'Estándar' y costGtq=45, 1 CostSettings con fxUsdGtq=7.645, gatewayPct=7.4, targetMarginPct=40, volumetricDivisor=5000. Confirmar que todos los valores Decimal tienen la precisión correcta.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T01:51:24.641Z"
           },
           {
             "id": 5,
@@ -616,14 +620,16 @@
               4
             ],
             "details": "1. Crear 4 registros Mask con los siguientes datos:\n   - Jaguar Dorado: slug='jaguar-dorado', nameEs='Jaguar Dorado', nameEn='Golden Jaguar', animal='jaguar', status='DRAFT'\n   - Lobo Florido: slug='lobo-florido', nameEs='Lobo Florido', nameEn='Floral Wolf', animal='lobo', status='DRAFT'\n   - Venado Rosa: slug='venado-rosa', nameEs='Venado Rosa', nameEn='Pink Deer', animal='venado', status='DRAFT'\n   - Cebra Mágica: slug='cebra-magica', nameEs='Cebra Mágica', nameEn='Magic Zebra', animal='cebra', status='DRAFT'\n2. Campos en NULL: priceUsd, priceGtq, shopifyProductId, shopifyVariantId, materialsCostGtq, laborHours, weightGrams, lengthCm, widthCm, heightCm.\n3. Campos requeridos con defaults: featured=false, descriptionEs/En='', storyEs/En='', publishedAt=null.\n4. Vincular packagingProfileId al perfil 'Estándar' creado en subtarea 4.\n5. Usar upsert con `where: { slug: 'x' }` para permitir re-ejecución.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "En Prisma Studio verificar que existen 4 registros en Mask con status='DRAFT', todos con priceUsd y priceGtq en NULL, sin shopifyProductId. Verificar que los slugs son únicos y correctos (jaguar-dorado, lobo-florido, venado-rosa, cebra-magica).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T01:51:24.645Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear seed.ts con configuración de Prisma Client, 2) Insertar ShippingZones (zona C: US/CA/MX, zona E: Europa, zona F: Australia), 3) Insertar ShippingRates con tarifas FedEx verificadas de Sección 6.4, 4) Insertar PackagingProfile y CostSettings con valores de Sección 6.2, 5) Insertar 4 Masks en estado DRAFT (Jaguar Dorado, Lobo Florido, Venado Rosa, Cebra Mágica)."
+        "expansionPrompt": "Dividir en: 1) Crear seed.ts con configuración de Prisma Client, 2) Insertar ShippingZones (zona C: US/CA/MX, zona E: Europa, zona F: Australia), 3) Insertar ShippingRates con tarifas FedEx verificadas de Sección 6.4, 4) Insertar PackagingProfile y CostSettings con valores de Sección 6.2, 5) Insertar 4 Masks en estado DRAFT (Jaguar Dorado, Lobo Florido, Venado Rosa, Cebra Mágica).",
+        "updatedAt": "2026-10-20T01:51:24.645Z"
       },
       {
         "id": "9",
@@ -1865,7 +1871,7 @@
         "dependencies": [
           "25"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1873,9 +1879,10 @@
             "description": "Implementar el componente Header completo con logo 'SC Art Studio' usando fuente Bagel Fat One, links de navegación (Máscaras, Personalizada, Historias, Videos, Contacto), selector de idioma con banderas US/GT, y ícono de carrito con contador integrado con Shopify. Debe ser completamente responsive con menú hamburguesa en móvil.",
             "dependencies": [],
             "details": "Crear `apps/web/components/Header.tsx` con TypeScript y Tailwind. Estructura: contenedor flex con logo a la izquierda (texto estilizado con font-bagel-fat-one), nav central con links usando next/link y usePathname para marcar activo, selector de idioma a la derecha con dropdown y banderas (emoji 🇺🇸/🇬🇹 o SVG), ícono de carrito con badge contador. Para móvil (breakpoint md:): ocultar nav desktop, mostrar botón hamburguesa que abre drawer/sheet lateral con los mismos links verticales. Usar useState para controlar apertura del menú móvil. El contador del carrito debe conectarse al contexto de Shopify Buy SDK (o placeholder si aún no está implementado). Usar heroicons o lucide-react para íconos (ShoppingCartIcon, Bars3Icon, XMarkIcon). Aplicar bordes de 4px y border-radius según sistema de diseño. Colores según paleta: fondo cream (#FFF8E7), texto black/brown.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Renderizar Header en página de prueba. Verificar: logo visible con fuente correcta, todos los links funcionan y navegan, selector de idioma muestra dropdown al hacer clic, carrito muestra ícono con badge '0'. En viewport móvil (<768px): verificar que nav desktop se oculta, aparece hamburguesa, al hacer clic abre drawer con links, al hacer clic en X o fuera se cierra. Verificar accesibilidad con tab navigation.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.513Z"
           },
           {
             "id": 2,
@@ -1885,9 +1892,10 @@
               1
             ],
             "details": "Crear `apps/web/components/Footer.tsx`. Layout: grid o flex responsivo. Sección izquierda: logo (reutilizar estilo del Header o crear componente Logo compartido). Sección central: links legales como lista de next/link a /privacidad, /terminos, /envios. Sección derecha: integrar SocialLinks (creado en subtask 5) o placeholder temporal. Parte inferior: copyright '© {año} SC Art Studio. Todos los derechos reservados.' usando new Date().getFullYear(). Fondo usando color de paleta (ej: pink-100 o cream), padding generoso (py-12), border-top sutil. En móvil: stack vertical centrado. Asegurar que links tienen hover states apropiados.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Renderizar Footer en página de prueba. Verificar: logo visible, tres links legales presentes y clickeables (pueden ir a 404 por ahora), SocialLinks visible con íconos, copyright muestra año actual (2024 o 2025). En móvil: verificar que elementos se apilan verticalmente sin overflow. Verificar contraste de colores para accesibilidad.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.518Z"
           },
           {
             "id": 3,
@@ -1897,9 +1905,10 @@
               4
             ],
             "details": "Crear `apps/web/components/MaskCard.tsx`. Props: { mask: { id, name, animal, imageUrl, status, priceUsd, priceGtq }, showGtq?: boolean }. Estructura: contenedor con aspect-square para imagen (usar next/image con fill y object-cover dentro de div relative), debajo: nombre (font-semibold), animal (text-sm text-gray-600), flex row con StatusPill y PriceTag. Aplicar border-radius de 24px según sistema de diseño, border de 4px en hover, sombra sutil. Transiciones suaves en hover (scale, shadow). Hacer clickeable (Link a /mascaras/[id]). Asegurar que imagen tiene alt text apropiado. Manejar caso de imagen faltante con placeholder.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Renderizar MaskCard con datos de prueba: { name: 'Jaguar Dorado', animal: 'Jaguar', imageUrl: '/placeholder.jpg', status: 'AVAILABLE', priceUsd: 95, priceGtq: 726 }. Verificar: imagen se muestra en aspect-square sin distorsión, nombre y animal visibles, StatusPill verde con 'Disponible', PriceTag con US$95. Probar con status SOLD (pill gris) y RESERVED (pill amarillo). Verificar hover effects. En móvil: verificar que la tarjeta se ve bien en anchos pequeños.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.522Z"
           },
           {
             "id": 4,
@@ -1907,9 +1916,10 @@
             "description": "Implementar StatusPill como badge con colores según estado (AVAILABLE=verde, SOLD=gris, RESERVED=amarillo) y PriceTag que muestra precio en USD y opcionalmente en GTQ para visitantes de Guatemala.",
             "dependencies": [],
             "details": "Crear `apps/web/components/StatusPill.tsx`. Props: { status: 'AVAILABLE' | 'SOLD' | 'RESERVED' }. Mapeo de colores: AVAILABLE → bg-green-100 text-green-800, SOLD → bg-gray-100 text-gray-600, RESERVED → bg-yellow-100 text-yellow-800. Mapeo de texto (español): AVAILABLE → 'Disponible', SOLD → 'Vendida', RESERVED → 'Reservada'. Estilo: inline-flex, px-2 py-0.5, text-xs font-medium, rounded-full. Crear `apps/web/components/PriceTag.tsx`. Props: { priceUsd: number, priceGtq?: number, showGtq?: boolean }. Mostrar siempre 'US${priceUsd}' formateado. Si showGtq y priceGtq existe, mostrar también '/ Q{priceGtq}' (o usar separador visual). Usar Intl.NumberFormat para formato de moneda apropiado. Estilo: font-semibold para USD, text-sm para GTQ.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Renderizar StatusPill con cada status: AVAILABLE (verde, 'Disponible'), SOLD (gris, 'Vendida'), RESERVED (amarillo, 'Reservada'). Verificar colores y texto correctos. Renderizar PriceTag con priceUsd=95. Verificar muestra 'US$95'. Renderizar con priceUsd=95, priceGtq=726, showGtq=true. Verificar muestra ambos precios. Renderizar con showGtq=false, verificar que solo muestra USD.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.526Z"
           },
           {
             "id": 5,
@@ -1917,9 +1927,10 @@
             "description": "Implementar SectionBlock como contenedor con fondo de color de la paleta, WhatsAppButton como botón verde con ícono que abre wa.me con mensaje prellenado, y SocialLinks con íconos de YouTube, TikTok e Instagram con sus respectivos links.",
             "dependencies": [],
             "details": "Crear `apps/web/components/SectionBlock.tsx`. Props: { color: 'cream' | 'pink' | 'yellow' | 'green' | 'blue', children, className? }. Mapeo de colores a clases Tailwind según paleta del diseño (ej: cream → bg-[#FFF8E7], pink → bg-[#FFE4E6]). Aplicar padding (p-8 md:p-12), border-radius (rounded-3xl = 24px). Crear `apps/web/components/WhatsAppButton.tsx`. Props: { message?: string, phoneNumber?: string }. Botón con bg-[#25D366] (verde WhatsApp), texto blanco, ícono de WhatsApp (buscar en lucide-react o usar SVG). Link a `https://wa.me/{phoneNumber}?text={encodeURIComponent(message)}`. Phone number por defecto desde env o hardcoded para SC Art Studio. Crear `apps/web/components/SocialLinks.tsx`. Props: { youtubeUrl?, tiktokUrl?, instagramUrl?, size?: 'sm' | 'md' | 'lg' }. Renderizar íconos de cada red social como links externos (target='_blank', rel='noopener'). Usar lucide-react: Youtube, Instagram (TikTok puede necesitar SVG custom). Flex row con gap.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Renderizar SectionBlock con cada color y contenido hijo. Verificar que el fondo cambia según prop color, padding y border-radius correctos. Renderizar WhatsAppButton, verificar color verde, ícono visible, al hacer clic abre wa.me en nueva pestaña con mensaje prellenado. Renderizar SocialLinks con URLs de prueba, verificar 3 íconos visibles, cada uno abre link correcto en nueva pestaña. Verificar hover states en todos los componentes.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.530Z"
           },
           {
             "id": 6,
@@ -1933,14 +1944,16 @@
               5
             ],
             "details": "Crear `apps/web/app/[locale]/(dev)/test-components/page.tsx`. Esta página solo debe existir en desarrollo (agregar redirección o 404 en producción). Estructura: secciones claramente separadas para cada componente. Header: renderizar Header completo en la parte superior. StatusPill: mostrar los 3 estados (AVAILABLE, SOLD, RESERVED) en fila. PriceTag: mostrar variantes (solo USD, USD+GTQ). MaskCard: grid de 3-4 cards con diferentes datos de prueba (diferentes status, con/sin imagen). SectionBlock: mostrar cada color con contenido de ejemplo. WhatsAppButton: botón funcional con mensaje de prueba. SocialLinks: con URLs reales de SC Art Studio si están disponibles. Footer: renderizar al final. Agregar títulos h2 para cada sección, spacing apropiado. Opcional: agregar controles interactivos para cambiar props dinámicamente.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Abrir /test-components en navegador. Verificar visualmente: Header muestra logo, nav, idioma, carrito. StatusPill muestra 3 variantes con colores correctos. PriceTag muestra formatos de precio correctos. MaskCard muestra imagen, nombre, pills y precios integrados. SectionBlock muestra cada color de paleta. WhatsAppButton abre wa.me al hacer clic. SocialLinks tienen íconos clickeables. Footer muestra logo, links, social, copyright. Probar en viewport móvil: verificar Header hamburguesa funciona, MaskCards se apilan, Footer se adapta. Capturar screenshots para documentación.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-19T15:48:29.534Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Dividir en: 1) Crear Header con logo, nav, selector de idioma y carrito, 2) Crear Footer con logo, links legales, SocialLinks y copyright, 3) Crear MaskCard con imagen, nombre, StatusPill y PriceTag, 4) Crear StatusPill y PriceTag (USD/GTQ), 5) Crear SectionBlock, WhatsAppButton y SocialLinks, 6) Crear página de prueba para verificar todos los componentes."
+        "expansionPrompt": "Dividir en: 1) Crear Header con logo, nav, selector de idioma y carrito, 2) Crear Footer con logo, links legales, SocialLinks y copyright, 3) Crear MaskCard con imagen, nombre, StatusPill y PriceTag, 4) Crear StatusPill y PriceTag (USD/GTQ), 5) Crear SectionBlock, WhatsAppButton y SocialLinks, 6) Crear página de prueba para verificar todos los componentes.",
+        "updatedAt": "2026-10-19T15:48:29.534Z"
       },
       {
         "id": "27",
@@ -3597,9 +3610,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-19T15:35:53.559Z",
+      "lastModified": "2026-10-20T01:51:24.645Z",
       "taskCount": 49,
-      "completedCount": 9,
+      "completedCount": 11,
       "tags": [
         "master"
       ]
