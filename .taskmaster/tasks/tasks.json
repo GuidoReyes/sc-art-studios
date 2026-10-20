@@ -789,7 +789,7 @@
         "dependencies": [
           "9"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -797,9 +797,10 @@
             "description": "Instalar dependencias necesarias y configurar el cliente AWS S3 SDK para conectarse a Cloudflare R2 con las credenciales apropiadas",
             "dependencies": [],
             "details": "Instalar `@aws-sdk/client-s3` y `@aws-sdk/s3-request-presigner` para compatibilidad S3. Crear archivo `apps/api/src/lib/r2Client.ts` con configuración del cliente S3 apuntando al endpoint de R2: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`. Configurar credenciales usando R2_ACCESS_KEY_ID y R2_SECRET_ACCESS_KEY. Exportar instancia del cliente y constante del bucket R2_BUCKET. Agregar variables R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET a `.env.example` con comentarios descriptivos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear test unitario que verifique que el cliente R2 se inicializa correctamente con las variables de entorno. Verificar que el endpoint apunta al formato correcto de Cloudflare. Hacer prueba de conexión listando buckets (si las credenciales tienen permiso) o manejando error de forma controlada.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.662Z"
           },
           {
             "id": 2,
@@ -809,9 +810,10 @@
               1
             ],
             "details": "Crear archivo `apps/api/src/schemas/customRequest.ts`. Definir esquema Zod con campos: name (string, min 2, max 100), email (string.email()), whatsapp (string, regex para formato internacional +XX...), country (string, ISO 3166-1 alpha-2, validar contra lista), idea (string, min 10, max 2000), colors (string, max 500), size (enum: 'small', 'medium', 'large', 'custom'), use (string, max 500), desiredDate (string, formato ISO date, opcional), hasReference (boolean), turnstileToken (string, min 1). Exportar tipo TypeScript inferido del esquema. Crear mensajes de error en español e inglés.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Escribir tests unitarios para el esquema Zod: validar que acepta payload correcto, rechaza email inválido, rechaza país no ISO, rechaza idea muy corta, rechaza size fuera de enum. Verificar que los mensajes de error son descriptivos. Probar edge cases como campos vacíos y tipos incorrectos.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.666Z"
           },
           {
             "id": 3,
@@ -821,9 +823,10 @@
               1
             ],
             "details": "Crear archivo `apps/api/src/lib/turnstile.ts`. Implementar función `verifyTurnstileToken(token: string, remoteIp?: string): Promise<{success: boolean, error?: string}>`. Hacer POST a `https://challenges.cloudflare.com/turnstile/v0/siteverify` con body form-urlencoded: secret=TURNSTILE_SECRET, response=token, remoteip=ip. Parsear respuesta JSON: {success: boolean, error-codes?: string[]}. Manejar errores de red con timeout de 5 segundos. Agregar TURNSTILE_SECRET a `.env.example`. Crear tipo para la respuesta del API de Cloudflare.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear tests con mocks de fetch para simular respuesta exitosa y fallida de Turnstile. Verificar que maneja timeout correctamente. Probar con token de prueba de Cloudflare (1x00000000000000000000AA = siempre pasa, 2x00000000000000000000AB = siempre falla). Verificar logging apropiado de errores.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.670Z"
           },
           {
             "id": 4,
@@ -833,9 +836,10 @@
               1
             ],
             "details": "En `apps/api/src/lib/r2Client.ts`, agregar función `generateUploadUrl(key: string, contentType: string, expiresIn: number = 3600): Promise<string>`. Usar `@aws-sdk/s3-request-presigner` con comando PutObjectCommand. El key debe tener formato: `custom-requests/{requestId}/{uuid}.{extension}`. Validar contentType contra lista blanca: image/jpeg, image/png, image/webp. Limitar tamaño máximo con header x-amz-content-length (ej: 10MB). Retornar URL firmada con expiración de 1 hora. Incluir metadata de request ID en el objeto.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario verificando que genera URL con formato correcto de R2. Verificar que incluye firma y expiración en query params. Test de integración (manual o con credenciales de prueba): generar URL y hacer PUT con imagen real, verificar que sube a R2. Probar rechazo de contentType no permitido.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.675Z"
           },
           {
             "id": 5,
@@ -847,9 +851,10 @@
               4
             ],
             "details": "Crear archivo `apps/api/src/routes/customRequests.ts`. Definir POST `/api/custom-requests`: 1) Parsear y validar body con esquema Zod, responder 400 si falla. 2) Verificar Turnstile token, responder 403 si inválido. 3) Crear registro CustomRequest en DB con Prisma: mapear campos del body, status='NEW', createdAt=now(). 4) Si hasReference=true: generar UUID para referenceR2Key, generar presigned URL. 5) Responder 201 con {id: requestId, uploadUrl?: string}. Envolver en try-catch para errores de DB, responder 500 con mensaje genérico. Loggear errores completos en servidor.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test de integración del endpoint completo: POST con payload válido y token Turnstile de prueba, verificar respuesta 201 y creación en DB. Probar con hasReference=true y verificar que devuelve uploadUrl. Probar payload inválido para verificar 400. Probar token Turnstile inválido para verificar 403. Verificar que errores de DB no exponen detalles.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.682Z"
           },
           {
             "id": 6,
@@ -859,14 +864,16 @@
               5
             ],
             "details": "Instalar `rate-limiter-flexible` o usar implementación con Redis/memoria. Crear middleware `apps/api/src/middleware/rateLimiter.ts`. Configurar límite: 5 puntos, duración 15 minutos (900 segundos), key por IP (req.ip o X-Forwarded-For). Aplicar middleware específicamente a POST /api/custom-requests. Responder 429 Too Many Requests cuando se excede, con header Retry-After indicando segundos restantes. Incluir mensaje en español/inglés: 'Demasiadas solicitudes. Por favor espera X minutos.' Loggear intentos bloqueados para monitoreo de abuso.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario del middleware con mocks: verificar que permite 5 requests y bloquea el 6to. Verificar que el contador se reinicia después de 15 minutos (mock de tiempo). Verificar que responde 429 con headers correctos. Test de integración: hacer 6 POST seguidos al endpoint y verificar que el último devuelve 429. Verificar logging de requests bloqueados.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T04:24:48.686Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Dividir en: 1) Configurar cliente S3 compatible para Cloudflare R2, 2) Implementar validación con Zod del formulario de encargo personalizado, 3) Integrar verificación de Cloudflare Turnstile con fetch al API de Cloudflare, 4) Generar presigned URL para subida de imagen de referencia a R2, 5) Crear registro en CustomRequest con manejo de errores, 6) Agregar rate limiting estricto (5 req/15min por IP)."
+        "expansionPrompt": "Dividir en: 1) Configurar cliente S3 compatible para Cloudflare R2, 2) Implementar validación con Zod del formulario de encargo personalizado, 3) Integrar verificación de Cloudflare Turnstile con fetch al API de Cloudflare, 4) Generar presigned URL para subida de imagen de referencia a R2, 5) Crear registro en CustomRequest con manejo de errores, 6) Agregar rate limiting estricto (5 req/15min por IP).",
+        "updatedAt": "2026-10-20T04:24:48.686Z"
       },
       {
         "id": "12",
@@ -3621,9 +3628,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T02:27:41.459Z",
+      "lastModified": "2026-10-20T04:24:48.686Z",
       "taskCount": 49,
-      "completedCount": 13,
+      "completedCount": 14,
       "tags": [
         "master"
       ]

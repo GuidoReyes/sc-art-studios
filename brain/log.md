@@ -57,3 +57,7 @@
 ## [2026-10-19 20:30] ingest | 2026-10-19-endpoints-publicos-historias-y-videos
 - Área: backend
 - Cross-refs: [[2026-10-19-endpoints-publicos-de-mascaras]], [[2026-10-17-scaffold-backend-express]] (bidireccionales)
+
+## [2026-10-19 22:30] ingest | 2026-10-19-formulario-de-encargos-con-foto-segura
+- Área: backend
+- Cross-refs: [[2026-10-19-endpoints-publicos-historias-y-videos]], [[2026-10-17-scaffold-backend-express]] (bidireccionales)
