@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-19
-**Total de nodos:** 12 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 13 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,6 +13,7 @@
 
 ### backend
 
+- [[2026-10-19-endpoints-publicos-historias-y-videos]] — Tarea 10: /api/stories, /:slug y /api/videos con el contrato de masks; solo historias publicadas y sin enlaces a borradores
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — Tarea 9: GET /api/masks y /:slug sin borradores ni costos, Zod estricto, caché solo en 200, tipos en shared; PR #9 unida
 - [[2026-10-19-seed-tarifas-fedex-y-costos]] — Tarea 8: seed que solo crea lo que falta: 3 zonas y 18 tarifas FedEx, CostSettings (PayPal 5.40 + Shopify 2.00), empaque supuesto, 4 máscaras DRAFT
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — Tarea 7: Prisma 7.10.1 + adapter MariaDB, 13 modelos y migración init, 43 pruebas (98.8 %)

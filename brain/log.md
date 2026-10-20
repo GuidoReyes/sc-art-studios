@@ -53,3 +53,7 @@
 ## [2026-10-19 20:15] ingest | 2026-10-19-endpoints-publicos-de-mascaras
 - Área: backend
 - Cross-refs: [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-17-scaffold-backend-express]], [[2026-10-19-componentes-base-del-diseno]] (bidireccionales)
+
+## [2026-10-19 20:30] ingest | 2026-10-19-endpoints-publicos-historias-y-videos
+- Área: backend
+- Cross-refs: [[2026-10-19-endpoints-publicos-de-mascaras]], [[2026-10-17-scaffold-backend-express]] (bidireccionales)

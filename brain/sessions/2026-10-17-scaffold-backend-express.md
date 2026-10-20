@@ -52,6 +52,7 @@ Tarea 6 de Task Master. `apps/api` ya traía de la plantilla MEA las piezas `env
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — monorepo y CI.
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — tarea 7: Prisma 7 y el schema que dejó pendiente esta sesión.
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — primeras rutas públicas sobre este scaffold: usan su manejador de errores y su rate limit de /api.
+- [[2026-10-19-endpoints-publicos-historias-y-videos]] — más rutas públicas sobre este scaffold, con su manejador de errores y su rate limit.
 
 ## Fuentes
 - repo:apps/api/src/app.ts

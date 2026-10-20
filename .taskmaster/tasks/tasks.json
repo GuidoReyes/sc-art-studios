@@ -721,7 +721,7 @@
         "dependencies": [
           "9"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -729,9 +729,10 @@
             "description": "Crear ruta para listar historias públicas con soporte de paginación usando query params limit y offset",
             "dependencies": [],
             "details": "En `apps/api/src/routes/stories.ts`: crear archivo de rutas. Definir schema Zod para query params: `{ limit: z.coerce.number().default(10).pipe(z.number().min(1).max(100)), offset: z.coerce.number().default(0).pipe(z.number().min(0)) }`. Implementar handler GET `/api/stories`: validar query con schema, usar Prisma `findMany` con `take: limit`, `skip: offset`, `orderBy: { publishedAt: 'desc' }`, incluir relación `mask` opcionalmente. Ejecutar `count` para total. Responder con `{ stories: Story[], total: number }`. Registrar ruta en el router principal de la API.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Probar GET /api/stories sin params (debe usar defaults limit=10, offset=0). Probar con params explícitos ?limit=5&offset=10. Verificar que devuelve array vacío si no hay datos. Verificar estructura de respuesta {stories, total}. Probar límites: limit=0 debe fallar validación, limit=101 también.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:27:41.447Z"
           },
           {
             "id": 2,
@@ -741,9 +742,10 @@
               1
             ],
             "details": "En `apps/api/src/routes/stories.ts`: agregar handler GET `/api/stories/:slug`. Definir schema Zod para params: `{ slug: z.string().min(1) }`. Usar Prisma `findUnique` con `where: { slug }`, incluir relación `mask` si existe. Si no encuentra resultado, responder 404 con `{ error: 'Historia no encontrada' }`. Si existe, responder con objeto `{ story: Story }`. Considerar incluir campos de contenido (bodyEs, bodyEn) para renderizado completo.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Probar GET /api/stories/slug-inexistente y verificar respuesta 404 con mensaje de error. Cuando existan datos de seed, probar con slug válido y verificar que devuelve la historia completa con su máscara relacionada si aplica.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:27:41.451Z"
           },
           {
             "id": 3,
@@ -751,9 +753,10 @@
             "description": "Crear ruta para listar videos públicos con filtro opcional por máscara asociada y paginación",
             "dependencies": [],
             "details": "Crear `apps/api/src/routes/videos.ts`. Definir schema Zod para query: `{ maskId: z.string().uuid().optional(), limit: z.coerce.number().default(10), offset: z.coerce.number().default(0) }`. Implementar handler GET `/api/videos`: validar query, construir cláusula `where` condicionalmente (`maskId ? { maskId } : {}`), usar Prisma `findMany` con `take/skip`, `orderBy: { publishedAt: 'desc' }`, incluir relaciones `mask` y `story`. Ejecutar `count` con mismo where para total. Responder `{ videos: Video[], total: number }`. Registrar ruta en router principal.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Probar GET /api/videos sin filtros (listar todos). Probar con ?maskId=uuid-válido para filtrar por máscara. Probar con maskId inválido (no UUID) y verificar error de validación 400. Verificar que incluye mask y story en cada video. Verificar paginación funciona correctamente.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:27:41.455Z"
           },
           {
             "id": 4,
@@ -765,14 +768,16 @@
               3
             ],
             "details": "En `packages/shared/src/types/`: crear o extender archivos para tipos `Story`, `Video`, `StoryListResponse`, `VideoListResponse`. Exportar desde index. En cada handler de stories.ts y videos.ts: agregar header `Cache-Control: public, max-age=120` para habilitar caché de 2 minutos. Implementar rate limiting de 60 req/min usando middleware existente o crear uno con store en memoria (Map con timestamps por IP). Aplicar rate limiter a todas las rutas GET de stories y videos. Responder 429 Too Many Requests si se excede límite.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que tipos Story y Video se exportan correctamente desde packages/shared. Hacer request a /api/stories y verificar header Cache-Control en respuesta. Simular 61 requests en 1 minuto desde misma IP y verificar que la 61va recibe 429. Verificar que tipos compilan sin errores en apps/api y apps/web.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:27:41.459Z"
           }
         ],
         "complexity": 4,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Implementar GET /api/stories con paginación (limit, offset), 2) Implementar GET /api/stories/:slug con lookup por slug, 3) Implementar GET /api/videos con filtro opcional por maskId, 4) Agregar tipos compartidos y headers de caché."
+        "expansionPrompt": "Dividir en: 1) Implementar GET /api/stories con paginación (limit, offset), 2) Implementar GET /api/stories/:slug con lookup por slug, 3) Implementar GET /api/videos con filtro opcional por maskId, 4) Agregar tipos compartidos y headers de caché.",
+        "updatedAt": "2026-10-20T02:27:41.459Z"
       },
       {
         "id": "11",
@@ -3616,9 +3621,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T02:11:48.282Z",
+      "lastModified": "2026-10-20T02:27:41.459Z",
       "taskCount": 49,
-      "completedCount": 12,
+      "completedCount": 13,
       "tags": [
         "master"
       ]
