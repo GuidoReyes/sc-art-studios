@@ -43,3 +43,8 @@ export type VideoListResponse = ListResponse<VideoDto>;
 export interface StoryDetailResponse {
   data: StoryDetailDto;
 }
+
+/** Respuesta de POST /api/custom-requests: solo el id; los datos del cliente no vuelven al navegador. */
+export interface CustomRequestCreatedResponse {
+  id: string;
+}

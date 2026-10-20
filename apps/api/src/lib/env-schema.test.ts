@@ -37,6 +37,37 @@ describe("parseEnv", () => {
     expect(env.SHOPIFY_WEBHOOK_SECRET).toBeUndefined();
   });
 
+  describe("Turnstile y R2 (formulario de encargos)", () => {
+    const integrations = {
+      TURNSTILE_SECRET: "0x4AAAAAAAsecreto",
+      R2_ACCOUNT_ID: "a".repeat(32),
+      R2_ACCESS_KEY_ID: "llave",
+      R2_SECRET_ACCESS_KEY: "secreto-r2",
+      R2_PRIVATE_BUCKET: "sc-art-studio-privado",
+    };
+
+    it("son opcionales fuera de producción", () => {
+      const env = parseEnv(valid);
+
+      expect(env.TURNSTILE_SECRET).toBeUndefined();
+      expect(env.R2_PRIVATE_BUCKET).toBeUndefined();
+    });
+
+    it("en producción son obligatorias: sin ellas el formulario quedaría sin anti-spam o sin fotos", () => {
+      const run = () => parseEnv({ ...valid, NODE_ENV: "production" });
+
+      expect(run).toThrow(/TURNSTILE_SECRET/);
+      expect(run).toThrow(/R2_PRIVATE_BUCKET/);
+      expect(parseEnv({ ...valid, ...integrations, NODE_ENV: "production" }).R2_ACCOUNT_ID).toBe("a".repeat(32));
+    });
+
+    it("rechaza un R2_ACCOUNT_ID que no es el id hexadecimal de Cloudflare", () => {
+      expect(() => parseEnv({ ...valid, ...integrations, R2_ACCOUNT_ID: "mi-cuenta.example" })).toThrow(
+        /R2_ACCOUNT_ID/,
+      );
+    });
+  });
+
   it("falla nombrando las variables inválidas sin mostrar sus valores", () => {
     const secret = "corto-y-secreto";
 

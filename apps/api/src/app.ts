@@ -9,6 +9,7 @@ import { errorHandler, notFound } from "./middleware/errors.js";
 import type { MaskRepository } from "./repositories/masks.js";
 import type { StoryRepository } from "./repositories/stories.js";
 import type { VideoRepository } from "./repositories/videos.js";
+import { type CustomRequestsDeps, createCustomRequestsRouter } from "./routes/customRequests.js";
 import { createMasksRouter } from "./routes/masks.js";
 import { createStoriesRouter } from "./routes/stories.js";
 import { createVideosRouter } from "./routes/videos.js";
@@ -21,9 +22,11 @@ export interface AppOptions {
   masks?: MaskRepository;
   stories?: StoryRepository;
   videos?: VideoRepository;
+  /** Sin Turnstile no hay formulario de encargos: se monta solo con sus dependencias. */
+  customRequests?: CustomRequestsDeps;
 }
 
-export function createApp({ allowedOrigins, logger, apiRateLimit, masks, stories, videos }: AppOptions) {
+export function createApp({ allowedOrigins, logger, apiRateLimit, masks, stories, videos, customRequests }: AppOptions) {
   const app = express();
 
   app.use(
@@ -47,6 +50,7 @@ export function createApp({ allowedOrigins, logger, apiRateLimit, masks, stories
   if (masks) app.use("/api/masks", createMasksRouter(masks));
   if (stories) app.use("/api/stories", createStoriesRouter(stories));
   if (videos) app.use("/api/videos", createVideosRouter(videos));
+  if (customRequests) app.use("/api/custom-requests", createCustomRequestsRouter(customRequests));
   // app.use("/api/admin", adminRoutes);
 
   app.use(notFound);
