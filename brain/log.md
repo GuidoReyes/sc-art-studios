@@ -61,3 +61,7 @@
 ## [2026-10-19 22:30] ingest | 2026-10-19-formulario-de-encargos-con-foto-segura
 - Área: backend
 - Cross-refs: [[2026-10-19-endpoints-publicos-historias-y-videos]], [[2026-10-17-scaffold-backend-express]] (bidireccionales)
+
+## [2026-10-20 09:40] ingest | 2026-10-20-cotizador-de-envio-sin-perdida
+- Área: backend
+- Cross-refs: [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-19-formulario-de-encargos-con-foto-segura]], [[2026-10-19-endpoints-publicos-de-mascaras]] (bidireccionales)

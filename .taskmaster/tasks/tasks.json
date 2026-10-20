@@ -885,7 +885,7 @@
         "dependencies": [
           "11"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -893,9 +893,10 @@
             "description": "Crear función que calcule el peso volumétrico usando las dimensiones del paquete y el divisor volumétrico configurado en CostSettings",
             "dependencies": [],
             "details": "Crear función `calculateVolumetricWeight(lengthCm: number, widthCm: number, heightCm: number, volumetricDivisor: number): Decimal` en `apps/api/src/utils/shipping-calculations.ts`. Usar biblioteca Decimal.js para precisión matemática. La fórmula es: (L × W × H) / volumetricDivisor. El divisor volumétrico típico es 5000 para cm/kg. Obtener volumetricDivisor desde la tabla CostSettings en la base de datos. Incluir validaciones: dimensiones deben ser > 0, divisor no puede ser 0. Retornar el resultado en kilogramos con 3 decimales de precisión.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: calcular peso volumétrico de caja 30×20×15 cm con divisor 5000 = 1.8 kg. Verificar que dimensiones negativas o cero lanzan error. Verificar precisión decimal del resultado.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:34:41.115Z"
           },
           {
             "id": 2,
@@ -905,9 +906,10 @@
               1
             ],
             "details": "Crear función `calculateBillableWeight(realWeightGrams: number, volumetricWeightKg: Decimal): Decimal` en el mismo archivo de utilidades. Convertir peso real de gramos a kg (dividir entre 1000). Usar Decimal.max() para comparar ambos pesos. Si se proporciona maskId, obtener peso de la máscara y sumar peso del PackagingProfile asociado (weightGrams del packaging). Calcular dimensiones empacadas: dimensiones de máscara + márgenes del PackagingProfile (si aplica). Retornar peso facturable en kg con precisión de 3 decimales.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test: peso real 800g (0.8kg) vs volumétrico 1.2kg → retorna 1.2kg. Test: peso real 1.5kg vs volumétrico 1.0kg → retorna 1.5kg. Verificar conversión correcta de gramos a kg.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:34:43.114Z"
           },
           {
             "id": 3,
@@ -915,9 +917,10 @@
             "description": "Implementar búsqueda de ShippingZone en la base de datos usando el código ISO del país de destino",
             "dependencies": [],
             "details": "Crear función `findShippingZoneByCountry(countryCode: string): Promise<ShippingZone | null>` en `apps/api/src/services/shipping.service.ts`. Validar que countryCode sea un código ISO 3166-1 alpha-2 válido (2 letras mayúsculas). Consultar tabla ShippingZone donde el array de países contiene el código proporcionado. Si no se encuentra zona, retornar null (el endpoint manejará el error apropiado). Incluir eager loading de ShippingRates para evitar queries N+1. Cachear resultado en memoria por 5 minutos para países frecuentes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test: buscar zona para 'US' retorna zona 'C' (FedEx). Test: buscar zona para país no configurado (ej: 'JP') retorna null. Verificar que códigos inválidos (ej: 'USA', '12') son rechazados con error de validación.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:34:45.075Z"
           },
           {
             "id": 4,
@@ -925,9 +928,10 @@
             "description": "Implementar fórmula que ajuste el costo base para cubrir comisiones de pasarela (Stripe/PayPal) sin pérdida para el negocio",
             "dependencies": [],
             "details": "Crear función `calculateChargeWithGatewayFee(costUsd: Decimal, gatewayPct: number): Decimal` en utilidades de shipping. La fórmula es: chargeUsd = costUsd / (1 - gatewayPct/100). Ejemplo: si costo es $20 y comisión es 3.5%, charge = 20 / (1 - 0.035) = $20.73. Obtener gatewayPct desde CostSettings (típico: 3.5% para Stripe). Usar Decimal.js para todos los cálculos monetarios. Redondear al centavo más cercano (2 decimales) hacia arriba para no perder. Validar que gatewayPct esté entre 0 y 100.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test: costo $20, comisión 3.5% → charge $20.73. Test: costo $100, comisión 2.9% → charge $103.00. Verificar que $20.73 - 3.5% ≈ $20 (cubre exactamente el costo). Verificar redondeo hacia arriba.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:34:47.041Z"
           },
           {
             "id": 5,
@@ -940,14 +944,16 @@
               4
             ],
             "details": "Crear `apps/api/src/routes/shipping.ts` con POST `/api/shipping/quote`. Definir schema Zod para body con discriminated union: {country, maskId?} | {country, weightGrams, lengthCm, widthCm, heightCm}. Aplicar rate limiting: 20 req/min por IP usando express-rate-limit. Flujo: 1) Validar input, 2) Si maskId, obtener Mask y PackagingProfile, 3) Calcular peso volumétrico, 4) Calcular peso facturable, 5) Buscar zona por país, 6) Query ShippingRates donde maxWeightKg >= billableWeight ORDER BY maxWeightKg ASC, 7) Para cada rate, calcular chargeUsd con comisión, 8) Retornar {options: [{carrier, service, deliveryDays, costUsd, chargeUsd, isEstimate: true}]}. Manejar errores: país sin zona → 400 con mensaje claro.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "POST con {country: 'US', maskId: <jaguar>} → al menos 1 opción FedEx, chargeUsd > costUsd. POST con dims manuales → verificar cálculo volumétrico. POST con país sin zona → error 400 apropiado. Verificar rate limit: 21 requests rápidos → 429.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T15:34:49.111Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Implementar cálculo de peso volumétrico con fórmula (L×W×H)/divisor, 2) Implementar lógica de peso facturable: max(peso real empacado, volumétrico), 3) Buscar zona de envío por código de país ISO, 4) Calcular precio al cliente para cubrir comisiones de pasarela, 5) Construir respuesta con múltiples opciones de carrier/servicio."
+        "expansionPrompt": "Dividir en: 1) Implementar cálculo de peso volumétrico con fórmula (L×W×H)/divisor, 2) Implementar lógica de peso facturable: max(peso real empacado, volumétrico), 3) Buscar zona de envío por código de país ISO, 4) Calcular precio al cliente para cubrir comisiones de pasarela, 5) Construir respuesta con múltiples opciones de carrier/servicio.",
+        "updatedAt": "2026-10-20T15:34:49.111Z"
       },
       {
         "id": "13",
@@ -3628,9 +3634,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T04:24:48.686Z",
+      "lastModified": "2026-10-20T15:34:49.112Z",
       "taskCount": 49,
-      "completedCount": 14,
+      "completedCount": 15,
       "tags": [
         "master"
       ]
