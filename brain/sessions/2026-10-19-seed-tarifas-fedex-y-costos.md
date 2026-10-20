@@ -47,6 +47,7 @@ Tarea 8 de Task Master (PRD 2.3): cargar los datos iniciales que el PRD marca co
 - [[2026-10-15-railway-mysql-y-db-local]] — el MySQL local en Docker donde se verificó; el de Railway lo recibirá.
 - [[2026-10-18-guia-contadores-llc-y-stripe]] — si cambia la pasarela, cambia `gatewayPct` en una fila nueva de `CostSettings`, no el seed.
 - [[2026-10-19-componentes-base-del-diseno]] — `PriceTag` recibirá el tipo de cambio que aquí se carga (7.645).
+- [[2026-10-19-endpoints-publicos-de-mascaras]] — los endpoints públicos ocultan las máscaras DRAFT que carga este seed.
 
 ## Fuentes
 - [[sources#prd]]

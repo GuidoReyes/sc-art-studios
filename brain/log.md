@@ -49,3 +49,7 @@
 ## [2026-10-19 19:55] ingest | 2026-10-19-seed-tarifas-fedex-y-costos
 - Área: backend
 - Cross-refs: [[2026-10-18-prisma-7-schema-y-migracion-inicial]], [[2026-10-15-railway-mysql-y-db-local]], [[2026-10-18-guia-contadores-llc-y-stripe]], [[2026-10-19-componentes-base-del-diseno]] (bidireccionales)
+
+## [2026-10-19 20:15] ingest | 2026-10-19-endpoints-publicos-de-mascaras
+- Área: backend
+- Cross-refs: [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-17-scaffold-backend-express]], [[2026-10-19-componentes-base-del-diseno]] (bidireccionales)

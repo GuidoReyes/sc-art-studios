@@ -641,7 +641,7 @@
         "dependencies": [
           "8"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -649,9 +649,10 @@
             "description": "Configurar el archivo de rutas masks.ts con Express Router, importar dependencias necesarias (Prisma, Zod, middleware de rate limiting) y exportar el router para su registro en el index principal.",
             "dependencies": [],
             "details": "Crear directorio apps/api/src/routes/ si no existe. Crear archivo masks.ts con: import express Router, import prisma client desde @/lib/prisma, import zod para validaciones. Configurar express.Router(). Aplicar middleware de rate limiting específico de 60 req/min por IP usando express-rate-limit con keyGenerator por req.ip. Exportar el router. En apps/api/src/index.ts registrar las rutas con app.use('/api', masksRouter).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verificar que el servidor arranca sin errores. Hacer GET a /api/masks y confirmar que responde (aunque sea 404 si aún no hay handler). Verificar en logs que el rate limiter está activo.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:11:48.267Z"
           },
           {
             "id": 2,
@@ -661,9 +662,10 @@
               1
             ],
             "details": "En masks.ts crear handler GET '/masks'. Definir schema Zod para query params: z.object({ status: z.enum(MaskStatus).optional(), animal: z.string().optional() }). Validar req.query con safeParse, retornar 400 si falla. Construir objeto where de Prisma dinámicamente según filtros presentes. Query Prisma: findMany con where, include: { images: true }, orderBy: { publishedAt: 'desc' }. Responder con JSON array de máscaras. Considerar paginación futura (skip/take) aunque no sea requerido inicialmente.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "GET /api/masks debe retornar array (vacío o con datos). GET /api/masks?status=DRAFT debe filtrar por status. GET /api/masks?animal=jaguar debe filtrar por animal. Combinación de filtros debe funcionar. Query params inválidos deben retornar 400.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:11:48.271Z"
           },
           {
             "id": 3,
@@ -673,9 +675,10 @@
               1
             ],
             "details": "En masks.ts crear handler GET '/masks/:slug'. Definir schema Zod para params: z.object({ slug: z.string().min(1) }). Validar req.params con safeParse, retornar 400 si falla. Query Prisma: findUnique con where: { slug }, include: { images: true, videos: true, story: true }. Si resultado es null, responder 404 con { error: 'Máscara no encontrada' }. Si existe, responder con JSON del objeto máscara completo con todas sus relaciones.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "GET /api/masks/jaguar-dorado con slug existente debe retornar la máscara con images, videos, story. GET /api/masks/slug-inexistente debe retornar 404. Slug vacío o inválido debe retornar 400.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:11:48.274Z"
           },
           {
             "id": 4,
@@ -686,9 +689,10 @@
               3
             ],
             "details": "Crear middleware de caché o aplicar directamente en cada handler. Para GET /api/masks y GET /api/masks/:slug: res.set('Cache-Control', 'public, max-age=60, s-maxage=300'). max-age=60 indica que navegadores pueden cachear por 1 minuto. s-maxage=300 indica que CDN puede cachear por 5 minutos. Considerar agregar header Vary: Accept-Encoding para correcta variación de caché. Opcionalmente extraer a un middleware reutilizable publicCacheMiddleware(maxAge, sMaxAge) para usar en otros endpoints públicos.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "GET /api/masks debe incluir header Cache-Control: public, max-age=60, s-maxage=300. GET /api/masks/:slug debe incluir el mismo header. Verificar con curl -I que los headers están presentes en la respuesta.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:11:48.278Z"
           },
           {
             "id": 5,
@@ -696,14 +700,16 @@
             "description": "Definir tipos TypeScript en el paquete compartido para las respuestas de la API de máscaras, asegurando consistencia entre backend y frontend.",
             "dependencies": [],
             "details": "Crear packages/shared/types.ts si no existe. Definir MaskImage type con campos: id, url, alt, isPrimary, order. Definir MaskVideo type con campos: id, url, platform, thumbnailUrl. Definir MaskStory type con campos: id, titleEs, titleEn, bodyEs, bodyEn. Definir MaskListItem type con campos de máscara básicos + images: MaskImage[]. Definir MaskListResponse como MaskListItem[]. Definir MaskDetailResponse con todos los campos de máscara + images, videos, story opcional. Exportar todos los tipos. Actualizar packages/shared/package.json para exportar correctamente.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Importar tipos en apps/api y apps/web sin errores de TypeScript. Verificar que MaskListResponse y MaskDetailResponse coinciden con la estructura real devuelta por los endpoints. Ejecutar tsc --noEmit en el monorepo sin errores de tipos.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-20T02:11:48.282Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear router de Express para rutas de máscaras, 2) Implementar GET /api/masks con filtros Zod (status, animal), paginación y ordenamiento, 3) Implementar GET /api/masks/:slug con validación y relaciones (images, videos, story), 4) Agregar headers Cache-Control para CDN (max-age=60, s-maxage=300), 5) Crear tipos compartidos en packages/shared para MaskListResponse y MaskDetailResponse."
+        "expansionPrompt": "Dividir en: 1) Crear router de Express para rutas de máscaras, 2) Implementar GET /api/masks con filtros Zod (status, animal), paginación y ordenamiento, 3) Implementar GET /api/masks/:slug con validación y relaciones (images, videos, story), 4) Agregar headers Cache-Control para CDN (max-age=60, s-maxage=300), 5) Crear tipos compartidos en packages/shared para MaskListResponse y MaskDetailResponse.",
+        "updatedAt": "2026-10-20T02:11:48.282Z"
       },
       {
         "id": "10",
@@ -3610,9 +3616,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T01:51:24.645Z",
+      "lastModified": "2026-10-20T02:11:48.282Z",
       "taskCount": 49,
-      "completedCount": 11,
+      "completedCount": 12,
       "tags": [
         "master"
       ]
