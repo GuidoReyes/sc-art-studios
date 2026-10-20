@@ -43,6 +43,7 @@ Tarea 36.2 [HUMANO]: citas con un contador de EE. UU. y otro de Guatemala para d
 ## Cross-refs
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — misma sesión; `CostSettings` guarda las comisiones de la pasarela que se elija.
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — tarea 36.1 (dominio), la decisión hermana de Fase 0; el repo público obliga a dejar fuera los datos fiscales.
+- [[2026-10-19-seed-tarifas-fedex-y-costos]] — el seed guarda PayPal (5.40 %) y Shopify (2.00 %) por separado; otra pasarela es otra fila de CostSettings.
 
 ## Fuentes
 - [[sources#prd]]

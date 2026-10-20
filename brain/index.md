@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-19
-**Total de nodos:** 10 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 11 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,6 +13,7 @@
 
 ### backend
 
+- [[2026-10-19-seed-tarifas-fedex-y-costos]] — Tarea 8: seed que solo crea lo que falta: 3 zonas y 18 tarifas FedEx, CostSettings (PayPal 5.40 + Shopify 2.00), empaque supuesto, 4 máscaras DRAFT
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — Tarea 7: Prisma 7.10.1 + adapter MariaDB, 13 modelos y migración init, 43 pruebas (98.8 %)
 - [[2026-10-17-scaffold-backend-express]] — Tarea 6: Express 5 + Helmet/CORS/rate limit, Pino sin datos personales, /health, 34 pruebas (98 %)
 

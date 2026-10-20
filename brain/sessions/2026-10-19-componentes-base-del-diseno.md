@@ -57,6 +57,7 @@ Tarea 26 de Task Master: los bloques con los que se arma cada página (PRD §3).
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — las rutas nuevas usan el mismo routing tipado, hreflang y sitemap.
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — `StatusPill` usa los estados de `MaskStatus` y `PriceTag` espera el tipo de cambio de `CostSettings`.
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — la tarea 4 (DNS) se cerró aquí sobre el dominio comprado en esa sesión.
+- [[2026-10-19-seed-tarifas-fedex-y-costos]] — el seed carga el tipo de cambio de CostSettings que PriceTag recibirá.
 
 ## Fuentes
 - [[sources#prd]]

@@ -54,6 +54,7 @@ Tarea 7 de Task Master. `apps/api` traía Prisma 5.22 y un schema de plantilla c
 - [[2026-10-15-railway-mysql-y-db-local]] — el MySQL local en Docker donde se aplicó la migración y el de Railway que la recibirá.
 - [[2026-10-18-guia-contadores-llc-y-stripe]] — misma sesión; la decisión de pasarela cambia los valores de `CostSettings`, no el schema.
 - [[2026-10-19-componentes-base-del-diseno]] — StatusPill refleja MaskStatus (sin DRAFT) y PriceTag recibe el tipo de cambio de CostSettings
+- [[2026-10-19-seed-tarifas-fedex-y-costos]] — el seed que llena estas tablas con zonas, tarifas FedEx, costos y las 4 máscaras DRAFT.
 
 ## Fuentes
 - [[sources#tasks]]

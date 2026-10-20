@@ -48,6 +48,7 @@ Tarea 5 [HUMANO] de Task Master. La CLI de Railway (5.68) ya estaba instalada y 
 - [[2026-10-14-repo-publico-monorepo-y-dominio]] — monorepo y CI sobre los que se monta la base.
 - [[2026-10-14-gitleaks-pre-commit-y-plan-incidentes]] — rotación de secretos y restauración de respaldos que aplican a esta base.
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — primera migración aplicada sobre esta base local; Railway la recibe con `migrate deploy`.
+- [[2026-10-19-seed-tarifas-fedex-y-costos]] — el seed se verificó en este MySQL local y se correrá en el de Railway.
 
 ## Fuentes
 - repo:docker-compose.yml
