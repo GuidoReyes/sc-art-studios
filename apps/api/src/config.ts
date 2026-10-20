@@ -13,6 +13,13 @@ export const LOGIN_RATE_LIMIT: RateLimitConfig = { windowMs: 15 * MINUTE_MS, lim
 export const FORM_RATE_LIMIT: RateLimitConfig = { windowMs: 60 * MINUTE_MS, limit: 10 };
 export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 20 };
 
+// Catálogo público: la CDN guarda 5 min y el navegador 1 min (el admin revalida al publicar).
+export const PUBLIC_CACHE_CONTROL = "public, max-age=60, s-maxage=300";
+export const MASKS_PAGE_SIZE = 24;
+export const MASKS_MAX_PAGE_SIZE = 48;
+// Tope para que `page` no dispare un OFFSET enorme en MySQL.
+export const MASKS_MAX_PAGE = 1000;
+
 export const JSON_BODY_LIMIT = "1mb";
 export const SHUTDOWN_TIMEOUT_MS = 10_000;
 

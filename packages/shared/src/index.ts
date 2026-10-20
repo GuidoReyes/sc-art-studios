@@ -9,3 +9,5 @@ export const ContactSchema = z.object({
   turnstileToken: z.string().min(1),
 }).strict();
 export type Contact = z.infer<typeof ContactSchema>;
+
+export type * from "./masks.js";

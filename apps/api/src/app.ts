@@ -6,14 +6,18 @@ import { JSON_BODY_LIMIT, type RateLimitConfig } from "./config.js";
 import { serializeRequest, serializeResponse } from "./lib/logger.js";
 import { applySecurity } from "./middleware/security.js";
 import { errorHandler, notFound } from "./middleware/errors.js";
+import type { MaskRepository } from "./repositories/masks.js";
+import { createMasksRouter } from "./routes/masks.js";
 
 export interface AppOptions {
   allowedOrigins: readonly string[];
   logger: Logger;
   apiRateLimit?: RateLimitConfig;
+  /** Sin repositorio no se montan las rutas del catálogo (pruebas de cabeceras, CORS, etc.). */
+  masks?: MaskRepository;
 }
 
-export function createApp({ allowedOrigins, logger, apiRateLimit }: AppOptions) {
+export function createApp({ allowedOrigins, logger, apiRateLimit, masks }: AppOptions) {
   const app = express();
 
   app.use(
@@ -34,7 +38,7 @@ export function createApp({ allowedOrigins, logger, apiRateLimit }: AppOptions) 
   app.get("/health", (_req, res) => {
     res.json({ status: "ok", timestamp: Date.now() });
   });
-  // app.use("/api", publicRoutes);
+  if (masks) app.use("/api/masks", createMasksRouter(masks));
   // app.use("/api/admin", adminRoutes);
 
   app.use(notFound);
