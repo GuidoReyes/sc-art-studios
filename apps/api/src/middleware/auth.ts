@@ -1,45 +1,52 @@
-import type { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { z } from "zod";
-import { env } from "../lib/env.js";
+import type { CookieOptions, NextFunction, Request, RequestHandler, Response } from "express";
+import { ACCESS_TOKEN_TTL_MS } from "../config.js";
+import type { Role, TokenService } from "../lib/tokens.js";
 
-// Un solo algoritmo permitido: evita ataques de confusión de algoritmo (`none`, HS512, RS256 con la clave como pública).
-const JWT_ALGORITHM = "HS256" as const;
-
-const ClaimsSchema = z.object({
-  sub: z.string().min(1),
-  role: z.enum(["OWNER", "EDITOR"]),
-});
-
-export type Role = z.infer<typeof ClaimsSchema>["role"];
-type Claims = z.infer<typeof ClaimsSchema>;
-
-// Capa 1: JWT corto en cookie httpOnly. El refresh rotativo vive en su propia ruta.
-export function signAccess(claims: Claims) {
-  return jwt.sign(claims, env.JWT_SECRET, { algorithm: JWT_ALGORITHM, expiresIn: "15m" });
+export interface AdminPrincipal {
+  id: string;
+  role: Role;
+  sessionId: string;
 }
 
-export function requireRole(...roles: Role[]) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies?.access;
-    if (!token) return res.status(401).json({ error: "No autenticado" });
-    let claims: Claims;
-    try {
-      const payload = jwt.verify(token, env.JWT_SECRET, { algorithms: [JWT_ALGORITHM] });
-      // Firma válida no basta: la forma del payload también se valida.
-      claims = ClaimsSchema.parse(payload);
-    } catch {
-      return res.status(401).json({ error: "Sesión vencida" });
+// Así se tipa res.locals en Express: el namespace global es la vía que ofrecen sus tipos.
+declare global {
+  namespace Express {
+    interface Locals {
+      admin?: AdminPrincipal;
     }
-    if (!roles.includes(claims.role)) return res.status(403).json({ error: "Sin permiso" });
-    (req as Request & { user?: Claims }).user = claims;
+  }
+}
+
+// `__Host-`: el navegador exige Secure, Path=/ y sin Domain, así que un subdominio no puede plantarla.
+export const ACCESS_COOKIE = "__Host-sc_access";
+export const CSRF_HEADER = "x-csrf-token";
+
+// Capa 1: JWT corto en cookie httpOnly; JavaScript de la página nunca lo ve.
+export const accessCookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "lax",
+  path: "/",
+  maxAge: ACCESS_TOKEN_TTL_MS,
+};
+
+const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
+
+/**
+ * Exige sesión de admin con alguno de los roles. En métodos que cambian algo exige además
+ * la cabecera X-CSRF-Token, atada a la sesión: otro sitio no puede leerla ni adivinarla.
+ */
+export function requireAdmin(tokens: TokenService, ...roles: Role[]): RequestHandler {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const token: unknown = req.cookies?.[ACCESS_COOKIE];
+    if (typeof token !== "string") return void res.status(401).json({ error: "No autenticado" });
+    const claims = tokens.verifyAccess(token);
+    if (!claims) return void res.status(401).json({ error: "Sesión vencida" });
+    if (!roles.includes(claims.role)) return void res.status(403).json({ error: "Sin permiso" });
+    if (!SAFE_METHODS.has(req.method) && !tokens.isValidCsrf(claims.sid, req.get(CSRF_HEADER))) {
+      return void res.status(403).json({ error: "Token CSRF inválido" });
+    }
+    res.locals.admin = { id: claims.sub, role: claims.role, sessionId: claims.sid };
     next();
   };
 }
-
-export const accessCookie = {
-  httpOnly: true,
-  secure: true,
-  sameSite: "lax" as const,
-  maxAge: 15 * 60_000,
-};

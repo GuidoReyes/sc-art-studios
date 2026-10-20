@@ -4,12 +4,14 @@ const MINUTE_MS = 60_000;
 export interface RateLimitConfig {
   windowMs: number;
   limit: number;
+  /** Solo cuentan las respuestas con error (login: un acierto no gasta intentos). */
+  skipSuccessfulRequests?: boolean;
 }
 
 // General para /api. Holgado porque el SSR de Vercel llama desde pocas IPs compartidas.
 export const API_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 120 };
 // Estrictos (capa 5): login, formularios públicos y cotizador de envío.
-export const LOGIN_RATE_LIMIT: RateLimitConfig = { windowMs: 15 * MINUTE_MS, limit: 5 };
+export const LOGIN_RATE_LIMIT: RateLimitConfig = { windowMs: 15 * MINUTE_MS, limit: 5, skipSuccessfulRequests: true };
 export const FORM_RATE_LIMIT: RateLimitConfig = { windowMs: 60 * MINUTE_MS, limit: 10 };
 export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 20 };
 
@@ -39,6 +41,16 @@ export const REFERENCE_WEBP_QUALITY = 85;
 // R2 (capa 6): una foto de 2048 px pesa < 1 MB; 10 s y un reintento alcanzan.
 export const R2_REQUEST_TIMEOUT_MS = 10_000;
 export const R2_MAX_ATTEMPTS = 2;
+
+// Sesión del admin (capa 1): JWT de acceso corto y refresh rotativo con vida fija desde el login.
+export const ACCESS_TOKEN_TTL_MS = 15 * MINUTE_MS;
+export const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * MINUTE_MS;
+// Bloqueo de la cuenta: 5 fallos seguidos la cierran 15 minutos (aparte del límite por IP).
+export const LOGIN_MAX_FAILURES = 5;
+export const LOGIN_LOCK_MS = 15 * MINUTE_MS;
+// Contraseñas del admin: mínimo por seguridad, máximo para que argon2 no sea vector de DoS.
+export const PASSWORD_MIN_LENGTH = 12;
+export const PASSWORD_MAX_LENGTH = 256;
 
 export const JSON_BODY_LIMIT = "1mb";
 export const SHUTDOWN_TIMEOUT_MS = 10_000;

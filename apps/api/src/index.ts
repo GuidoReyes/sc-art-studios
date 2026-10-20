@@ -7,6 +7,9 @@ import { createTurnstileVerifier } from "./lib/turnstile.js";
 import { createPrismaCustomRequestRepository } from "./repositories/customRequests.js";
 import { createPrismaMaskRepository } from "./repositories/masks.js";
 import { createPrismaShippingRepository } from "./repositories/shipping.js";
+import { createPrismaAdminRepository } from "./repositories/admins.js";
+import { createTokenService } from "./lib/tokens.js";
+import { createAuthService } from "./services/auth.js";
 import { createPrismaStoryRepository } from "./repositories/stories.js";
 import { createPrismaVideoRepository } from "./repositories/videos.js";
 import { SHUTDOWN_TIMEOUT_MS } from "./config.js";
@@ -33,6 +36,7 @@ const customRequests = env.TURNSTILE_SECRET
   : undefined;
 if (!customRequests) logger.warn("Sin TURNSTILE_SECRET: el formulario de encargos no está disponible");
 if (customRequests && !storage) logger.warn("Sin R2: los encargos no aceptan foto de referencia");
+const tokens = createTokenService({ accessSecret: env.JWT_SECRET, refreshSecret: env.JWT_REFRESH_SECRET });
 const app = createApp({
   allowedOrigins: [env.FRONTEND_URL],
   logger,
@@ -41,6 +45,7 @@ const app = createApp({
   videos: createPrismaVideoRepository(prisma),
   customRequests,
   shipping: { repository: createPrismaShippingRepository(prisma) },
+  auth: { service: createAuthService({ repository: createPrismaAdminRepository(prisma), tokens }), tokens },
 });
 
 const server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, "API escuchando"));

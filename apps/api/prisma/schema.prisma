@@ -286,6 +286,24 @@ model AdminUser {
   updatedAt    DateTime       @updatedAt
   audits       AuditLog[]
   costSettings CostSettings[]
+  sessions     AdminSession[]
+}
+
+// Refresh rotativo (capa 1): cada uso marca el token y emite otro de la misma familia (un login).
+// Si un token ya usado vuelve a llegar, alguien lo copió: se revoca toda la familia.
+model AdminSession {
+  id        String    @id @default(cuid())
+  userId    String
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyId  String    @db.VarChar(32)
+  tokenHash String    @unique @db.Char(64) // HMAC-SHA256 del token; el token nunca se guarda
+  expiresAt DateTime // el de la familia: rotar no alarga la sesión
+  usedAt    DateTime?
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([familyId])
+  @@index([userId])
 }
 
 model AuditLog {

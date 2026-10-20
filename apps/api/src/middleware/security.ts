@@ -10,10 +10,11 @@ export interface SecurityOptions {
   apiRateLimit?: RateLimitConfig;
 }
 
-export function createLimiter({ windowMs, limit }: RateLimitConfig) {
+export function createLimiter({ windowMs, limit, skipSuccessfulRequests = false }: RateLimitConfig) {
   return rateLimit({
     windowMs,
     limit,
+    skipSuccessfulRequests,
     standardHeaders: "draft-8",
     legacyHeaders: false,
     handler: (_req: Request, res: Response) => {
