@@ -13,6 +13,11 @@ export const LOGIN_RATE_LIMIT: RateLimitConfig = { windowMs: 15 * MINUTE_MS, lim
 export const FORM_RATE_LIMIT: RateLimitConfig = { windowMs: 60 * MINUTE_MS, limit: 10 };
 export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 20 };
 
+// Cotizador con peso y medidas a mano: topes de un bulto de courier (FedEx: 68 kg y 274 cm por lado).
+// Validan la entrada; las tarifas de cada tramo viven en la DB.
+export const QUOTE_MAX_WEIGHT_GRAMS = 68_000;
+export const QUOTE_MAX_SIDE_CM = 274;
+
 // Rutas públicas: la CDN guarda 5 min y el navegador 1 min (el admin revalida al publicar).
 export const PUBLIC_CACHE_CONTROL = "public, max-age=60, s-maxage=300";
 // Paginación de las listas públicas (máscaras, historias, videos).

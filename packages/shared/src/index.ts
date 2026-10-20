@@ -12,3 +12,4 @@ export type Contact = z.infer<typeof ContactSchema>;
 
 export type * from "./masks.js";
 export type * from "./content.js";
+export type * from "./shipping.js";

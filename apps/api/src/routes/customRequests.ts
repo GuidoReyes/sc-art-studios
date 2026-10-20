@@ -6,6 +6,7 @@ import multer from "multer";
 import { z } from "zod";
 import type { CustomRequestCreatedResponse } from "@sc-art-studio/shared";
 import { FORM_RATE_LIMIT, REFERENCE_MAX_BYTES, type RateLimitConfig } from "../config.js";
+import { isCountryCode } from "../lib/countries.js";
 import { UnsupportedImageError, processReferenceImage } from "../lib/images.js";
 import type { ReferenceStorage } from "../lib/storage.js";
 import { TurnstileUnavailableError, type TurnstileVerifier } from "../lib/turnstile.js";
@@ -24,15 +25,6 @@ export interface CustomRequestsDeps {
 const REFERENCE_FIELD = "reference";
 const DESIRED_DATE_MAX_YEARS = 2;
 const TURNSTILE_TOKEN_MAX_LENGTH = 2048; // límite documentado por Cloudflare
-const countryNames = new Intl.DisplayNames(["en"], { type: "region", fallback: "none" });
-// Códigos que Intl reconoce pero no son países: uso privado (AA, QM–QZ, XA–XZ salvo XK = Kosovo,
-// ZZ = "Unknown Region") y agrupaciones (EU, EZ, UN, QO).
-const NOT_A_COUNTRY = /^(AA|Q[M-Z]|X[A-JL-Z]|ZZ|EU|EZ|UN|QO)$/;
-
-function isCountryCode(code: string): boolean {
-  if (!/^[A-Z]{2}$/.test(code) || NOT_A_COUNTRY.test(code)) return false;
-  return countryNames.of(code) !== undefined;
-}
 
 const MESSAGES = {
   notHuman: "No pudimos verificar el formulario. Recarga la página e inténtalo de nuevo.",

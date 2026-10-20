@@ -6,6 +6,7 @@ import { createR2Storage } from "./lib/storage.js";
 import { createTurnstileVerifier } from "./lib/turnstile.js";
 import { createPrismaCustomRequestRepository } from "./repositories/customRequests.js";
 import { createPrismaMaskRepository } from "./repositories/masks.js";
+import { createPrismaShippingRepository } from "./repositories/shipping.js";
 import { createPrismaStoryRepository } from "./repositories/stories.js";
 import { createPrismaVideoRepository } from "./repositories/videos.js";
 import { SHUTDOWN_TIMEOUT_MS } from "./config.js";
@@ -39,6 +40,7 @@ const app = createApp({
   stories: createPrismaStoryRepository(prisma),
   videos: createPrismaVideoRepository(prisma),
   customRequests,
+  shipping: { repository: createPrismaShippingRepository(prisma) },
 });
 
 const server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, "API escuchando"));
