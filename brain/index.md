@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-20
-**Total de nodos:** 17 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-21
+**Total de nodos:** 18 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,6 +13,7 @@
 
 ### backend
 
+- [[2026-10-21-motor-de-precios-sugeridos]] — Tarea 15: POST /api/admin/pricing/suggest con costo unitario y precio por margen (objetivo ± 10 de CostSettings), Decimal y redondeo hacia arriba
 - [[2026-10-20-crud-admin-auditado]] — Tarea 14: /api/admin/{masks,stories,videos} con requireAdmin, CSRF, 30/min por usuario, AuditLog en la misma transacción, sin borrar vendidas
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — Tarea 12: POST /api/shipping/quote con peso volumétrico, tramo más ajustado y cobro ÷ (1 − 7.4 %) hacia arriba; sin exponer costos
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — Tarea 11: POST /api/custom-requests con Zod, Turnstile, foto por la API re-codificada sin EXIF a R2 privado

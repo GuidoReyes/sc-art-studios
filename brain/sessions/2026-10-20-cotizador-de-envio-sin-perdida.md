@@ -48,6 +48,7 @@ Tarea 12 de Task Master (PRD §4.5, §6.1 y §6.4): `POST /api/shipping/quote`, 
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — comparte `lib/countries.ts` (validación ISO 3166-1).
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — mismo criterio: borradores no existen para el público y los costos no salen.
 - [[2026-10-20-login-admin-refresh-rotativo-csrf]] — misma sesión; después del cotizador vino el login del admin.
+- [[2026-10-21-motor-de-precios-sugeridos]] — usa la misma CostSettings vigente y el mismo redondeo hacia arriba para no perder.
 
 ## Fuentes
 - [[sources#prd]]

@@ -1146,7 +1146,7 @@
         "dependencies": [
           "14"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1154,9 +1154,10 @@
             "description": "Obtener la fila de CostSettings y el PackagingProfile por ID usando Prisma para tener todos los parámetros necesarios para los cálculos de costos",
             "dependencies": [],
             "details": "En `apps/api/src/routes/admin/pricing.ts`, crear el endpoint POST `/api/admin/pricing/suggest` con validación Zod del body ({materialsCostGtq: Decimal, laborHours: number, packagingProfileId: string}). Cargar CostSettings con `prisma.costSettings.findFirst()` (solo hay una fila). Cargar PackagingProfile con `prisma.packagingProfile.findUnique({where: {id: packagingProfileId}})`. Validar que ambos registros existan, devolviendo 404 si CostSettings no está configurado o 400 si el packagingProfileId no existe. Extraer los valores necesarios: fxUsdGtq, monthlyFixedUsd, expectedUnitsPerMonth, laborRateGtqPerHour, gatewayPct, gatewayFixedUsd, shopifyThirdPartyPct, targetMarginPct, y packagingProfile.costGtq.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: mockear Prisma para devolver CostSettings y PackagingProfile válidos; verificar que el endpoint no falla. Test de error: enviar packagingProfileId inexistente y verificar respuesta 400. Test de configuración faltante: sin CostSettings debe devolver 404 con mensaje descriptivo.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T06:47:59.070Z"
           },
           {
             "id": 2,
@@ -1166,9 +1167,10 @@
               1
             ],
             "details": "Usar la librería Decimal.js (o el tipo Decimal de Prisma) para mantener precisión en los cálculos financieros. Implementar la función `calcularCostoFijoPorPieza(costSettings: CostSettings): Decimal` que aplica la fórmula del PRD: costoFijoPorPieza = (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth. Con los valores del seed (monthlyFixedUsd=54.94, fxUsdGtq=7.645, expectedUnitsPerMonth=8), el resultado debe ser Q52.50 aproximadamente. Redondear a 2 decimales. Este valor representa la porción de gastos fijos mensuales (Shopify, dominio, etc.) que cada pieza debe absorber.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test con valores del seed: monthlyFixedUsd=54.94, fxUsdGtq=7.645, expectedUnitsPerMonth=8 → resultado esperado Q52.50 (54.94 × 7.645 / 8 = 52.497). Verificar que el cálculo usa Decimal para evitar errores de punto flotante. Test de borde: expectedUnitsPerMonth=1 y expectedUnitsPerMonth mayor.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T06:47:59.077Z"
           },
           {
             "id": 3,
@@ -1179,9 +1181,10 @@
               2
             ],
             "details": "Crear función `calcularCostoUnitario(materialsCostGtq, laborHours, packagingCostGtq, laborRateGtqPerHour, costoFijoPorPieza, fxUsdGtq)` que retorna {totalGtq, totalUsd, breakdown}. Fórmula GTQ: costoUnitarioGtq = materialsCostGtq + (laborHours × laborRateGtqPerHour) + packagingCostGtq + costoFijoPorPieza. Fórmula USD: costoUnitarioUsd = costoUnitarioGtq / fxUsdGtq. El breakdown debe incluir cada componente para transparencia: {materials: Decimal, labor: Decimal, packaging: Decimal, fixed: Decimal}. Con los valores del seed (materialsCostGtq=120, laborHours=6, laborRate=25, packaging=45, fijo=52.50), el total debe ser Q367.50 = US$48.07. Usar Decimal con 2 decimales de precisión.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test con valores del seed: materialsCostGtq=120, laborHours=6 (×Q25=150), packaging=45, fijo=52.50 → totalGtq=367.50, totalUsd=48.07 (367.50/7.645). Verificar que breakdown.materials=120, breakdown.labor=150, breakdown.packaging=45, breakdown.fixed=52.50. Test con laborHours=0 para verificar que no falla. Test de precisión decimal: verificar que 367.50/7.645 = 48.0706... se redondea a 48.07.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T06:47:59.081Z"
           },
           {
             "id": 4,
@@ -1191,14 +1194,16 @@
               3
             ],
             "details": "Crear función `calcularPrecioSugerido(costoUnitarioUsd, gatewayFixedUsd, gatewayPct, shopifyThirdPartyPct, margenPct)` que aplica la fórmula del PRD: P = (costoUnitarioUsd + gatewayFixedUsd) / (1 - (gatewayPct + shopifyThirdPartyPct)/100 - margenPct/100). Generar array suggestedPrices con 3 objetos: [{margin: 30, priceUsd, profitUsd, profitGtq}, {margin: 40, ...}, {margin: 50, ...}]. Para cada precio: profitUsd = priceUsd × (1 - totalComisiones/100) - gatewayFixedUsd - costoUnitarioUsd; profitGtq = profitUsd × fxUsdGtq. Incluir targetPrice calculado con targetMarginPct del CostSettings. Con costo US$48.07, comisiones 7.4%, fixed US$0.30: margen 30% → US$77.27, margen 40% → US$91.96, margen 50% → US$113.55. Devolver respuesta JSON completa: {costBreakdown, suggestedPrices, targetPrice}.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test con valores del seed (costo US$48.07, gatewayPct=5.4, shopifyThirdPartyPct=2.0, gatewayFixed=0.30): margen 30% → priceUsd≈77.27, margen 40% → priceUsd≈91.96, margen 50% → priceUsd≈113.55 (verificar contra PRD 6.3). Verificar que profitUsd con margen 40% y precio US$95 es ≈US$39.60 como indica el PRD. Test de targetPrice: con targetMarginPct=40 del CostSettings, targetPrice.priceUsd debe coincidir con suggestedPrices[1]. Verificar formato con 2 decimales.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T06:47:59.085Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Cargar CostSettings y PackagingProfile desde DB, 2) Implementar fórmula de costo fijo por pieza: (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth, 3) Calcular costo unitario: materiales + labor + empaque + fijo, 4) Calcular precios sugeridos para márgenes 30%, 40%, 50% usando fórmula P = (costo + fixed) / (1 - %comisiones - margen)."
+        "expansionPrompt": "Dividir en: 1) Cargar CostSettings y PackagingProfile desde DB, 2) Implementar fórmula de costo fijo por pieza: (monthlyFixedUsd × fxUsdGtq) / expectedUnitsPerMonth, 3) Calcular costo unitario: materiales + labor + empaque + fijo, 4) Calcular precios sugeridos para márgenes 30%, 40%, 50% usando fórmula P = (costo + fixed) / (1 - %comisiones - margen).",
+        "updatedAt": "2026-10-21T06:47:59.085Z"
       },
       {
         "id": "16",
@@ -3647,9 +3652,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-21T01:48:15.843Z",
+      "lastModified": "2026-10-21T06:47:59.085Z",
       "taskCount": 49,
-      "completedCount": 17,
+      "completedCount": 18,
       "tags": [
         "master"
       ]

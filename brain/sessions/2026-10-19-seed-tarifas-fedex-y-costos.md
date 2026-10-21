@@ -49,6 +49,7 @@ Tarea 8 de Task Master (PRD 2.3): cargar los datos iniciales que el PRD marca co
 - [[2026-10-19-componentes-base-del-diseno]] — `PriceTag` recibirá el tipo de cambio que aquí se carga (7.645).
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — los endpoints públicos ocultan las máscaras DRAFT que carga este seed.
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — el cotizador de envío usa sus zonas, tarifas, empaque supuesto y CostSettings.
+- [[2026-10-21-motor-de-precios-sugeridos]] — calcula costo y precio con la CostSettings y la caja de este seed.
 
 ## Fuentes
 - [[sources#prd]]
