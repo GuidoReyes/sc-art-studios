@@ -75,3 +75,46 @@ export interface AdminItemResponse<T> {
 export type AdminMaskListResponse = ListResponse<AdminMaskDto>;
 export type AdminStoryListResponse = ListResponse<AdminStoryDto>;
 export type AdminVideoListResponse = ListResponse<AdminVideoDto>;
+
+// POST /api/admin/pricing/suggest (tarea 15, PRD §6). Montos a 2 decimales; % de 0 a 100.
+export interface PricingCostBreakdown {
+  materialsGtq: number;
+  laborGtq: number;
+  packagingGtq: number;
+  fixedGtq: number;
+  totalGtq: number;
+  totalUsd: number;
+}
+
+export interface PricingOption {
+  marginPct: number;
+  /** Precio mínimo para ese margen, redondeado hacia arriba al centavo. */
+  priceUsd: number;
+  /** Comisiones de Shopify y de la pasarela, incluido el cargo fijo. */
+  feesUsd: number;
+  profitUsd: number;
+  profitGtq: number;
+}
+
+/** Los parámetros de CostSettings con que se calculó, para que el admin vea de dónde sale. */
+export interface PricingSettingsUsed {
+  fxUsdGtq: number;
+  commissionPct: number;
+  gatewayFixedUsd: number;
+  monthlyFixedUsd: number;
+  expectedUnitsPerMonth: number;
+  laborRateGtqPerHour: number;
+  targetMarginPct: number;
+  /** ISO 8601. */
+  updatedAt: string;
+}
+
+export interface PricingSuggestion {
+  costBreakdown: PricingCostBreakdown;
+  /** Margen objetivo y uno por debajo y otro por encima. */
+  suggestedPrices: PricingOption[];
+  targetPrice: PricingOption;
+  settings: PricingSettingsUsed;
+}
+
+export type PricingSuggestionResponse = AdminItemResponse<PricingSuggestion>;

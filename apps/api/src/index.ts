@@ -9,6 +9,7 @@ import { createPrismaMaskRepository } from "./repositories/masks.js";
 import { createPrismaShippingRepository } from "./repositories/shipping.js";
 import { createPrismaAdminRepository } from "./repositories/admins.js";
 import { createPrismaAdminMaskStore } from "./repositories/admin/masks.js";
+import { createPrismaPricingRepository } from "./repositories/admin/pricing.js";
 import { createPrismaAdminStoryStore } from "./repositories/admin/stories.js";
 import { createPrismaAdminVideoStore } from "./repositories/admin/videos.js";
 import { createTokenService } from "./lib/tokens.js";
@@ -54,6 +55,7 @@ const app = createApp({
     masks: createPrismaAdminMaskStore(prisma),
     stories: createPrismaAdminStoryStore(prisma),
     videos: createPrismaAdminVideoStore(prisma),
+    pricing: createPrismaPricingRepository(prisma),
   },
 });
 

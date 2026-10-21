@@ -6,10 +6,12 @@ import type { TokenService } from "../../lib/tokens.js";
 import { requireAdmin } from "../../middleware/auth.js";
 import { createLimiter } from "../../middleware/security.js";
 import type { AdminMaskStore } from "../../repositories/admin/masks.js";
+import type { PricingRepository } from "../../repositories/admin/pricing.js";
 import type { AdminStoryStore } from "../../repositories/admin/stories.js";
 import type { AdminVideoStore } from "../../repositories/admin/videos.js";
 import { noStoreByDefault } from "../public.js";
 import { createAdminMasksRouter } from "./masks.js";
+import { createAdminPricingRouter } from "./pricing.js";
 import { createAdminStoriesRouter } from "./stories.js";
 import { createAdminVideosRouter } from "./videos.js";
 
@@ -18,10 +20,18 @@ export interface AdminDeps {
   masks: AdminMaskStore;
   stories: AdminStoryStore;
   videos: AdminVideoStore;
+  pricing: PricingRepository;
   rateLimit?: RateLimitConfig;
 }
 
-export function createAdminRouter({ tokens, masks, stories, videos, rateLimit = ADMIN_RATE_LIMIT }: AdminDeps): Router {
+export function createAdminRouter({
+  tokens,
+  masks,
+  stories,
+  videos,
+  pricing,
+  rateLimit = ADMIN_RATE_LIMIT,
+}: AdminDeps): Router {
   const router = Router();
   router.use(noStoreByDefault);
   router.use(requireAdmin(tokens, "OWNER", "EDITOR"));
@@ -36,5 +46,6 @@ export function createAdminRouter({ tokens, masks, stories, videos, rateLimit = 
   router.use("/masks", createAdminMasksRouter(masks));
   router.use("/stories", createAdminStoriesRouter(stories));
   router.use("/videos", createAdminVideosRouter(videos));
+  router.use("/pricing", createAdminPricingRouter(pricing));
   return router;
 }

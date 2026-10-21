@@ -5,6 +5,8 @@ import { createApp } from "../../app.js";
 import { HttpError } from "../../lib/httpErrors.js";
 import { createTokenService } from "../../lib/tokens.js";
 import { ACCESS_COOKIE, CSRF_HEADER } from "../../middleware/auth.js";
+import { Prisma } from "../../generated/prisma/client.js";
+import type { PricingRepository } from "../../repositories/admin/pricing.js";
 import type { AdminStore } from "../../repositories/admin/store.js";
 import type { AdminDeps } from "./index.js";
 
@@ -25,8 +27,30 @@ function fakeStore() {
   } satisfies AdminStore<{ id: string }, never, never, never>;
 }
 
+const d = (value: string | number) => new Prisma.Decimal(value);
+
+// CostSettings y caja del seed (PRD §6.2).
+const SEED_SETTINGS = {
+  fxUsdGtq: d("7.6450"),
+  gatewayPct: d("5.40"),
+  gatewayFixedUsd: d("0.30"),
+  shopifyThirdPartyPct: d("2.00"),
+  monthlyFixedUsd: d("54.94"),
+  expectedUnitsPerMonth: 8,
+  laborRateGtqPerHour: d("25.00"),
+  targetMarginPct: d("40.00"),
+  updatedAt: new Date("2026-10-13T00:00:00.000Z"),
+};
+
+function fakePricing() {
+  return {
+    findSettings: vi.fn(async (): Promise<typeof SEED_SETTINGS | null> => SEED_SETTINGS),
+    findPackagingCostGtq: vi.fn(async (id: string) => (id === MASK_ID ? d("45.00") : null)),
+  } satisfies PricingRepository;
+}
+
 function setup(extra: Partial<AdminDeps> = {}) {
-  const stores = { masks: fakeStore(), stories: fakeStore(), videos: fakeStore() };
+  const stores = { masks: fakeStore(), stories: fakeStore(), videos: fakeStore(), pricing: fakePricing() };
   const app = createApp({
     allowedOrigins: ["https://scartstudios.com"],
     logger: silent,
@@ -239,5 +263,91 @@ describe("/api/admin/videos", () => {
     await request(app).get(`/api/admin/videos?maskId=${MASK_ID}`).set(session());
 
     expect(videos.list).toHaveBeenCalledWith({ maskId: MASK_ID, page: 1, limit: 24 });
+  });
+});
+
+describe("/api/admin/pricing/suggest", () => {
+  const PIECE = { materialsCostGtq: 120, laborHours: 6, packagingProfileId: MASK_ID };
+  const option = (marginPct: number, priceUsd: number) => expect.objectContaining({ marginPct, priceUsd });
+
+  it("ejemplo del PRD §6.3: Q367.50 = US$48.07 y precios con márgenes 30/40/50", async () => {
+    const { app, pricing } = setup();
+
+    const res = await request(app).post("/api/admin/pricing/suggest").set(session()).send(PIECE);
+
+    expect(res.status).toBe(200);
+    expect(res.headers["cache-control"]).toBe("no-store");
+    expect(pricing.findPackagingCostGtq).toHaveBeenCalledWith(MASK_ID);
+    expect(res.body.data.costBreakdown).toEqual({
+      materialsGtq: 120,
+      laborGtq: 150,
+      packagingGtq: 45,
+      fixedGtq: 52.5,
+      totalGtq: 367.5,
+      totalUsd: 48.07,
+    });
+    expect(res.body.data.suggestedPrices).toEqual([option(30, 77.27), option(40, 91.96), option(50, 113.55)]);
+    expect(res.body.data.targetPrice).toEqual({ marginPct: 40, priceUsd: 91.96, feesUsd: 7.11, profitUsd: 36.78, profitGtq: 281.21 });
+    expect(res.body.data.settings).toMatchObject({ fxUsdGtq: 7.645, commissionPct: 7.4, targetMarginPct: 40, updatedAt: "2026-10-13T00:00:00.000Z" });
+  });
+
+  it("el margen objetivo sale de CostSettings, no del código", async () => {
+    const { app, pricing } = setup();
+    pricing.findSettings.mockResolvedValueOnce({ ...SEED_SETTINGS, targetMarginPct: d(35) });
+
+    const res = await request(app).post("/api/admin/pricing/suggest").set(session()).send(PIECE);
+
+    expect(res.body.data.suggestedPrices.map((o: { marginPct: number }) => o.marginPct)).toEqual([25, 35, 45]);
+    expect(res.body.data.targetPrice.marginPct).toBe(35);
+  });
+
+  it.each([
+    ["sin empaque", { materialsCostGtq: 120, laborHours: 6 }],
+    ["horas negativas", { ...PIECE, laborHours: -1 }],
+    ["tres decimales", { ...PIECE, materialsCostGtq: 1.005 }],
+    ["texto en vez de número", { ...PIECE, materialsCostGtq: "120" }],
+    ["campo desconocido", { ...PIECE, marginPct: 90 }],
+  ])("400: %s", async (_name, body) => {
+    const { app, pricing } = setup();
+
+    expect((await request(app).post("/api/admin/pricing/suggest").set(session()).send(body)).status).toBe(400);
+    expect(pricing.findSettings).not.toHaveBeenCalled();
+  });
+
+  it("422 si el perfil de empaque no existe", async () => {
+    const res = await request(setup().app)
+      .post("/api/admin/pricing/suggest")
+      .set(session())
+      .send({ ...PIECE, packagingProfileId: OTHER_ID });
+
+    expect(res.status).toBe(422);
+    expect(res.body.code).toBe("INVALID_REFERENCE");
+  });
+
+  it("422 con código si CostSettings no permite calcular", async () => {
+    const { app, pricing } = setup();
+    pricing.findSettings.mockResolvedValueOnce({ ...SEED_SETTINGS, targetMarginPct: d(95) });
+
+    const res = await request(app).post("/api/admin/pricing/suggest").set(session()).send(PIECE);
+
+    expect(res.status).toBe(422);
+    expect(res.body.code).toBe("MARGIN_UNREACHABLE");
+  });
+
+  it("500 genérico si falta el seed de CostSettings", async () => {
+    const { app, pricing } = setup();
+    pricing.findSettings.mockResolvedValueOnce(null);
+
+    const res = await request(app).post("/api/admin/pricing/suggest").set(session()).send(PIECE);
+
+    expect(res.status).toBe(500);
+    expect(res.body).toEqual({ error: "Error interno" });
+  });
+
+  it("exige sesión y CSRF como el resto del admin", async () => {
+    const { app } = setup();
+
+    expect((await request(app).post("/api/admin/pricing/suggest").send(PIECE)).status).toBe(401);
+    expect((await request(app).post("/api/admin/pricing/suggest").set("Cookie", session().Cookie).send(PIECE)).status).toBe(403);
   });
 });
