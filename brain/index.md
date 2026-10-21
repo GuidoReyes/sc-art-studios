@@ -5,7 +5,7 @@
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
 **Última actualización:** 2026-10-20
-**Total de nodos:** 16 sesiones | 0 conceptos | 0 ADRs
+**Total de nodos:** 17 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -13,6 +13,7 @@
 
 ### backend
 
+- [[2026-10-20-crud-admin-auditado]] — Tarea 14: /api/admin/{masks,stories,videos} con requireAdmin, CSRF, 30/min por usuario, AuditLog en la misma transacción, sin borrar vendidas
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — Tarea 12: POST /api/shipping/quote con peso volumétrico, tramo más ajustado y cobro ÷ (1 − 7.4 %) hacia arriba; sin exponer costos
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — Tarea 11: POST /api/custom-requests con Zod, Turnstile, foto por la API re-codificada sin EXIF a R2 privado
 - [[2026-10-19-endpoints-publicos-historias-y-videos]] — Tarea 10: /api/stories, /:slug y /api/videos con el contrato de masks; solo historias publicadas y sin enlaces a borradores

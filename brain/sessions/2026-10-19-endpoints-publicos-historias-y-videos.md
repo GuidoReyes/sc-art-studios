@@ -43,6 +43,7 @@ Tarea 10 de Task Master (PRD §4.5): `GET /api/stories`, `GET /api/stories/:slug
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — mismo contrato, caché y criterio de borradores; `masks.ts` se refactorizó para compartir helpers.
 - [[2026-10-17-scaffold-backend-express]] — usa su manejador de errores y su rate limit general de `/api`.
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — misma sesión; después vino el formulario de encargos, primera ruta pública que escribe.
+- [[2026-10-20-crud-admin-auditado]] — el admin crea, programa y enlaza las historias y videos que estas rutas muestran.
 
 ## Fuentes
 - [[sources#prd]]

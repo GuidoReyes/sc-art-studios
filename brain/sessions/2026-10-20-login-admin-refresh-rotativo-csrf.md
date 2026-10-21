@@ -51,6 +51,7 @@ Tarea 13 de Task Master (capa 1 de seguridad de `CLAUDE.md`): login del panel de
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — misma sesión; el login vino después del cotizador.
 - [[2026-10-17-scaffold-backend-express]] — usa su `LOGIN_RATE_LIMIT`, cookie-parser, el manejador de errores y `lib/password.ts`.
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — usa `AdminUser` y `AuditLog` de ese esquema y le suma la migración `admin_sessions`.
+- [[2026-10-20-crud-admin-auditado]] — primeras rutas que usan `requireAdmin` y el CSRF; mismo estilo `entidad.verbo` en AuditLog.
 
 ## Fuentes
 - [[sources#prd]]

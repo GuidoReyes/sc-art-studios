@@ -1061,7 +1061,7 @@
         "dependencies": [
           "13"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1069,9 +1069,10 @@
             "description": "Crear el archivo apps/api/src/routes/admin/masks.ts con los 4 endpoints CRUD (GET lista, POST crear, PUT actualizar, DELETE eliminar) para máscaras, incluyendo esquemas de validación Zod para body y params.",
             "dependencies": [],
             "details": "Crear archivo `apps/api/src/routes/admin/masks.ts`. Implementar: 1) GET `/api/admin/masks` - listar todas las máscaras incluyendo DRAFT, con paginación opcional (limit/offset), 2) POST `/api/admin/masks` - crear máscara con schema Zod: nameEs (string min 3), nameEn (string min 3), animal (string), descriptionEs/En (string), storyEs/En (string opcional), materialsCostGtq (number positive), laborHours (number positive), weightGrams (number positive), dims (object {length, width, height} en cm), packagingProfileId (string uuid opcional), status default DRAFT, 3) PUT `/api/admin/masks/:id` - actualizar con schema parcial (partial Zod schema), validar que id existe, 4) DELETE `/api/admin/masks/:id` - validar que existe. Usar Prisma client para todas las operaciones. Responder con el objeto creado/actualizado en formato JSON. Manejar errores con status codes apropiados (400 validación, 404 no encontrado, 500 error interno).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Tests unitarios con supertest: 1) POST /api/admin/masks con body válido retorna 201 y objeto creado con id, 2) POST con body inválido (falta nameEs) retorna 400, 3) GET /api/admin/masks retorna array con la máscara creada, 4) PUT /api/admin/masks/:id actualiza campo y retorna objeto, 5) PUT con id inexistente retorna 404, 6) DELETE /api/admin/masks/:id elimina y retorna 204, 7) DELETE con id inexistente retorna 404.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T01:48:07.929Z"
           },
           {
             "id": 2,
@@ -1081,9 +1082,10 @@
               1
             ],
             "details": "Crear `apps/api/src/routes/admin/stories.ts`: GET `/api/admin/stories` (lista con paginación), POST (schema Zod: titleEs/En, contentEs/En, slug unique, maskId opcional, publishedAt opcional), PUT `/:id`, DELETE `/:id`. Crear `apps/api/src/routes/admin/videos.ts`: GET `/api/admin/videos` (lista con filtro por maskId opcional), POST (schema Zod: titleEs/En, url string url, source enum MANUAL/SYNC, maskId, storyId opcional, thumbnailUrl opcional, durationSeconds number), PUT `/:id`, DELETE `/:id`. Ambos archivos siguen el mismo patrón de masks.ts: validación Zod, Prisma operations, JSON responses, error handling. Registrar las rutas en el router principal de admin.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Tests unitarios: 1) Stories - POST crea historia vinculada a máscara, GET lista incluye máscara relacionada, PUT actualiza slug, DELETE elimina, 2) Videos - POST crea video con source=MANUAL, GET filtra por maskId correctamente, PUT actualiza url, DELETE elimina. Verificar validación de URLs en videos y unicidad de slug en stories.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T01:48:09.889Z"
           },
           {
             "id": 3,
@@ -1093,9 +1095,10 @@
               1
             ],
             "details": "En `apps/api/src/routes/admin/masks.ts`, modificar el handler DELETE: 1) Antes de eliminar, hacer findUnique para obtener la máscara actual, 2) Verificar si mask.status === 'SOLD', 3) Si es SOLD, retornar 400/409 Conflict con mensaje JSON: {error: 'No se puede eliminar una máscara vendida', code: 'MASK_SOLD'}. 4) Si no es SOLD, proceder con delete normal. Considerar también agregar restricción similar para RESERVED si aplica según reglas de negocio. Documentar la restricción en comentarios del código.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Tests: 1) Crear máscara con status DRAFT, eliminar exitosamente (204), 2) Crear máscara, actualizar status a SOLD, intentar DELETE, verificar respuesta 400/409 con código MASK_SOLD, 3) Verificar que máscara SOLD sigue existiendo después del intento fallido. Test de regresión: verificar que AVAILABLE, DRAFT, RESERVED, COMMISSION_EXAMPLE sí se pueden eliminar.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T01:48:11.891Z"
           },
           {
             "id": 4,
@@ -1106,9 +1109,10 @@
               2
             ],
             "details": "Crear helper `apps/api/src/utils/auditLog.ts` con función `logAudit({userId, action, entity, entityId, oldData?, newData?})`. Para CREATE: diff contiene newData completo. Para UPDATE: diff contiene {before: oldData, after: newData} solo campos modificados. Para DELETE: diff contiene oldData. Actions enum: CREATE_MASK, UPDATE_MASK, DELETE_MASK, CREATE_STORY, UPDATE_STORY, DELETE_STORY, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO. Integrar en cada handler CRUD: 1) Obtener userId del req.user (del middleware requireAdmin), 2) Para UPDATE, guardar estado anterior antes de modificar, 3) Después de operación exitosa, llamar logAudit. El AuditLog debe tener: id, userId, action, entity (Mask/Story/Video), entityId, diff (Json), createdAt. No exponer AuditLog en API pública.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Tests: 1) POST /api/admin/masks crea registro en AuditLog con action=CREATE_MASK y diff con datos nuevos, 2) PUT /api/admin/masks/:id crea registro con action=UPDATE_MASK y diff mostrando before/after, 3) DELETE crea registro con action=DELETE_MASK y diff con datos eliminados. Verificar que userId corresponde al admin autenticado. Query directa a DB para verificar registros AuditLog.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T01:48:13.898Z"
           },
           {
             "id": 5,
@@ -1121,14 +1125,16 @@
               4
             ],
             "details": "En el router principal de admin (`apps/api/src/routes/admin/index.ts`): 1) Importar middleware requireAdmin de auth, 2) Aplicar router.use(requireAdmin) antes de registrar rutas, 3) Configurar express-rate-limit: windowMs=60000 (1 min), max=30, keyGenerator que usa req.user.id (del JWT decodificado por requireAdmin), standardHeaders=true, message JSON {error: 'Demasiadas solicitudes', code: 'RATE_LIMIT_EXCEEDED'}. El middleware requireAdmin debe: verificar cookie adminToken, validar JWT, decodificar y poner user en req.user, verificar CSRF si es POST/PUT/DELETE. Crear archivo de rutas que agrupa masks, stories, videos bajo /api/admin. Exportar router para usar en app principal.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Tests: 1) Sin cookie adminToken, cualquier ruta /api/admin/* retorna 401, 2) Con JWT expirado retorna 401, 3) Con JWT válido accede correctamente, 4) Rate limiting: hacer 31 requests en menos de 1 minuto, verificar que #31 retorna 429 con código RATE_LIMIT_EXCEEDED, 5) Esperar 1 minuto, verificar que requests funcionan de nuevo. Test CSRF: POST sin header X-CSRF-Token retorna 403.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-21T01:48:15.842Z"
           }
         ],
         "complexity": 6,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Implementar CRUD completo para /api/admin/masks con validación Zod, 2) Implementar CRUD para /api/admin/stories y /api/admin/videos, 3) Agregar lógica de negocio: no permitir eliminar máscara SOLD, 4) Registrar cada acción en AuditLog con diff del cambio, 5) Aplicar middleware requireAdmin y rate limiting por usuario."
+        "expansionPrompt": "Dividir en: 1) Implementar CRUD completo para /api/admin/masks con validación Zod, 2) Implementar CRUD para /api/admin/stories y /api/admin/videos, 3) Agregar lógica de negocio: no permitir eliminar máscara SOLD, 4) Registrar cada acción en AuditLog con diff del cambio, 5) Aplicar middleware requireAdmin y rate limiting por usuario.",
+        "updatedAt": "2026-10-21T01:48:15.842Z"
       },
       {
         "id": "15",
@@ -3641,9 +3647,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-20T15:45:56.709Z",
+      "lastModified": "2026-10-21T01:48:15.843Z",
       "taskCount": 49,
-      "completedCount": 16,
+      "completedCount": 17,
       "tags": [
         "master"
       ]

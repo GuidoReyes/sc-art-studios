@@ -49,6 +49,7 @@ Tarea 9 de Task Master (PRD §4.5): `GET /api/masks` y `GET /api/masks/:slug` pa
 - [[2026-10-19-componentes-base-del-diseno]] — `MaskCard` y la ficha consumirán estos DTO.
 - [[2026-10-19-endpoints-publicos-historias-y-videos]] — historias y videos usan el mismo contrato y los helpers que salieron de masks.ts.
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — el cotizador sigue el mismo criterio: sin borradores y sin costos internos.
+- [[2026-10-20-crud-admin-auditado]] — el admin crea y edita estas máscaras (borradores y costos incluidos); `SLUG_PATTERN` pasó a `lib/slug.ts`.
 
 ## Fuentes
 - [[sources#prd]]
