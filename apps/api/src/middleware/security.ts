@@ -10,11 +10,16 @@ export interface SecurityOptions {
   apiRateLimit?: RateLimitConfig;
 }
 
-export function createLimiter({ windowMs, limit, skipSuccessfulRequests = false }: RateLimitConfig) {
+/** Sin `keyGenerator` cuenta por IP; el admin cuenta por usuario. */
+export function createLimiter(
+  { windowMs, limit, skipSuccessfulRequests = false }: RateLimitConfig,
+  keyGenerator?: (req: Request, res: Response) => string,
+) {
   return rateLimit({
     windowMs,
     limit,
     skipSuccessfulRequests,
+    ...(keyGenerator ? { keyGenerator } : {}),
     standardHeaders: "draft-8",
     legacyHeaders: false,
     handler: (_req: Request, res: Response) => {

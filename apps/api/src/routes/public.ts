@@ -3,9 +3,7 @@
 import type { RequestHandler, Response } from "express";
 import { z } from "zod";
 import { PUBLIC_CACHE_CONTROL, PUBLIC_MAX_PAGE, PUBLIC_MAX_PAGE_SIZE, PUBLIC_PAGE_SIZE } from "../config.js";
-
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const MAX_SLUG_LENGTH = 120; // igual que las columnas Mask.slug y Story.slug
+import { MAX_SLUG_LENGTH, SLUG_PATTERN } from "../lib/slug.js";
 
 /** Campos de paginación para `z.object({...pageQueryShape, ...}).strict()`. */
 export const pageQueryShape = {

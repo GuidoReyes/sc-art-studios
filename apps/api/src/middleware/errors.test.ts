@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import express from "express";
 import request from "supertest";
 import { z } from "zod";
+import { HttpError } from "../lib/httpErrors.js";
 import { errorHandler } from "./errors.js";
 
 function appThatThrows(err: unknown) {
@@ -14,6 +15,19 @@ function appThatThrows(err: unknown) {
 }
 
 describe("errorHandler", () => {
+  it("un HttpError muestra su mensaje y su código", async () => {
+    const res = await request(appThatThrows(new HttpError(409, "No se puede", "MASK_SOLD"))).get("/boom");
+
+    expect(res.status).toBe(409);
+    expect(res.body).toEqual({ error: "No se puede", code: "MASK_SOLD" });
+  });
+
+  it("un HttpError sin código no agrega el campo", async () => {
+    const res = await request(appThatThrows(new HttpError(422, "Revisa"))).get("/boom");
+
+    expect(res.body).toEqual({ error: "Revisa" });
+  });
+
   it("convierte ZodError en 400 con la lista de problemas", async () => {
     const zodError = z.object({ email: z.email() }).safeParse({ email: "x" }).error;
 

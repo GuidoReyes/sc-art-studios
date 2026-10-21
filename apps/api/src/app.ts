@@ -9,6 +9,7 @@ import { errorHandler, notFound } from "./middleware/errors.js";
 import type { MaskRepository } from "./repositories/masks.js";
 import type { StoryRepository } from "./repositories/stories.js";
 import type { VideoRepository } from "./repositories/videos.js";
+import { type AdminDeps, createAdminRouter } from "./routes/admin/index.js";
 import { type AuthDeps, createAuthRouter } from "./routes/auth.js";
 import { type CustomRequestsDeps, createCustomRequestsRouter } from "./routes/customRequests.js";
 import { createMasksRouter } from "./routes/masks.js";
@@ -28,6 +29,7 @@ export interface AppOptions {
   customRequests?: CustomRequestsDeps;
   shipping?: ShippingDeps;
   auth?: AuthDeps;
+  admin?: AdminDeps;
 }
 
 export function createApp({
@@ -40,6 +42,7 @@ export function createApp({
   customRequests,
   shipping,
   auth,
+  admin,
 }: AppOptions) {
   const app = express();
 
@@ -67,7 +70,7 @@ export function createApp({
   if (customRequests) app.use("/api/custom-requests", createCustomRequestsRouter(customRequests));
   if (shipping) app.use("/api/shipping", createShippingRouter(shipping));
   if (auth) app.use("/api/auth", createAuthRouter(auth));
-  // app.use("/api/admin", adminRoutes);
+  if (admin) app.use("/api/admin", createAdminRouter(admin));
 
   app.use(notFound);
   app.use(errorHandler);

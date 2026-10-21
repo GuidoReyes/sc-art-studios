@@ -8,6 +8,9 @@ import { createPrismaCustomRequestRepository } from "./repositories/customReques
 import { createPrismaMaskRepository } from "./repositories/masks.js";
 import { createPrismaShippingRepository } from "./repositories/shipping.js";
 import { createPrismaAdminRepository } from "./repositories/admins.js";
+import { createPrismaAdminMaskStore } from "./repositories/admin/masks.js";
+import { createPrismaAdminStoryStore } from "./repositories/admin/stories.js";
+import { createPrismaAdminVideoStore } from "./repositories/admin/videos.js";
 import { createTokenService } from "./lib/tokens.js";
 import { createAuthService } from "./services/auth.js";
 import { createPrismaStoryRepository } from "./repositories/stories.js";
@@ -46,6 +49,12 @@ const app = createApp({
   customRequests,
   shipping: { repository: createPrismaShippingRepository(prisma) },
   auth: { service: createAuthService({ repository: createPrismaAdminRepository(prisma), tokens }), tokens },
+  admin: {
+    tokens,
+    masks: createPrismaAdminMaskStore(prisma),
+    stories: createPrismaAdminStoryStore(prisma),
+    videos: createPrismaAdminVideoStore(prisma),
+  },
 });
 
 const server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, "API escuchando"));

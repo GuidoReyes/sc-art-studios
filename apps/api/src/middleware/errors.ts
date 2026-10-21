@@ -1,14 +1,15 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import { HttpError } from "../lib/httpErrors.js";
 
-interface HttpError {
+interface StatusCarrier {
   status?: number;
   statusCode?: number;
 }
 
 function clientErrorStatus(err: unknown): number | undefined {
   if (typeof err !== "object" || err === null) return undefined;
-  const { status, statusCode } = err as HttpError;
+  const { status, statusCode } = err as StatusCarrier;
   const code = status ?? statusCode;
   return code !== undefined && code >= 400 && code < 500 ? code : undefined;
 }
@@ -26,6 +27,10 @@ export function errorHandler(err: unknown, req: Request, res: Response, next: Ne
   }
   if (err instanceof ZodError) {
     res.status(400).json({ error: "Datos inválidos", issues: err.issues });
+    return;
+  }
+  if (err instanceof HttpError) {
+    res.status(err.status).json({ error: err.message, ...(err.code ? { code: err.code } : {}) });
     return;
   }
   const clientStatus = clientErrorStatus(err);

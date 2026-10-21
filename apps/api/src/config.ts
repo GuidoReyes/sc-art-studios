@@ -14,6 +14,8 @@ export const API_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 120
 export const LOGIN_RATE_LIMIT: RateLimitConfig = { windowMs: 15 * MINUTE_MS, limit: 5, skipSuccessfulRequests: true };
 export const FORM_RATE_LIMIT: RateLimitConfig = { windowMs: 60 * MINUTE_MS, limit: 10 };
 export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 20 };
+// Admin: por usuario autenticado, no por IP (Guido y quien edite pueden compartir red).
+export const ADMIN_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 30 };
 
 // Cotizador con peso y medidas a mano: topes de un bulto de courier (FedEx: 68 kg y 274 cm por lado).
 // Validan la entrada; las tarifas de cada tramo viven en la DB.
