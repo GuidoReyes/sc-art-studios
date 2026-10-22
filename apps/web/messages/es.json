@@ -21,10 +21,31 @@
     "flag": "🇺🇸"
   },
   "Home": {
-    "title": "SC Art Studio",
-    "tagline": "Máscaras únicas, pintadas a mano en Guatemala.",
+    "title": "Máscaras de animales pintadas a mano",
+    "tagline": "Cada máscara es única. La pinta Scarlett, una artista de 11 años de Guatemala, y cuenta la historia de un animal.",
     "cta": "Ver las máscaras",
-    "palette": "Nuestros colores"
+    "eyebrow": "Hecho a mano en Guatemala",
+    "ctaCustom": "Encarga la tuya",
+    "featuredTitle": "Colección destacada",
+    "featuredAll": "Ver todo el catálogo",
+    "featuredEmpty": "Muy pronto: las primeras máscaras se están terminando.",
+    "meetTitle": "Conoce a Scarlett",
+    "meetBody": "Empezó pintando máscaras para jugar y ahora cada pieza tiene su propia historia. Un adulto de la familia la acompaña y responde todos los mensajes.",
+    "meetCta": "Leer sus historias",
+    "videosTitle": "Últimos videos",
+    "videosAll": "Ver todos los videos",
+    "howTitle": "Cómo comprar",
+    "step1Title": "Elige tu máscara",
+    "step1Body": "Cada pieza es única: cuando se vende, no se repite.",
+    "step2Title": "Paga en línea",
+    "step2Body": "El pago se procesa de forma segura en el checkout de la tienda.",
+    "step3Title": "La recibes en casa",
+    "step3Body": "La empacamos con cuidado y la enviamos por courier a tu país.",
+    "howCustom": "¿No encuentras la que buscas? Pide una personalizada.",
+    "sticker1": "Jaguar",
+    "sticker2": "Lobo",
+    "sticker3": "Venado",
+    "sticker4": "Cebra"
   },
   "Pages": {
     "masks": "Máscaras",
@@ -51,14 +72,6 @@
     "title": "Panel de administración",
     "placeholder": "Aquí vivirá el panel de administración (protegido, sin indexar)."
   },
-  "Palette": {
-    "ink": "Tinta",
-    "cream": "Crema",
-    "pink": "Rosa",
-    "purple": "Morado",
-    "turquoise": "Turquesa",
-    "orange": "Naranja"
-  },
   "NotFound": {
     "title": "Página no encontrada",
     "description": "Esta página no existe o cambió de lugar.",
@@ -74,7 +87,8 @@
     "handmade": "Hecho a mano en Guatemala",
     "orderYours": "Ordena la tuya",
     "askSimilar": "Pide una parecida",
-    "noPhoto": "Foto muy pronto"
+    "noPhoto": "Foto muy pronto",
+    "priceSoon": "Precio muy pronto"
   },
   "Price": {
     "approxGtq": "aprox. {amount}"
@@ -85,5 +99,51 @@
   },
   "Social": {
     "visit": "SC Art Studio en {platform} (se abre en una pestaña nueva)"
+  },
+  "Catalog": {
+    "intro": "Todas son piezas únicas, pintadas a mano en Guatemala.",
+    "filtersLabel": "Filtrar máscaras",
+    "status": "Estado",
+    "animal": "Animal",
+    "all": "Todas",
+    "count": "{count, plural, =0 {Ninguna máscara} one {# máscara} other {# máscaras}}",
+    "empty": "No hay máscaras con estos filtros.",
+    "clear": "Quitar filtros",
+    "paginationLabel": "Páginas del catálogo",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {page} de {pages}"
+  },
+  "MaskDetail": {
+    "back": "Todas las máscaras",
+    "about": "Sobre esta máscara",
+    "story": "Su historia",
+    "details": "Detalles",
+    "animal": "Animal",
+    "dimensions": "Medidas",
+    "dimensionsValue": "{length} × {width} × {height} cm ({lengthIn} × {widthIn} × {heightIn} in)",
+    "weight": "Peso",
+    "weightValue": "{grams} g ({pounds} lb)",
+    "buySoon": "Compra en línea muy pronto",
+    "buySoonHint": "Mientras tanto, escríbenos y te la apartamos.",
+    "askSimilar": "Quiero una parecida",
+    "soldNote": "Esta máscara ya tiene dueño, pero Scarlett puede pintar una parecida para ti.",
+    "commissionNote": "Fue un encargo. ¿Quieres una así?",
+    "whatsappMessage": "Hola, me interesa la máscara {name}",
+    "gallery": "Fotos de {name}",
+    "photo": "Foto {number} de {total}",
+    "videos": "Mírala en video",
+    "stories": "Historias de esta máscara",
+    "handmade": "Pieza única, pintada a mano"
+  },
+  "Video": {
+    "watchOn": "Ver en {platform}",
+    "embedTitle": "Video: {title}",
+    "newTab": "(se abre en una pestaña nueva)"
+  },
+  "Error": {
+    "title": "Algo salió mal",
+    "description": "No pudimos cargar esta página. Intenta de nuevo en un momento.",
+    "retry": "Reintentar"
   }
 }

@@ -21,10 +21,31 @@
     "flag": "🇬🇹"
   },
   "Home": {
-    "title": "SC Art Studio",
-    "tagline": "One-of-a-kind masks, hand-painted in Guatemala.",
+    "title": "Hand-painted animal masks",
+    "tagline": "Every mask is one of a kind. Scarlett, an 11-year-old artist from Guatemala, paints each one to tell an animal's story.",
     "cta": "See the masks",
-    "palette": "Our colors"
+    "eyebrow": "Handmade in Guatemala",
+    "ctaCustom": "Order your own",
+    "featuredTitle": "Featured collection",
+    "featuredAll": "See the full catalog",
+    "featuredEmpty": "Coming soon: the first masks are being finished.",
+    "meetTitle": "Meet Scarlett",
+    "meetBody": "She started painting masks for fun, and now every piece has its own story. An adult in the family helps her and answers every message.",
+    "meetCta": "Read her stories",
+    "videosTitle": "Latest videos",
+    "videosAll": "See all videos",
+    "howTitle": "How to buy",
+    "step1Title": "Pick your mask",
+    "step1Body": "Every piece is unique: once it sells, it's gone.",
+    "step2Title": "Pay online",
+    "step2Body": "Payment is processed securely at the store checkout.",
+    "step3Title": "Get it at home",
+    "step3Body": "We pack it with care and ship it by courier to your country.",
+    "howCustom": "Can't find the one you want? Order a custom mask.",
+    "sticker1": "Jaguar",
+    "sticker2": "Wolf",
+    "sticker3": "Deer",
+    "sticker4": "Zebra"
   },
   "Pages": {
     "masks": "Masks",
@@ -51,14 +72,6 @@
     "title": "Admin panel",
     "placeholder": "The admin panel will live here (protected, not indexed)."
   },
-  "Palette": {
-    "ink": "Ink",
-    "cream": "Cream",
-    "pink": "Pink",
-    "purple": "Purple",
-    "turquoise": "Turquoise",
-    "orange": "Orange"
-  },
   "NotFound": {
     "title": "Page not found",
     "description": "This page doesn't exist or has moved.",
@@ -74,7 +87,8 @@
     "handmade": "Handmade in Guatemala",
     "orderYours": "Order yours",
     "askSimilar": "Ask for a similar one",
-    "noPhoto": "Photo coming soon"
+    "noPhoto": "Photo coming soon",
+    "priceSoon": "Price coming soon"
   },
   "Price": {
     "approxGtq": "approx. {amount}"
@@ -85,5 +99,51 @@
   },
   "Social": {
     "visit": "SC Art Studio on {platform} (opens in a new tab)"
+  },
+  "Catalog": {
+    "intro": "Every one is unique, hand-painted in Guatemala.",
+    "filtersLabel": "Filter masks",
+    "status": "Status",
+    "animal": "Animal",
+    "all": "All",
+    "count": "{count, plural, =0 {No masks} one {# mask} other {# masks}}",
+    "empty": "No masks match these filters.",
+    "clear": "Clear filters",
+    "paginationLabel": "Catalog pages",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {pages}"
+  },
+  "MaskDetail": {
+    "back": "All masks",
+    "about": "About this mask",
+    "story": "Its story",
+    "details": "Details",
+    "animal": "Animal",
+    "dimensions": "Size",
+    "dimensionsValue": "{lengthIn} × {widthIn} × {heightIn} in ({length} × {width} × {height} cm)",
+    "weight": "Weight",
+    "weightValue": "{pounds} lb ({grams} g)",
+    "buySoon": "Online checkout coming soon",
+    "buySoonHint": "In the meantime, message us and we'll hold it for you.",
+    "askSimilar": "I want one like this",
+    "soldNote": "This mask already has a home, but Scarlett can paint a similar one for you.",
+    "commissionNote": "This was a custom order. Want one like it?",
+    "whatsappMessage": "Hi, I'm interested in the {name} mask",
+    "gallery": "Photos of {name}",
+    "photo": "Photo {number} of {total}",
+    "videos": "Watch it on video",
+    "stories": "Stories about this mask",
+    "handmade": "One of a kind, hand-painted"
+  },
+  "Video": {
+    "watchOn": "Watch on {platform}",
+    "embedTitle": "Video: {title}",
+    "newTab": "(opens in a new tab)"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "description": "We couldn't load this page. Please try again in a moment.",
+    "retry": "Try again"
   }
 }

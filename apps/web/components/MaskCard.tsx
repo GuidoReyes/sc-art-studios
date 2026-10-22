@@ -1,18 +1,10 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { showsPrice, type MaskSummary } from "@/lib/mask";
-import { SURFACE_CLASSES, type SurfaceName } from "@/lib/palette";
+import { placeholderSurface, showsPrice, type MaskSummary } from "@/lib/mask";
+import { SURFACE_CLASSES } from "@/lib/palette";
 import { PriceTag } from "./PriceTag";
 import { StatusPill } from "./StatusPill";
-
-// Colores para las máscaras que aún no tienen foto; el slug decide cuál, así no cambia entre visitas.
-const PLACEHOLDER_SURFACES: readonly SurfaceName[] = ["turquoise", "orange", "purple", "pink"];
-
-function placeholderSurface(slug: string): SurfaceName {
-  const hash = [...slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return PLACEHOLDER_SURFACES[hash % PLACEHOLDER_SURFACES.length];
-}
 
 interface MaskCardProps {
   mask: MaskSummary;
@@ -59,7 +51,11 @@ export function MaskCard({ mask, gtqPerUsd }: MaskCardProps) {
         <p className="font-semibold">{animal}</p>
         <div className="mt-auto pt-3">
           {showsPrice(status) ? (
-            <PriceTag usd={priceUsd} gtqPerUsd={gtqPerUsd} />
+            priceUsd !== null ? (
+              <PriceTag usd={priceUsd} gtqPerUsd={gtqPerUsd} />
+            ) : (
+              <p className="font-extrabold">{t("priceSoon")}</p>
+            )
           ) : (
             <p className="font-extrabold text-purple">{t("askSimilar")} →</p>
           )}

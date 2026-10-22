@@ -1,19 +1,19 @@
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 import type { Metadata } from "next";
+import type { MaskListResponse, VideoListResponse } from "@sc-art-studio/shared";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { MaskCard } from "@/components/MaskCard";
+import { SectionBlock } from "@/components/SectionBlock";
+import { VideoEmbed } from "@/components/VideoEmbed";
 import { Link } from "@/i18n/navigation";
-import { asLocale } from "@/i18n/routing";
+import { type Locale, asLocale } from "@/i18n/routing";
+import { apiGet, orFallback } from "@/lib/api";
+import { pickFeatured, toMaskSummary } from "@/lib/catalog";
 import { buildAlternates } from "@/lib/seo";
 
-const PALETTE = [
-  { name: "ink", className: "bg-ink" },
-  { name: "cream", className: "bg-cream" },
-  { name: "pink", className: "bg-pink" },
-  { name: "purple", className: "bg-purple" },
-  { name: "turquoise", className: "bg-turquoise" },
-  { name: "orange", className: "bg-orange" },
-] as const;
+const FEATURED_COUNT = 4;
+const LATEST_VIDEOS = 3;
+// Suficiente para elegir destacadas sin paginar (el tope de la API es 48).
+const HOME_MASK_POOL = 48;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -22,39 +22,159 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { alternates: buildAlternates("/", locale) };
 }
 
-export default function HomePage({ params }: Props) {
-  const locale = asLocale(use(params).locale);
+const BUTTON =
+  "inline-flex items-center rounded-full border-4 border-ink px-6 py-3 text-lg font-extrabold shadow-sticker transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sticker-lg focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-ink motion-reduce:transition-none";
+
+// Calcomanías del hero: decorativas, giradas a mano.
+const STICKERS = [
+  { key: "sticker1", className: "bg-orange rotate-[-8deg] left-0 top-6" },
+  { key: "sticker2", className: "bg-turquoise rotate-[6deg] right-2 top-0" },
+  { key: "sticker3", className: "bg-pink-deep text-cream rotate-[-3deg] left-10 bottom-0" },
+  { key: "sticker4", className: "bg-purple text-cream rotate-[9deg] right-0 bottom-10" },
+] as const;
+
+async function loadHome() {
+  const [masks, videos] = await Promise.all([
+    orFallback(apiGet<MaskListResponse>("/api/masks", { limit: HOME_MASK_POOL }), null, "inicio:masks"),
+    orFallback(apiGet<VideoListResponse>("/api/videos", { limit: LATEST_VIDEOS }), null, "inicio:videos"),
+  ]);
+  return { masks: masks?.data ?? [], videos: videos?.data ?? [] };
+}
+
+export default async function HomePage({ params }: Props) {
+  const locale: Locale = asLocale((await params).locale);
   setRequestLocale(locale);
-  const t = useTranslations("Home");
-  const tPalette = useTranslations("Palette");
+  const t = await getTranslations("Home");
+  const { masks, videos } = await loadHome();
+  const featured = pickFeatured(masks, FEATURED_COUNT).map((mask) => toMaskSummary(mask, locale));
+
+  const steps = [
+    { title: t("step1Title"), body: t("step1Body"), color: "bg-turquoise" },
+    { title: t("step2Title"), body: t("step2Body"), color: "bg-orange" },
+    { title: t("step3Title"), body: t("step3Body"), color: "bg-pink" },
+  ];
 
   return (
     <>
-      <section className="mx-auto flex max-w-5xl flex-col items-start gap-6 px-4 py-16 sm:py-24">
-        <h1 className="font-display text-5xl leading-tight sm:text-7xl">{t("title")}</h1>
-        <p className="max-w-xl text-lg font-semibold sm:text-xl">{t("tagline")}</p>
-        <Link
-          href="/masks"
-          className="rounded-full border-4 border-ink bg-purple px-6 py-3 text-lg font-extrabold text-cream transition-transform hover:-translate-y-0.5 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-ink"
-        >
-          {t("cta")}
-        </Link>
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 py-14 sm:py-20 md:grid-cols-[1.3fr_1fr]">
+          <div className="flex flex-col items-start gap-6">
+            <p className="rounded-full border-[3px] border-ink bg-cream px-4 py-1 text-sm font-extrabold uppercase tracking-wide shadow-sticker">
+              {t("eyebrow")}
+            </p>
+            <h1 className="font-display text-5xl leading-[1.02] sm:text-7xl">{t("title")}</h1>
+            <p className="max-w-xl text-lg font-semibold sm:text-xl">{t("tagline")}</p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/masks" className={`${BUTTON} bg-purple text-cream`}>
+                {t("cta")}
+              </Link>
+              <Link href="/custom" className={`${BUTTON} bg-cream`}>
+                {t("ctaCustom")}
+              </Link>
+            </div>
+          </div>
+          <div aria-hidden="true" className="relative mx-auto hidden h-80 w-full max-w-sm md:block">
+            {STICKERS.map(({ key, className }) => (
+              <span
+                key={key}
+                className={`absolute flex size-36 items-center justify-center rounded-card border-4 border-ink font-display text-2xl shadow-sticker-lg ${className}`}
+              >
+                {t(key)}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <section aria-labelledby="paleta" className="bg-turquoise py-12">
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 id="paleta" className="font-display text-3xl">
-            {t("palette")}
+      <SectionBlock color="turquoise" aria-labelledby="destacadas">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 id="destacadas" className="font-display text-4xl">
+            {t("featuredTitle")}
           </h2>
-          <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {PALETTE.map(({ name, className }) => (
-              <li key={name} className="overflow-hidden rounded-card border-4 border-ink bg-cream">
-                <div className={`h-20 ${className}`} />
-                <p className="px-3 py-2 font-extrabold">{tPalette(name)}</p>
+          {featured.length > 0 && (
+            <Link href="/masks" className="font-extrabold underline decoration-4 underline-offset-4">
+              {t("featuredAll")} →
+            </Link>
+          )}
+        </div>
+        {featured.length > 0 ? (
+          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map((mask) => (
+              <li key={mask.slug}>
+                <MaskCard mask={mask} />
               </li>
             ))}
           </ul>
-        </div>
+        ) : (
+          <p className="mt-6 text-lg font-semibold">{t("featuredEmpty")}</p>
+        )}
+      </SectionBlock>
+
+      <div className="mx-auto max-w-5xl px-4 py-14 sm:py-20">
+        <SectionBlock color="purple" isCard aria-labelledby="scarlett">
+          <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
+            <span
+              aria-hidden="true"
+              className="flex size-32 rotate-[-6deg] items-center justify-center rounded-full border-4 border-ink bg-orange font-display text-6xl text-ink shadow-sticker-lg"
+            >
+              S
+            </span>
+            <div className="flex flex-col items-start gap-4">
+              <h2 id="scarlett" className="font-display text-4xl">
+                {t("meetTitle")}
+              </h2>
+              <p className="max-w-2xl text-lg font-semibold">{t("meetBody")}</p>
+              <Link href="/stories" className={`${BUTTON} bg-cream text-ink`}>
+                {t("meetCta")}
+              </Link>
+            </div>
+          </div>
+        </SectionBlock>
+      </div>
+
+      {videos.length > 0 && (
+        <SectionBlock color="orange" aria-labelledby="videos">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 id="videos" className="font-display text-4xl">
+              {t("videosTitle")}
+            </h2>
+            <Link href="/videos" className="font-extrabold underline decoration-4 underline-offset-4">
+              {t("videosAll")} →
+            </Link>
+          </div>
+          <ul className="mt-8 grid gap-6 md:grid-cols-3">
+            {videos.map((video) => (
+              <li key={video.id}>
+                <VideoEmbed video={video} />
+              </li>
+            ))}
+          </ul>
+        </SectionBlock>
+      )}
+
+      <section aria-labelledby="como-comprar" className="mx-auto max-w-5xl px-4 pb-14 sm:pb-20">
+        <h2 id="como-comprar" className="font-display text-4xl">
+          {t("howTitle")}
+        </h2>
+        <ol className="mt-8 grid gap-6 md:grid-cols-3">
+          {steps.map(({ title, body, color }, index) => (
+            <li key={title} className="relative rounded-card border-4 border-ink bg-cream p-6 pt-10 shadow-sticker">
+              <span
+                aria-hidden="true"
+                className={`absolute -top-6 left-5 flex size-12 items-center justify-center rounded-full border-4 border-ink font-display text-2xl ${color}`}
+              >
+                {index + 1}
+              </span>
+              <h3 className="font-display text-2xl">{title}</h3>
+              <p className="mt-2 font-semibold">{body}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-10 text-lg font-extrabold">
+          <Link href="/custom" className="underline decoration-pink decoration-4 underline-offset-4">
+            {t("howCustom")}
+          </Link>
+        </p>
       </section>
     </>
   );
