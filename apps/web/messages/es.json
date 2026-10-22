@@ -13,7 +13,8 @@
     "videos": "Videos",
     "menu": "Abrir menú",
     "closeMenu": "Cerrar menú",
-    "cart": "{count, plural, =0 {Carrito vacío} one {Carrito: # máscara} other {Carrito: # máscaras}}"
+    "cart": "{count, plural, =0 {Carrito vacío} one {Carrito: # máscara} other {Carrito: # máscaras}}",
+    "about": "Scarlett"
   },
   "LocaleSwitcher": {
     "label": "Cambiar idioma",
@@ -31,7 +32,7 @@
     "featuredEmpty": "Muy pronto: las primeras máscaras se están terminando.",
     "meetTitle": "Conoce a Scarlett",
     "meetBody": "Empezó pintando máscaras para jugar y ahora cada pieza tiene su propia historia. Un adulto de la familia la acompaña y responde todos los mensajes.",
-    "meetCta": "Leer sus historias",
+    "meetCta": "Abrir su libro",
     "videosTitle": "Últimos videos",
     "videosAll": "Ver todos los videos",
     "howTitle": "Cómo comprar",
@@ -56,7 +57,8 @@
     "videos": "Videos",
     "shipping": "Envíos, aranceles y tiempos",
     "privacy": "Privacidad",
-    "terms": "Términos y condiciones"
+    "terms": "Términos y condiciones",
+    "about": "Sobre Scarlett"
   },
   "Footer": {
     "adultNotice": "Un adulto de la familia responde los mensajes.",
@@ -176,5 +178,77 @@
     "damageTitle": "Si llega dañada",
     "damageBody": "Toma fotos de la caja y de la máscara al abrirla y escríbenos por WhatsApp o correo. Revisamos cada caso contigo.",
     "reviewed": "Información revisada el {date}."
+  },
+  "Book": {
+    "roleDescription": "libro",
+    "controls": "Cambiar de página",
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "pageOf": "Página {pages} de {total}",
+    "cover": "Portada",
+    "backCover": "Contraportada"
+  },
+  "About": {
+    "title": "Sobre Scarlett",
+    "intro": "Scarlett es una artista guatemalteca de 11 años. Pinta a mano cada máscara de SC Art Studio. Hojea su libro para conocerla.",
+    "bookLabel": "Libro de Scarlett",
+    "hint": "Usa las flechas, el teclado o desliza el dedo para pasar las páginas.",
+    "privacy": "Un adulto de la familia administra la tienda y responde todos los mensajes.",
+    "coverTitle": "Portada",
+    "coverTagline": "Máscaras con alma de animal salvaje",
+    "coverBadge": "Hecho a mano",
+    "coverHint": "Pasa la página →",
+    "welcomeTitle": "Bienvenida",
+    "welcomeBadge": "Hecho a mano · pintado con mucho color",
+    "welcomeHeading": "Máscaras con alma de animal salvaje",
+    "welcomeBody": "Soy Scarlett, tengo 11 años y pinto cada máscara con mis propias manos. Cada una tiene su personalidad, sus manchas y su brillito en la frente.",
+    "meTitle": "Hola, soy Scarlett",
+    "meBody1": "Me encanta pintar, y mis máscaras son mi forma favorita de contar historias con colores.",
+    "meBody2": "Me gustan los lobos, los dinosaurios y los libros. Por eso mis máscaras son animales con mucha fuerza y mucha imaginación.",
+    "factsTitle": "Scarlett en cuatro datos",
+    "factAge": "años de pura creatividad",
+    "factAnimals": "Lobos y dinosaurios",
+    "factAnimalsLabel": "mis animales favoritos",
+    "factBooks": "Libros",
+    "factBooksLabel": "leer me da ideas para pintar",
+    "factUnique": "1 de 1",
+    "factUniqueLabel": "cada máscara es única",
+    "masksTitle": "Mis máscaras",
+    "masksBody": "Cada máscara es única: no hay dos iguales.",
+    "maskOf": "Máscara {number} de {total}",
+    "maskCta": "Verla en la tienda",
+    "jaguar": "Naranja brillante, manchas negras y un cristal turquesa en la frente.",
+    "lobo": "Blanca, con flores moradas y cuernos verdes y celestes.",
+    "venado": "Mil tonos de rosa, lunares blancos y cuernos de rayas.",
+    "cebra": "Rayas rosas y naranjas, puntos turquesa y un cristal fucsia.",
+    "howTitle": "Cómo conseguir tu máscara",
+    "how1": "Elige tu favorita",
+    "how1Body": "Mira el catálogo y escoge la máscara que más te guste.",
+    "how2": "Cómprala en línea",
+    "how2Body": "Pagas en la tienda y te avisamos cuando sale.",
+    "how3": "Recíbela",
+    "how3Body": "La empacamos con cuidado y te llega por courier.",
+    "contactTitle": "¿Te gustó alguna?",
+    "contactBody": "Escríbenos o pide una personalizada. Un adulto de la familia responde los mensajes.",
+    "contactCustom": "Pedir una personalizada",
+    "contactContact": "Escribirnos",
+    "thanksTitle": "Gracias por leer",
+    "thanksBody": "Máscaras pintadas a mano por Scarlett · Guatemala",
+    "backTitle": "Contraportada",
+    "backBody": "Cada máscara es única: no hay dos iguales."
+  },
+  "StoriesPage": {
+    "intro": "Cómo nace cada máscara, contado por Scarlett y su familia.",
+    "empty": "Muy pronto: las primeras historias se están escribiendo.",
+    "read": "Leer la historia",
+    "aboutMask": "Sobre {name}",
+    "back": "Todas las historias",
+    "maskLink": "Ver la máscara {name}",
+    "videos": "Videos de esta historia"
+  },
+  "VideosPage": {
+    "intro": "El proceso de cada máscara, en YouTube, TikTok e Instagram.",
+    "empty": "Muy pronto: los primeros videos del proceso.",
+    "fromMask": "De la máscara {name}"
   }
 }

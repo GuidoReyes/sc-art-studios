@@ -16,6 +16,7 @@ export const routing = defineRouting({
     "/custom": { en: "/custom", es: "/personalizada" },
     "/stories": { en: "/stories", es: "/historias" },
     "/stories/[slug]": { en: "/stories/[slug]", es: "/historias/[slug]" },
+    "/about": { en: "/about-scarlett", es: "/sobre-scarlett" },
     "/videos": "/videos",
     "/contact": { en: "/contact", es: "/contacto" },
     "/shipping": { en: "/shipping", es: "/envios" },

@@ -3,7 +3,7 @@
 import type { ComponentProps } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 
-type NavHref = "/masks" | "/custom" | "/stories" | "/videos" | "/contact";
+type NavHref = "/masks" | "/about" | "/custom" | "/stories" | "/videos" | "/contact";
 
 interface NavLinkProps extends Omit<ComponentProps<typeof Link>, "href"> {
   href: NavHref;

@@ -13,7 +13,8 @@
     "videos": "Videos",
     "menu": "Open menu",
     "closeMenu": "Close menu",
-    "cart": "{count, plural, =0 {Cart is empty} one {Cart: # mask} other {Cart: # masks}}"
+    "cart": "{count, plural, =0 {Cart is empty} one {Cart: # mask} other {Cart: # masks}}",
+    "about": "Scarlett"
   },
   "LocaleSwitcher": {
     "label": "Change language",
@@ -31,7 +32,7 @@
     "featuredEmpty": "Coming soon: the first masks are being finished.",
     "meetTitle": "Meet Scarlett",
     "meetBody": "She started painting masks for fun, and now every piece has its own story. An adult in the family helps her and answers every message.",
-    "meetCta": "Read her stories",
+    "meetCta": "Open her book",
     "videosTitle": "Latest videos",
     "videosAll": "See all videos",
     "howTitle": "How to buy",
@@ -56,7 +57,8 @@
     "videos": "Videos",
     "shipping": "Shipping, duties and delivery times",
     "privacy": "Privacy",
-    "terms": "Terms and conditions"
+    "terms": "Terms and conditions",
+    "about": "About Scarlett"
   },
   "Footer": {
     "adultNotice": "An adult from the family answers all messages.",
@@ -176,5 +178,77 @@
     "damageTitle": "If it arrives damaged",
     "damageBody": "Take photos of the box and the mask when you open it and message us on WhatsApp or by email. We'll review every case with you.",
     "reviewed": "Information reviewed on {date}."
+  },
+  "Book": {
+    "roleDescription": "book",
+    "controls": "Turn the page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "pageOf": "Page {pages} of {total}",
+    "cover": "Cover",
+    "backCover": "Back cover"
+  },
+  "About": {
+    "title": "About Scarlett",
+    "intro": "Scarlett is an 11-year-old artist from Guatemala. She hand-paints every SC Art Studio mask. Flip through her book to meet her.",
+    "bookLabel": "Scarlett's book",
+    "hint": "Use the arrows, your keyboard or swipe to turn the pages.",
+    "privacy": "An adult in the family runs the shop and answers every message.",
+    "coverTitle": "Cover",
+    "coverTagline": "Masks with a wild animal soul",
+    "coverBadge": "Handmade",
+    "coverHint": "Turn the page →",
+    "welcomeTitle": "Welcome",
+    "welcomeBadge": "Handmade · painted with lots of color",
+    "welcomeHeading": "Masks with a wild animal soul",
+    "welcomeBody": "I'm Scarlett, I'm 11, and I paint every mask with my own hands. Each one has its own personality, its own spots and a little sparkle on its forehead.",
+    "meTitle": "Hi, I'm Scarlett",
+    "meBody1": "I love painting, and my masks are my favorite way to tell stories with color.",
+    "meBody2": "I like wolves, dinosaurs and books. That's why my masks are animals full of strength and imagination.",
+    "factsTitle": "Scarlett in four facts",
+    "factAge": "years of pure creativity",
+    "factAnimals": "Wolves and dinosaurs",
+    "factAnimalsLabel": "my favorite animals",
+    "factBooks": "Books",
+    "factBooksLabel": "reading gives me ideas to paint",
+    "factUnique": "1 of 1",
+    "factUniqueLabel": "every mask is unique",
+    "masksTitle": "My masks",
+    "masksBody": "Every mask is unique: no two are alike.",
+    "maskOf": "Mask {number} of {total}",
+    "maskCta": "See it in the shop",
+    "jaguar": "Bright orange, black spots and a turquoise crystal on its forehead.",
+    "lobo": "White, with purple flowers and green and light-blue horns.",
+    "venado": "A thousand shades of pink, white spots and striped antlers.",
+    "cebra": "Pink and orange stripes, turquoise dots and a fuchsia crystal.",
+    "howTitle": "How to get your mask",
+    "how1": "Pick your favorite",
+    "how1Body": "Browse the catalog and choose the mask you like best.",
+    "how2": "Buy it online",
+    "how2Body": "Pay in the shop and we'll let you know when it ships.",
+    "how3": "Get it at home",
+    "how3Body": "We pack it with care and it arrives by courier.",
+    "contactTitle": "Did you like one?",
+    "contactBody": "Message us or order a custom mask. An adult in the family answers the messages.",
+    "contactCustom": "Order a custom mask",
+    "contactContact": "Message us",
+    "thanksTitle": "Thanks for reading",
+    "thanksBody": "Masks hand-painted by Scarlett · Guatemala",
+    "backTitle": "Back cover",
+    "backBody": "Every mask is unique: no two are alike."
+  },
+  "StoriesPage": {
+    "intro": "How each mask is born, told by Scarlett and her family.",
+    "empty": "Coming soon: the first stories are being written.",
+    "read": "Read the story",
+    "aboutMask": "About {name}",
+    "back": "All stories",
+    "maskLink": "See the {name} mask",
+    "videos": "Videos from this story"
+  },
+  "VideosPage": {
+    "intro": "How each mask is made, on YouTube, TikTok and Instagram.",
+    "empty": "Coming soon: the first process videos.",
+    "fromMask": "From the {name} mask"
   }
 }

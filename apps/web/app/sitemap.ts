@@ -9,6 +9,7 @@ const PUBLIC_PATHS: readonly AppPathname[] = [
   "/masks",
   "/custom",
   "/stories",
+  "/about",
   "/videos",
   "/contact",
   "/shipping",

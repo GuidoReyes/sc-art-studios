@@ -7,6 +7,7 @@ import { NavLink } from "./NavLink";
 
 const NAV_ITEMS = [
   { href: "/masks", key: "masks" },
+  { href: "/about", key: "about" },
   { href: "/custom", key: "custom" },
   { href: "/stories", key: "stories" },
   { href: "/videos", key: "videos" },
