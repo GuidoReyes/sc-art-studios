@@ -145,5 +145,36 @@
     "title": "Algo salió mal",
     "description": "No pudimos cargar esta página. Intenta de nuevo en un momento.",
     "retry": "Reintentar"
+  },
+  "Shipping": {
+    "title": "¿Cuánto cuesta el envío?",
+    "country": "País de destino",
+    "submit": "Cotizar",
+    "loading": "Cotizando…",
+    "estimate": "aprox.",
+    "notYet": "Todavía no enviamos a ese país por la tienda. Escríbenos y lo cotizamos.",
+    "incomplete": "Todavía no tenemos los datos de envío de esta máscara. Escríbenos y te cotizamos.",
+    "rateLimited": "Hiciste muchas cotizaciones seguidas. Espera un minuto e intenta de nuevo.",
+    "failed": "No pudimos cotizar ahora. Intenta de nuevo en un momento.",
+    "duties": "Al llegar, tu país puede cobrar aranceles de importación (los paga quien recibe).",
+    "more": "Envíos y aranceles"
+  },
+  "ShippingPage": {
+    "intro": "Enviamos desde Guatemala por courier internacional. El costo depende del país y del tamaño de la caja, y lo ves en la ficha de cada máscara antes de comprar.",
+    "zonesTitle": "A dónde enviamos",
+    "zone": "Zona",
+    "countries": "Países",
+    "otherCountries": "¿Tu país no está? Escríbenos y lo cotizamos.",
+    "timesBody": "Usamos FedEx International Economy e International Priority (más rápido). El tiempo exacto depende del destino y te lo confirmamos al despachar, con número de rastreo.",
+    "costTitle": "Por qué el envío pesa tanto",
+    "costBody": "Enviar una sola máscara por courier express puede costar más que la máscara. Si compras 2 o 3, van en la misma caja y el envío por pieza baja mucho.",
+    "dutiesTitle": "Quién paga los aranceles",
+    "dutiesBody": "Los aranceles e impuestos de importación los paga quien recibe, al momento de la entrega. Estados Unidos suspendió la exención para compras pequeñas (de minimis) y hoy cobra un arancel adicional a productos de Guatemala; las reglas cambian seguido.",
+    "dutiesLink": "Ver los cambios de aranceles de EE. UU. (Zonos, en inglés)",
+    "packagingTitle": "Empaque",
+    "packagingBody": "Cada máscara va envuelta en plástico burbuja dentro de una caja rígida, con una tarjeta de SC Art Studio.",
+    "damageTitle": "Si llega dañada",
+    "damageBody": "Toma fotos de la caja y de la máscara al abrirla y escríbenos por WhatsApp o correo. Revisamos cada caso contigo.",
+    "reviewed": "Información revisada el {date}."
   }
 }

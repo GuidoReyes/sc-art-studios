@@ -2,6 +2,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const isDev = process.env.NODE_ENV === "development";
+// Origen de la API para fetch desde el navegador (cotizador de envío); en producción, api.scartstudios.com.
+const apiOrigin = new URL(process.env.NEXT_PUBLIC_API_URL || "https://api.scartstudios.com").origin;
 
 // Capa 4: cabeceras de seguridad. Ajustar la CSP a los servicios que use cada proyecto.
 const csp = [
@@ -13,7 +15,7 @@ const csp = [
   "font-src 'self'", // next/font sirve las fuentes desde el propio sitio
   "img-src 'self' data: blob: https://cdn.shopify.com https://*.r2.dev https://i.ytimg.com",
   "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.tiktok.com https://www.instagram.com https://challenges.cloudflare.com",
-  "connect-src 'self' https://*.myshopify.com https://api.scartstudios.com",
+  `connect-src 'self' https://*.myshopify.com ${apiOrigin}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self' https://*.myshopify.com",

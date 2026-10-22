@@ -145,5 +145,36 @@
     "title": "Something went wrong",
     "description": "We couldn't load this page. Please try again in a moment.",
     "retry": "Try again"
+  },
+  "Shipping": {
+    "title": "How much is shipping?",
+    "country": "Destination country",
+    "submit": "Get a quote",
+    "loading": "Getting a quote…",
+    "estimate": "approx.",
+    "notYet": "We don't ship to that country through the store yet. Message us and we'll quote it.",
+    "incomplete": "We don't have this mask's shipping details yet. Message us and we'll quote it.",
+    "rateLimited": "Too many quotes in a row. Wait a minute and try again.",
+    "failed": "We couldn't get a quote right now. Please try again in a moment.",
+    "duties": "Your country may charge import duties on arrival (paid by the recipient).",
+    "more": "Shipping and duties"
+  },
+  "ShippingPage": {
+    "intro": "We ship from Guatemala by international courier. The cost depends on the country and the box size, and you can see it on each mask's page before buying.",
+    "zonesTitle": "Where we ship",
+    "zone": "Zone",
+    "countries": "Countries",
+    "otherCountries": "Don't see your country? Message us and we'll quote it.",
+    "timesBody": "We use FedEx International Economy and International Priority (faster). Exact timing depends on the destination; we confirm it when we ship, with a tracking number.",
+    "costTitle": "Why shipping costs so much",
+    "costBody": "Shipping a single mask by express courier can cost more than the mask. If you buy 2 or 3, they go in the same box and shipping per piece drops a lot.",
+    "dutiesTitle": "Who pays import duties",
+    "dutiesBody": "Import duties and taxes are paid by the recipient on delivery. The United States suspended the small-purchase (de minimis) exemption and currently charges an extra tariff on goods from Guatemala; these rules change often.",
+    "dutiesLink": "See U.S. tariff updates (Zonos)",
+    "packagingTitle": "Packaging",
+    "packagingBody": "Each mask is wrapped in bubble wrap inside a rigid box, with an SC Art Studio card.",
+    "damageTitle": "If it arrives damaged",
+    "damageBody": "Take photos of the box and the mask when you open it and message us on WhatsApp or by email. We'll review every case with you.",
+    "reviewed": "Information reviewed on {date}."
   }
 }

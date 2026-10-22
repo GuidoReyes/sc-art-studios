@@ -4,6 +4,7 @@ import type { MaskDetailDto, MaskDetailResponse } from "@sc-art-studio/shared";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { MaskGallery } from "@/components/MaskGallery";
 import { PriceTag } from "@/components/PriceTag";
+import { ShippingEstimator } from "@/components/ShippingEstimator";
 import { StatusPill } from "@/components/StatusPill";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -137,6 +138,8 @@ export default async function MaskPage({ params }: Props) {
               {t("askSimilar")}
             </Link>
           </div>
+
+          {isForSale && <ShippingEstimator maskId={mask.id} />}
 
           <dl className="grid w-full gap-3 sm:grid-cols-2">
             <div className="rounded-card border-4 border-ink bg-turquoise p-4">
