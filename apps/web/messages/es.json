@@ -250,5 +250,99 @@
     "intro": "El proceso de cada máscara, en YouTube, TikTok e Instagram.",
     "empty": "Muy pronto: los primeros videos del proceso.",
     "fromMask": "De la máscara {name}"
+  },
+  "CustomPage": {
+    "intro": "¿Tienes un animal favorito o una idea loca? Scarlett puede hacer una máscara solo para ti, de cartón y papel, pintada a mano.",
+    "steps": {
+      "tell": {
+        "title": "Cuéntanos tu idea",
+        "body": "Llena el formulario con el animal, los colores y, si quieres, una foto de referencia."
+      },
+      "talk": {
+        "title": "Te respondemos",
+        "body": "En 24 a 48 horas te escribimos por WhatsApp o correo con precio y tiempo."
+      },
+      "make": {
+        "title": "Scarlett la crea",
+        "body": "Cuando estés de acuerdo, empieza tu máscara y te mandamos fotos del avance."
+      }
+    },
+    "examples": "Encargos anteriores",
+    "formTitle": "Pide tu máscara",
+    "inspiredBy": "Te inspiraste en «{name}».",
+    "ideaFromRef": "Me gustaría una máscara parecida a «{name}», pero…"
+  },
+  "CustomForm": {
+    "adultReplies": "Un adulto de la familia responde los mensajes.",
+    "aboutYou": "Sobre ti",
+    "aboutMask": "Sobre la máscara",
+    "optional": "opcional",
+    "choose": "Elige una opción",
+    "fields": {
+      "name": "Tu nombre",
+      "email": "Correo",
+      "whatsapp": "WhatsApp",
+      "country": "País",
+      "idea": "Tu idea o animal",
+      "colors": "Colores",
+      "size": "Tamaño",
+      "use": "¿Para qué es?",
+      "desiredDate": "¿Para cuándo la quieres?"
+    },
+    "hints": {
+      "whatsapp": "Con código de país, por ejemplo +502.",
+      "idea": "Cuéntanos qué animal, su expresión, detalles que te gusten…",
+      "desiredDate": "Es una guía: confirmamos el tiempo real al responderte."
+    },
+    "sizes": {
+      "small": "Pequeña",
+      "medium": "Mediana",
+      "large": "Grande"
+    },
+    "uses": {
+      "wall": "Para colgar en la pared",
+      "costume": "Para disfraz",
+      "gift": "Para regalo",
+      "other": "Otro"
+    },
+    "errors": {
+      "name": "Escribe tu nombre (al menos 2 letras).",
+      "email": "Revisa el correo, por ejemplo nombre@correo.com.",
+      "whatsapp": "Revisa el número: solo dígitos, espacios y el + del código de país.",
+      "country": "Elige tu país.",
+      "idea": "Cuéntanos un poco más (al menos 10 letras).",
+      "colors": "Máximo 300 caracteres.",
+      "size": "Elige un tamaño de la lista.",
+      "use": "Elige un uso de la lista.",
+      "desiredDate": "Elige una fecha desde hoy y hasta dentro de 2 años."
+    },
+    "photo": {
+      "label": "Foto de referencia",
+      "optional": "opcional",
+      "hint": "JPG, PNG o WebP de hasta 8 MB. Le quitamos la ubicación y otros datos ocultos antes de guardarla.",
+      "errorType": "La foto debe ser JPG, PNG o WebP.",
+      "errorSize": "La foto pesa más de 8 MB.",
+      "previewAlt": "Vista previa de tu foto de referencia",
+      "remove": "Quitar foto"
+    },
+    "submit": "Enviar encargo",
+    "sending": "Enviando…",
+    "status": {
+      "fix": "Revisa los campos marcados.",
+      "noToken": "Espera a que termine la verificación de seguridad y vuelve a enviar.",
+      "invalid": "Algún dato no es válido. Revisa el formulario e intenta de nuevo.",
+      "notHuman": "No pudimos verificar el formulario. Intenta de nuevo.",
+      "tooLarge": "La foto pesa más de 8 MB.",
+      "unsupported": "No pudimos leer la foto. Prueba con otra en JPG, PNG o WebP.",
+      "rateLimited": "Recibimos muchos envíos seguidos. Espera un rato e intenta de nuevo.",
+      "unavailable": "No pudimos recibir el encargo en este momento. Intenta en unos minutos; si adjuntaste una foto, prueba sin ella.",
+      "failed": "No pudimos enviar el encargo. Revisa tu conexión e intenta de nuevo."
+    },
+    "done": {
+      "title": "¡Solicitud recibida!",
+      "body": "Te contactaremos en 24 a 48 horas por WhatsApp y correo."
+    },
+    "unconfigured": "El formulario de encargos estará disponible muy pronto. Mientras, escríbenos por WhatsApp.",
+    "whatsappMessage": "Hola, me gustaría encargar una máscara personalizada."
   }
 }

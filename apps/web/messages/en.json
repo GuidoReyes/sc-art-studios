@@ -250,5 +250,99 @@
     "intro": "How each mask is made, on YouTube, TikTok and Instagram.",
     "empty": "Coming soon: the first process videos.",
     "fromMask": "From the {name} mask"
+  },
+  "CustomPage": {
+    "intro": "Got a favorite animal or a wild idea? Scarlett can make a mask just for you, from cardboard and paper, painted by hand.",
+    "steps": {
+      "tell": {
+        "title": "Tell us your idea",
+        "body": "Fill in the form with the animal, the colors and, if you like, a reference photo."
+      },
+      "talk": {
+        "title": "We reply",
+        "body": "Within 24 to 48 hours we write to you on WhatsApp or by email with price and timing."
+      },
+      "make": {
+        "title": "Scarlett makes it",
+        "body": "Once you agree, your mask is started and we send you progress photos."
+      }
+    },
+    "examples": "Past commissions",
+    "formTitle": "Request your mask",
+    "inspiredBy": "Inspired by “{name}”.",
+    "ideaFromRef": "I'd love a mask similar to “{name}”, but…"
+  },
+  "CustomForm": {
+    "adultReplies": "An adult from the family answers the messages.",
+    "aboutYou": "About you",
+    "aboutMask": "About the mask",
+    "optional": "optional",
+    "choose": "Choose an option",
+    "fields": {
+      "name": "Your name",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "country": "Country",
+      "idea": "Your idea or animal",
+      "colors": "Colors",
+      "size": "Size",
+      "use": "What is it for?",
+      "desiredDate": "When would you like it?"
+    },
+    "hints": {
+      "whatsapp": "Include the country code, for example +1.",
+      "idea": "Tell us which animal, its expression, details you like…",
+      "desiredDate": "Just a guide: we confirm the real timing when we reply."
+    },
+    "sizes": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "uses": {
+      "wall": "To hang on the wall",
+      "costume": "For a costume",
+      "gift": "As a gift",
+      "other": "Other"
+    },
+    "errors": {
+      "name": "Write your name (at least 2 letters).",
+      "email": "Check the email, for example name@email.com.",
+      "whatsapp": "Check the number: only digits, spaces and the + of the country code.",
+      "country": "Choose your country.",
+      "idea": "Tell us a bit more (at least 10 letters).",
+      "colors": "300 characters at most.",
+      "size": "Choose a size from the list.",
+      "use": "Choose a use from the list.",
+      "desiredDate": "Choose a date from today up to 2 years from now."
+    },
+    "photo": {
+      "label": "Reference photo",
+      "optional": "optional",
+      "hint": "JPG, PNG or WebP up to 8 MB. We remove the location and other hidden data before storing it.",
+      "errorType": "The photo must be JPG, PNG or WebP.",
+      "errorSize": "The photo is larger than 8 MB.",
+      "previewAlt": "Preview of your reference photo",
+      "remove": "Remove photo"
+    },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "status": {
+      "fix": "Please check the highlighted fields.",
+      "noToken": "Wait for the security check to finish and send again.",
+      "invalid": "Some information isn't valid. Check the form and try again.",
+      "notHuman": "We couldn't verify the form. Please try again.",
+      "tooLarge": "The photo is larger than 8 MB.",
+      "unsupported": "We couldn't read the photo. Try another JPG, PNG or WebP.",
+      "rateLimited": "We received many requests in a row. Wait a while and try again.",
+      "unavailable": "We can't receive requests right now. Try again in a few minutes; if you attached a photo, try without it.",
+      "failed": "We couldn't send your request. Check your connection and try again."
+    },
+    "done": {
+      "title": "Request received!",
+      "body": "We'll contact you within 24 to 48 hours on WhatsApp and by email."
+    },
+    "unconfigured": "The commission form is coming very soon. Meanwhile, message us on WhatsApp.",
+    "whatsappMessage": "Hi, I'd like to order a custom mask."
   }
 }
