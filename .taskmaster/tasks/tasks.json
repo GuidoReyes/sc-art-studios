@@ -2251,7 +2251,7 @@
         "dependencies": [
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2316,7 +2316,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear formulario con campos: nombre, email, whatsapp, país, idea, colores, tamaño, uso, fecha deseada, 2) Agregar input de archivo para foto de referencia con preview, 3) Integrar widget Turnstile con @marsidev/react-turnstile, 4) Implementar flujo: obtener uploadUrl, subir foto a R2, enviar formulario, 5) Agregar galería de ejemplos (máscaras COMMISSION_EXAMPLE) y mensaje de éxito."
+        "expansionPrompt": "Dividir en: 1) Crear formulario con campos: nombre, email, whatsapp, país, idea, colores, tamaño, uso, fecha deseada, 2) Agregar input de archivo para foto de referencia con preview, 3) Integrar widget Turnstile con @marsidev/react-turnstile, 4) Implementar flujo: obtener uploadUrl, subir foto a R2, enviar formulario, 5) Agregar galería de ejemplos (máscaras COMMISSION_EXAMPLE) y mensaje de éxito.",
+        "updatedAt": "2026-10-27T00:37:11.897Z"
       },
       {
         "id": "31",
@@ -3655,9 +3656,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-22T02:09:28.327Z",
+      "lastModified": "2026-10-27T00:37:11.897Z",
       "taskCount": 49,
-      "completedCount": 20,
+      "completedCount": 21,
       "tags": [
         "master"
       ]

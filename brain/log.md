@@ -81,3 +81,7 @@
 ## [2026-10-26 10:00] ingest | 2026-10-26-sitio-publico-catalogo-envios-y-libro
 - Área: frontend
 - Cross-refs: [[2026-10-19-componentes-base-del-diseno]], [[2026-10-19-endpoints-publicos-de-mascaras]], [[2026-10-19-endpoints-publicos-historias-y-videos]], [[2026-10-20-cotizador-de-envio-sin-perdida]], [[2026-10-14-i18n-hreflang-sitemap-404]] (bidireccionales)
+
+## [2026-10-26 18:45] ingest | 2026-10-26-sitio-publico-catalogo-envios-y-libro (actualización tarea 30)
+- Área: frontend
+- Cross-refs: + [[2026-10-19-formulario-de-encargos-con-foto-segura]] (bidireccional)

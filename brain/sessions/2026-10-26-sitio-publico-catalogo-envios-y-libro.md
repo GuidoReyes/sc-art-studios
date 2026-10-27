@@ -47,11 +47,21 @@ Tareas 28, 29 y 31 de Task Master (fase 4). El usuario pidió ver cómo queda la
 - El usuario debe definir `NEXT_PUBLIC_WHATSAPP_NUMBER` y revisar los textos escritos por Claude ("Si llega dañada", "Conoce a Scarlett", textos del libro en primera persona).
 - Con la caja supuesta (3 kg volumétricos) el envío a EE. UU. sale ~US$245: revisar el perfil de empaque real antes de publicar.
 
+### Actualización [18:45] — tarea 30
+- `/personalizada` (`/en/custom`): pasos, galería de `COMMISSION_EXAMPLE` (se oculta si no hay), y `CustomRequestForm` con Turnstile (`@marsidev/react-turnstile` 1.6.2, la 1.6.3 tenía < 2 semanas).
+- **Un solo POST multipart** a `/api/custom-requests` con la foto en `reference`, como ya hace la API de [[2026-10-19-formulario-de-encargos-con-foto-segura]]; la tarea hablaba de URL prefirmada, que no existe.
+- Esquema del navegador en `apps/web/lib/customRequest.ts` copiando los límites de la API: la API importa `@sc-art-studio/shared` solo como tipos y `node dist/` no puede ejecutar el `.ts` de shared.
+- `?ref=slug` precarga la idea con el nombre de la máscara. Token de Turnstile de un solo uso: se resetea tras cada intento fallido.
+- Local: claves de prueba públicas de Cloudflare en `.env` / `.env.local` (gitignored). Sin R2 local, con foto la API da 503 y el formulario lo explica.
+- Verificado: 90 pruebas web, typecheck, lint; E2E en Chromium (validación + foco, 201 sin foto, 503 con foto), axe limpio tras pasar el paso 1 a `bg-pink-deep` con texto crema.
+- Pendiente [HUMANO]: crear el widget Turnstile en Cloudflare para `scartstudios.com` y poner `NEXT_PUBLIC_TURNSTILE_SITE_KEY` en Vercel y `TURNSTILE_SECRET` en Railway.
+
 ## Cross-refs
 - [[2026-10-19-componentes-base-del-diseno]] — MaskCard, StatusPill, PriceTag y Header que estas páginas usan; `placeholderSurface` pasó a `lib/mask.ts`.
 - [[2026-10-19-endpoints-publicos-de-mascaras]] — inicio, catálogo y ficha consumen sus DTO.
 - [[2026-10-19-endpoints-publicos-historias-y-videos]] — `/historias`, `/historias/[slug]` y `/videos` consumen estas rutas.
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — el estimador de la ficha llama a este cotizador desde el navegador.
+- [[2026-10-19-formulario-de-encargos-con-foto-segura]] — `/personalizada` envía a esta ruta (multipart con Turnstile).
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — nuevas rutas `/historias/[slug]` y `/sobre-scarlett` en el routing, hreflang y sitemap.
 
 ## Fuentes

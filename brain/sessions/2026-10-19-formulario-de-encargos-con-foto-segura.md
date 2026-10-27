@@ -48,6 +48,7 @@ Tarea 11 de Task Master (PRD §4.5, F4): `POST /api/custom-requests` para que un
 - [[2026-10-19-endpoints-publicos-historias-y-videos]] — misma sesión; el formulario es la primera ruta pública que escribe en la base.
 - [[2026-10-17-scaffold-backend-express]] — usa su `FORM_RATE_LIMIT`, su manejador de errores y los logs sin datos personales.
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — el cotizador de envío comparte `lib/countries.ts` con el formulario.
+- [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — el formulario de /personalizada (tarea 30) consume esta ruta.
 
 ## Fuentes
 - [[sources#prd]]
