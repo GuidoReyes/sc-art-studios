@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-21
-**Total de nodos:** 18 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-26
+**Total de nodos:** 19 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -33,6 +33,7 @@
 
 ### frontend
 
+- [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — Tareas 28, 29 y 31: inicio, catálogo con filtros, ficha con estimador de envío, /envios, historias, videos y Sobre Scarlett en modo libro (sin grado escolar); carrito pendiente
 - [[2026-10-19-componentes-base-del-diseno]] — Tarea 26: Header/Footer/MaskCard y demás componentes, pink-deep para WCAG AA, /test-components, 47 pruebas + axe sin violaciones
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — Tarea 38: hreflang/canonical/og:locale, sitemap y robots, 404 traducido, cookie de idioma, claves tipadas
 - [[2026-10-14-scaffold-frontend-nextjs-i18n]] — Tarea 25: Next 16 + next-intl (URLs /es/mascaras…), Tailwind 4 tokens, fuentes, rutas marketing/admin, Lighthouse 98/100

@@ -77,3 +77,7 @@
 ## [2026-10-21 00:50] ingest | 2026-10-21-motor-de-precios-sugeridos
 - Área: backend
 - Cross-refs: [[2026-10-20-crud-admin-auditado]], [[2026-10-20-cotizador-de-envio-sin-perdida]], [[2026-10-19-seed-tarifas-fedex-y-costos]] (bidireccionales)
+
+## [2026-10-26 10:00] ingest | 2026-10-26-sitio-publico-catalogo-envios-y-libro
+- Área: frontend
+- Cross-refs: [[2026-10-19-componentes-base-del-diseno]], [[2026-10-19-endpoints-publicos-de-mascaras]], [[2026-10-19-endpoints-publicos-historias-y-videos]], [[2026-10-20-cotizador-de-envio-sin-perdida]], [[2026-10-14-i18n-hreflang-sitemap-404]] (bidireccionales)

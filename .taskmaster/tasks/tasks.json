@@ -2085,7 +2085,7 @@
           "26",
           "27"
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -2176,7 +2176,8 @@
         ],
         "complexity": 8,
         "recommendedSubtasks": 7,
-        "expansionPrompt": "Dividir en: 1) Implementar Home con hero, máscaras destacadas, sección Scarlett, videos y cómo comprar, 2) Implementar Catálogo con grid de MaskCard y filtros (status, animal), 3) Implementar Ficha con galería carousel, medidas, historia, video embebido, 4) Integrar ShippingEstimator en ficha, 5) Agregar botones Comprar y 'Quiero una parecida', 6) Configurar ISR con revalidate y generateStaticParams, 7) Implementar metadata dinámica, JSON-LD Product y og:image."
+        "expansionPrompt": "Dividir en: 1) Implementar Home con hero, máscaras destacadas, sección Scarlett, videos y cómo comprar, 2) Implementar Catálogo con grid de MaskCard y filtros (status, animal), 3) Implementar Ficha con galería carousel, medidas, historia, video embebido, 4) Integrar ShippingEstimator en ficha, 5) Agregar botones Comprar y 'Quiero una parecida', 6) Configurar ISR con revalidate y generateStaticParams, 7) Implementar metadata dinámica, JSON-LD Product y og:image.",
+        "updatedAt": "2026-10-22T01:52:24.551Z"
       },
       {
         "id": "29",
@@ -2188,7 +2189,7 @@
         "dependencies": [
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2237,7 +2238,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Crear ShippingEstimator con select de país y fetch a /api/shipping/quote, 2) Mostrar opciones de envío con carrier, precio y nota de aranceles, 3) Crear página /envios con contenido de Sección 6.4-6.5 (tiempos, aranceles DDU, empaque), 4) Agregar metadata SEO y fecha de última actualización."
+        "expansionPrompt": "Dividir en: 1) Crear ShippingEstimator con select de país y fetch a /api/shipping/quote, 2) Mostrar opciones de envío con carrier, precio y nota de aranceles, 3) Crear página /envios con contenido de Sección 6.4-6.5 (tiempos, aranceles DDU, empaque), 4) Agregar metadata SEO y fecha de última actualización.",
+        "updatedAt": "2026-10-22T01:54:46.018Z"
       },
       {
         "id": "30",
@@ -2326,7 +2328,7 @@
         "dependencies": [
           "28"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2375,7 +2377,8 @@
         ],
         "complexity": 5,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Implementar /historias con grid de StoryCard y página de detalle /historias/[slug], 2) Implementar /videos con VideoCard y embed modal para YouTube/TikTok/Instagram, 3) Implementar /sobre-scarlett con BookViewer portado del prototipo HTML, 4) Verificar que NO se muestran datos sensibles de la menor (Sección 4.9)."
+        "expansionPrompt": "Dividir en: 1) Implementar /historias con grid de StoryCard y página de detalle /historias/[slug], 2) Implementar /videos con VideoCard y embed modal para YouTube/TikTok/Instagram, 3) Implementar /sobre-scarlett con BookViewer portado del prototipo HTML, 4) Verificar que NO se muestran datos sensibles de la menor (Sección 4.9).",
+        "updatedAt": "2026-10-22T02:09:28.326Z"
       },
       {
         "id": "32",
@@ -3652,9 +3655,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-21T06:47:59.085Z",
+      "lastModified": "2026-10-22T02:09:28.327Z",
       "taskCount": 49,
-      "completedCount": 18,
+      "completedCount": 20,
       "tags": [
         "master"
       ]

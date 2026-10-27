@@ -44,6 +44,7 @@ Tarea 10 de Task Master (PRD §4.5): `GET /api/stories`, `GET /api/stories/:slug
 - [[2026-10-17-scaffold-backend-express]] — usa su manejador de errores y su rate limit general de `/api`.
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — misma sesión; después vino el formulario de encargos, primera ruta pública que escribe.
 - [[2026-10-20-crud-admin-auditado]] — el admin crea, programa y enlaza las historias y videos que estas rutas muestran.
+- [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — las páginas /historias, /historias/[slug] y /videos consumen estas rutas.
 
 ## Fuentes
 - [[sources#prd]]
