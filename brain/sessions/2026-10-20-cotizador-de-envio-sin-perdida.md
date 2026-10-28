@@ -50,6 +50,7 @@ Tarea 12 de Task Master (PRD §4.5, §6.1 y §6.4): `POST /api/shipping/quote`, 
 - [[2026-10-20-login-admin-refresh-rotativo-csrf]] — misma sesión; después del cotizador vino el login del admin.
 - [[2026-10-21-motor-de-precios-sugeridos]] — usa la misma CostSettings vigente y el mismo redondeo hacia arriba para no perder.
 - [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — el estimador de la ficha llama a este cotizador desde el navegador.
+- [[2026-10-28-admin-costos-tarifas-y-cajas]] — el admin ahora edita las tarifas, el divisor volumétrico y las cajas que usa este cotizador.
 
 ## Fuentes
 - [[sources#prd]]

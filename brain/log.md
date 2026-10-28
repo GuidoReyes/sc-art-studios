@@ -89,3 +89,7 @@
 ## [2026-10-27 18:40] ingest | 2026-10-27-panel-admin-login-y-resumen
 - Área: frontend
 - Cross-refs: [[2026-10-20-login-admin-refresh-rotativo-csrf]], [[2026-10-20-crud-admin-auditado]], [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] (bidireccionales)
+
+## [2026-10-28 10:05] ingest | 2026-10-28-admin-costos-tarifas-y-cajas
+- Área: frontend
+- Cross-refs: [[2026-10-27-panel-admin-login-y-resumen]], [[2026-10-20-crud-admin-auditado]], [[2026-10-21-motor-de-precios-sugeridos]], [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-20-cotizador-de-envio-sin-perdida]] (bidireccionales)

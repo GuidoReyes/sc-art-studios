@@ -45,6 +45,7 @@ Tarea 33 (fase 5). El usuario pidió seguir con el panel de admin **en local** m
 - [[2026-10-20-login-admin-refresh-rotativo-csrf]] — el panel consume su login, `/session`, refresh rotativo y CSRF por sesión.
 - [[2026-10-20-crud-admin-auditado]] — el resumen se monta bajo el mismo `/api/admin` (requireAdmin, límite por usuario, sin caché).
 - [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — sitio público de la sesión anterior; comparte `BROWSER_API_URL` con su cotizador y formulario.
+- [[2026-10-28-admin-costos-tarifas-y-cajas]] — segunda pantalla del panel (Costos y envíos); extrae `useAdminData` y `styles.ts` de este resumen.
 
 ## Fuentes
 - [[sources#prd]]

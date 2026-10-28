@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-27
-**Total de nodos:** 20 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-28
+**Total de nodos:** 21 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -32,8 +32,9 @@
 - [[2026-10-14-reglas-claude-md-y-agents-md]] — Tarea 3: stack, 13 capas de seguridad, protección de la menor, commits y agentes en CLAUDE.md/AGENTS.md
 
 ### frontend
-- [[2026-10-27-panel-admin-login-y-resumen]] — Tarea 33: login y resumen del admin; la sesión vive en cookies de la API (Next no las lee), CSRF en memoria, refresh compartido, GET /api/admin/dashboard
 
+- [[2026-10-28-admin-costos-tarifas-y-cajas]] — Tarea 42: /admin/costs con CostSettings versionada (409 si otro guardó antes), aviso de arancel a los 60 días con columna propia, tarifas por zona y cajas auditadas
+- [[2026-10-27-panel-admin-login-y-resumen]] — Tarea 33: login y resumen del admin; la sesión vive en cookies de la API (Next no las lee), CSRF en memoria, refresh compartido, GET /api/admin/dashboard
 - [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — Tareas 28, 29 y 31: inicio, catálogo con filtros, ficha con estimador de envío, /envios, historias, videos y Sobre Scarlett en modo libro (sin grado escolar) y /personalizada con Turnstile; carrito pendiente
 - [[2026-10-19-componentes-base-del-diseno]] — Tarea 26: Header/Footer/MaskCard y demás componentes, pink-deep para WCAG AA, /test-components, 47 pruebas + axe sin violaciones
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — Tarea 38: hreflang/canonical/og:locale, sitemap y robots, 404 traducido, cookie de idioma, claves tipadas

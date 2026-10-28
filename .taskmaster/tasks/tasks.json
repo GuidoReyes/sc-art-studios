@@ -3128,7 +3128,7 @@
           "33",
           "15"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -3136,9 +3136,10 @@
             "description": "Implementar endpoint PUT /api/admin/cost-settings y formulario UI para editar los 10 campos de CostSettings, guardando cada cambio como nueva fila (versionado) con updatedAt y updatedBy para auditoría completa.",
             "dependencies": [],
             "details": "Backend: Crear archivo `apps/api/src/routes/admin/cost-settings.ts` con GET (última versión + historial opcional) y PUT (INSERT nueva fila, nunca UPDATE). Schema Zod con todos los campos: fxUsdGtq, gatewayPct, gatewayFixedUsd, shopifyThirdPartyPct, monthlyFixedUsd, expectedUnitsPerMonth, laborRateGtqPerHour, targetMarginPct, volumetricDivisor, usImportDutyPct. Frontend: Crear componente `CostSettingsForm.tsx` en la pestaña 1 de `/admin/costos-envios`. Mostrar 'Última actualización por <nombre> el <fecha>'. Cada campo NumericInput con precisión decimal apropiada. Al guardar: crear nueva fila en BD + registrar en AuditLog con diff {before, after}. Incluir vista previa en vivo: mostrar cómo cambian los precios sugeridos al modificar gatewayPct o laborRateGtqPerHour (llamar a POST /api/admin/pricing/suggest con debounce de 500ms).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: verificar que PUT crea nueva fila sin modificar la anterior. Test integración: cambiar gatewayPct de 7.4% a 8%, verificar que AuditLog registra el cambio, verificar que el precio sugerido aumenta proporcionalmente. Test E2E: completar formulario, guardar, refrescar página y verificar que muestra valores nuevos con fecha actualizada.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T16:01:31.071Z"
           },
           {
             "id": 2,
@@ -3148,9 +3149,10 @@
               1
             ],
             "details": "Backend: Crear `apps/api/src/routes/admin/shipping-rates.ts`. GET con query params ?carrier=FEDEX&zone=C para filtros. POST/PUT con schema Zod: carrier (enum FEDEX|POSTAL|COURIER_LOCAL|OTHER), service (string), zoneId (FK a ShippingZone), maxWeightKg (Decimal), costUsd (Decimal), validFrom (DateTime requerido), validTo (DateTime opcional), source (URL o texto 'cotización <fecha>'), isEstimate (boolean). DELETE soft-delete (agregar campo deletedAt) para mantener historial. Frontend: Crear componente `ShippingRatesTable.tsx` con filtros dropdown por carrier y zona. Columnas: carrier, servicio, zona, peso máx, costo USD, válido desde, fuente, ¿estimado? Acciones por fila: editar (modal), duplicar (crear nueva con validFrom=hoy), eliminar (confirmación). Mostrar badge visual si isEstimate=true. Modal de edición con DatePicker para validFrom/validTo.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: validar schema rechaza carrier inválido, validFrom futuro sin validTo. Test integración: crear tarifa FedEx zona C 2kg=$180, verificar aparece en GET con filtro carrier=FEDEX. Test E2E: duplicar tarifa existente, modificar costUsd, guardar, verificar que original permanece sin cambios y nueva tarifa tiene validFrom=hoy.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T16:01:31.077Z"
           },
           {
             "id": 3,
@@ -3160,9 +3162,10 @@
               1
             ],
             "details": "Backend: Crear `apps/api/src/routes/admin/packaging-profiles.ts`. GET devuelve lista (normalmente 1-2 perfiles). POST/PUT con schema Zod: name (string, ej: 'Estándar'), innerCm (string '25x20x15'), outerLengthCm/outerWidthCm/outerHeightCm (numbers), packagingWeightGrams (number), costGtq (Decimal). Calcular y retornar campo computado volumetricWeightKg = (outer L×W×H) / volumetricDivisor de CostSettings. No DELETE por ahora (perfiles referenciados en órdenes históricas). Frontend: Crear componente `PackagingProfilesTable.tsx` en pestaña 3. Columnas: nombre, dimensiones int, dimensiones ext, peso empaque, peso volumétrico calc, costo GTQ. Botón 'Crear perfil nuevo' abre modal con formulario. Editar inline o modal. Mostrar aviso si nombre contiene '(SUPUESTO)' indicando que debe confirmarse con empaque real.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: validar cálculo volumetricWeightKg con divisor 5000 (30×25×20=15000cm³ → 3kg volumétrico). Test integración: crear perfil 'Caja grande' con dimensiones mayores, verificar aparece en dropdown de POST /api/admin/pricing/suggest. Test E2E: editar costGtq del perfil Estándar, verificar que precio sugerido de máscaras cambia en consecuencia.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T16:01:31.081Z"
           },
           {
             "id": 4,
@@ -3172,14 +3175,16 @@
               1
             ],
             "details": "Backend: Modificar GET /api/admin/cost-settings para incluir campo computado `dutyWarning: boolean` (true si updatedAt del último CostSettings > 60 días). Opcionalmente agregar campo `usImportDutyPctLastReviewedAt` separado si se quiere trackear revisión sin cambio de valor. Frontend: En la pantalla `/admin/costos-envios`, arriba de las pestañas, renderizar componente `DutyWarningBanner.tsx` si dutyWarning=true. Estilo: fondo rosa acento #E8307A, texto blanco, ícono ⚠️, mensaje '¡Los aranceles de importación no se revisan hace más de 60 días! Los aranceles Sección 301 pueden cambiar sin previo aviso.' Botón 'Revisar ahora' que hace scroll/focus al campo usImportDutyPct en pestaña CostSettings y lo resalta. Al guardar CostSettings (aunque sea mismo valor), resetea el contador de 60 días. Agregar campo lastDutyReviewAt en modelo si es necesario para distinguir 'revisar' de 'cambiar valor'.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test unitario: mock de fecha actual, verificar que dutyWarning=true cuando updatedAt es hace 61 días, false cuando es hace 59 días. Test integración: seed CostSettings con updatedAt hace 70 días, verificar GET devuelve dutyWarning:true. Test E2E: navegar a /admin/costos-envios, verificar banner visible con estilo correcto, clic en 'Revisar ahora' hace scroll al campo usImportDutyPct, guardar sin cambios, refrescar, verificar banner desapareció.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T16:01:31.085Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Dividir en: 1) Crear formulario de edición de CostSettings con versionado (nueva fila por cambio), 2) Implementar CRUD de ShippingRates con source, validFrom/validTo, isEstimate, 3) Implementar CRUD de PackagingProfiles, 4) Agregar banner de aviso si usImportDutyPct no se revisa en 60 días."
+        "expansionPrompt": "Dividir en: 1) Crear formulario de edición de CostSettings con versionado (nueva fila por cambio), 2) Implementar CRUD de ShippingRates con source, validFrom/validTo, isEstimate, 3) Implementar CRUD de PackagingProfiles, 4) Agregar banner de aviso si usImportDutyPct no se revisa en 60 días.",
+        "updatedAt": "2026-10-28T16:01:31.085Z"
       },
       {
         "id": "43",
@@ -3663,9 +3668,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-28T00:34:58.984Z",
+      "lastModified": "2026-10-28T16:01:31.085Z",
       "taskCount": 49,
-      "completedCount": 22,
+      "completedCount": 23,
       "tags": [
         "master"
       ]

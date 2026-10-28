@@ -45,6 +45,7 @@ Tarea 15 de Task Master (F7): `POST /api/admin/pricing/suggest` calcula el costo
 - [[2026-10-20-crud-admin-auditado]] — vive bajo el mismo `/api/admin` y su `requireAdmin`; el precio elegido se guarda con ese CRUD.
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — misma CostSettings vigente y mismo criterio de redondear hacia arriba para no perder.
 - [[2026-10-19-seed-tarifas-fedex-y-costos]] — los valores de CostSettings y la caja supuesta con que se verificó el ejemplo del PRD.
+- [[2026-10-28-admin-costos-tarifas-y-cajas]] — edita la CostSettings que lee este motor; un cambio se refleja de inmediato en el precio sugerido.
 
 ## Fuentes
 - [[sources#prd]]

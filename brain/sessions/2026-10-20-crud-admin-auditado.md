@@ -51,6 +51,7 @@ Tarea 14 de Task Master: rutas protegidas `/api/admin/{masks,stories,videos}` pa
 - [[2026-10-18-prisma-7-schema-y-migracion-inicial]] — escribe en `Mask`, `Story`, `Video` y `AuditLog` de ese esquema, sin migraciones nuevas.
 - [[2026-10-21-motor-de-precios-sugeridos]] — el motor de precios vive bajo este /api/admin; el precio que sugiere se guarda con este CRUD.
 - [[2026-10-27-panel-admin-login-y-resumen]] — suma `GET /api/admin/dashboard` a este router y el panel que consumirá estos CRUD.
+- [[2026-10-28-admin-costos-tarifas-y-cajas]] — tarifas de envío y cajas reusan este store auditado; CostSettings audita igual pero versionando.
 
 ## Fuentes
 - [[sources#prd]]
