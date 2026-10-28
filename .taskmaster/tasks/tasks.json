@@ -2466,7 +2466,7 @@
           "13",
           "32"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2529,7 +2529,8 @@
         ],
         "complexity": 6,
         "recommendedSubtasks": 5,
-        "expansionPrompt": "Dividir en: 1) Crear layout protegido /admin con middleware de verificación de sesión, 2) Implementar /admin/login con formulario y manejo de CSRF, 3) Crear /admin/dashboard con métricas (total máscaras por status, pedidos, solicitudes), 4) Agregar sidebar con navegación a todas las secciones, 5) Configurar metadata robots noindex para admin."
+        "expansionPrompt": "Dividir en: 1) Crear layout protegido /admin con middleware de verificación de sesión, 2) Implementar /admin/login con formulario y manejo de CSRF, 3) Crear /admin/dashboard con métricas (total máscaras por status, pedidos, solicitudes), 4) Agregar sidebar con navegación a todas las secciones, 5) Configurar metadata robots noindex para admin.",
+        "updatedAt": "2026-10-28T00:34:58.983Z"
       },
       {
         "id": "34",
@@ -3662,9 +3663,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-28T00:16:52.348Z",
+      "lastModified": "2026-10-28T00:34:58.984Z",
       "taskCount": 49,
-      "completedCount": 21,
+      "completedCount": 22,
       "tags": [
         "master"
       ]

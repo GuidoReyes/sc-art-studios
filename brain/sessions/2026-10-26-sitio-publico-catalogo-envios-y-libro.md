@@ -63,6 +63,7 @@ Tareas 28, 29 y 31 de Task Master (fase 4). El usuario pidió ver cómo queda la
 - [[2026-10-20-cotizador-de-envio-sin-perdida]] — el estimador de la ficha llama a este cotizador desde el navegador.
 - [[2026-10-19-formulario-de-encargos-con-foto-segura]] — `/personalizada` envía a esta ruta (multipart con Turnstile).
 - [[2026-10-14-i18n-hreflang-sitemap-404]] — nuevas rutas `/historias/[slug]` y `/sobre-scarlett` en el routing, hreflang y sitemap.
+- [[2026-10-27-panel-admin-login-y-resumen]] — la sesión siguiente: panel de admin; movió `NEXT_PUBLIC_API_URL` a `BROWSER_API_URL` en `lib/site.ts`.
 
 ## Fuentes
 - [[sources#prd]]

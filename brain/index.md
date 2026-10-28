@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-26
-**Total de nodos:** 19 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-10-27
+**Total de nodos:** 20 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -32,6 +32,7 @@
 - [[2026-10-14-reglas-claude-md-y-agents-md]] — Tarea 3: stack, 13 capas de seguridad, protección de la menor, commits y agentes en CLAUDE.md/AGENTS.md
 
 ### frontend
+- [[2026-10-27-panel-admin-login-y-resumen]] — Tarea 33: login y resumen del admin; la sesión vive en cookies de la API (Next no las lee), CSRF en memoria, refresh compartido, GET /api/admin/dashboard
 
 - [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — Tareas 28, 29 y 31: inicio, catálogo con filtros, ficha con estimador de envío, /envios, historias, videos y Sobre Scarlett en modo libro (sin grado escolar) y /personalizada con Turnstile; carrito pendiente
 - [[2026-10-19-componentes-base-del-diseno]] — Tarea 26: Header/Footer/MaskCard y demás componentes, pink-deep para WCAG AA, /test-components, 47 pruebas + axe sin violaciones

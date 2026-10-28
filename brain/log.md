@@ -85,3 +85,7 @@
 ## [2026-10-26 18:45] ingest | 2026-10-26-sitio-publico-catalogo-envios-y-libro (actualización tarea 30)
 - Área: frontend
 - Cross-refs: + [[2026-10-19-formulario-de-encargos-con-foto-segura]] (bidireccional)
+
+## [2026-10-27 18:40] ingest | 2026-10-27-panel-admin-login-y-resumen
+- Área: frontend
+- Cross-refs: [[2026-10-20-login-admin-refresh-rotativo-csrf]], [[2026-10-20-crud-admin-auditado]], [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] (bidireccionales)
