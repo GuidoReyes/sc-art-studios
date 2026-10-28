@@ -8,10 +8,16 @@ const CSRF_HEADER = "X-CSRF-Token";
 
 export type LoginResult = { kind: "ok"; session: AdminSessionDto } | { kind: "invalid" | "locked" | "failed" };
 export type SessionResult = { kind: "ok"; session: AdminSessionDto } | { kind: "none" | "failed" };
+/** Por qué la API rechazó un pedido: `code` estable (STALE, IN_USE…) y los campos inválidos ("values.fxUsdGtq"). */
+export interface AdminProblem {
+  code?: string;
+  fields?: string[];
+}
+
 export type AdminResult<T> =
   | { kind: "ok"; data: T; session: AdminSessionDto }
   | { kind: "unauthenticated" }
-  | { kind: "failed"; status: number | null };
+  | ({ kind: "failed"; status: number | null } & AdminProblem);
 
 export interface AdminRequest {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -80,6 +86,21 @@ export async function logout(fetchImpl: Fetch = fetch): Promise<void> {
   await call(fetchImpl, "/api/auth/logout", { method: "POST" });
 }
 
+// Cuerpo de error de la API ({ error, code?, issues? }). Viene de afuera: se revisa antes de usarlo.
+async function readProblem(res: Response): Promise<AdminProblem> {
+  try {
+    const body: unknown = await res.json();
+    if (typeof body !== "object" || body === null) return {};
+    const { code, issues } = body as { code?: unknown; issues?: unknown };
+    const fields = Array.isArray(issues)
+      ? issues.flatMap((issue: { path?: unknown }) => (Array.isArray(issue?.path) ? [issue.path.join(".")] : []))
+      : [];
+    return { ...(typeof code === "string" ? { code } : {}), ...(fields.length > 0 ? { fields } : {}) };
+  } catch {
+    return {};
+  }
+}
+
 /**
  * Pedido a /api/admin con el CSRF de la sesión. Si el JWT de 15 min venció, renueva una vez y
  * reintenta; la sesión devuelta trae el CSRF nuevo para guardarlo.
@@ -103,7 +124,8 @@ export async function adminRequest<T>(
     res = await send(current);
   }
   if (res?.status === 401) return { kind: "unauthenticated" };
-  if (!res?.ok) return { kind: "failed", status: res?.status ?? null };
+  if (!res) return { kind: "failed", status: null };
+  if (!res.ok) return { kind: "failed", status: res.status, ...(await readProblem(res)) };
   const data = res.status === 204 ? (undefined as T) : ((await res.json()) as T);
   return { kind: "ok", data, session: current };
 }

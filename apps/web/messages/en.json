@@ -148,6 +148,169 @@
         "date": "Date"
       },
       "unknownMask": "No mask"
+    },
+    "costs": {
+      "title": "Costs and shipping",
+      "intro": "What the pricing engine and the shipping quote use. Every change is logged with who made it and when.",
+      "loading": "Loading…",
+      "failed": "We couldn't load this section.",
+      "retry": "Try again",
+      "sectionsLabel": "Parts of this page",
+      "sections": {
+        "settings": "Cost settings",
+        "rates": "Shipping rates",
+        "boxes": "Boxes"
+      },
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Really delete?",
+      "confirmYes": "Yes, delete",
+      "duty": {
+        "due": "The US import duty hasn't been reviewed since {date}. Check whether it is still the same and confirm it below, or change it.",
+        "ok": "US duty reviewed on {date}. Next review: {due}."
+      },
+      "settings": {
+        "groups": {
+          "fx": "Exchange rate",
+          "fees": "Fees on each sale",
+          "fixed": "Fixed costs and labor",
+          "pricing": "Price",
+          "shipping": "Shipping"
+        },
+        "fields": {
+          "fxUsdGtq": "Quetzales per dollar",
+          "gatewayPct": "Payment gateway fee (PayPal)",
+          "gatewayFixedUsd": "Gateway fixed fee per sale",
+          "shopifyThirdPartyPct": "Shopify fee for an external gateway",
+          "monthlyFixedUsd": "Monthly fixed costs",
+          "expectedUnitsPerMonth": "Pieces expected to sell per month",
+          "laborRateGtqPerHour": "Pay per hour of work",
+          "targetMarginPct": "Target margin",
+          "volumetricDivisor": "Volumetric weight divisor",
+          "usImportDutyPct": "US import duty"
+        },
+        "units": {
+          "fxUsdGtq": "Q",
+          "gatewayPct": "%",
+          "gatewayFixedUsd": "US$",
+          "shopifyThirdPartyPct": "%",
+          "monthlyFixedUsd": "US$",
+          "expectedUnitsPerMonth": "pieces",
+          "laborRateGtqPerHour": "Q",
+          "targetMarginPct": "%",
+          "volumetricDivisor": "cm³/kg",
+          "usImportDutyPct": "%"
+        },
+        "dutyReviewed": "I reviewed the duty today and it is still current",
+        "save": "Save new version",
+        "saving": "Saving…",
+        "saved": "Saved. The suggested price already uses these values.",
+        "current": "Version {id}, saved on {date} ({by}).",
+        "seed": "initial values",
+        "history": "Previous versions",
+        "historyEmpty": "There are no previous versions yet.",
+        "version": "Version {id} · {date} · {by}",
+        "changed": "Changed: {fields}",
+        "unchanged": "Only the duty was confirmed",
+        "first": "First version"
+      },
+      "rates": {
+        "intro": "The quote uses the current rates for the country's zone. To change a price, end the old rate and add a new one, so the history is kept.",
+        "zoneFilter": "Zone",
+        "allZones": "All zones",
+        "add": "Add rate",
+        "empty": "There are no rates for this zone.",
+        "more": "Showing {shown} of {total}. Filter by zone to see the rest.",
+        "newTitle": "New rate",
+        "editTitle": "Edit rate",
+        "columns": {
+          "zone": "Zone",
+          "carrier": "Carrier",
+          "service": "Service",
+          "maxWeightKg": "Up to",
+          "costUsd": "Cost",
+          "validity": "Valid",
+          "source": "Source",
+          "actions": "Actions"
+        },
+        "fields": {
+          "zoneId": "Zone",
+          "carrier": "Carrier",
+          "service": "Service",
+          "maxWeightKg": "Max weight (kg)",
+          "costUsd": "Cost (US$)",
+          "validFrom": "Valid from",
+          "validTo": "Valid until (optional)",
+          "source": "Source (link, or “quote” and the date)",
+          "isEstimate": "It is an estimate (the customer is told)"
+        },
+        "carriers": {
+          "FEDEX": "FedEx",
+          "POSTAL": "Postal service",
+          "COURIER_LOCAL": "Local courier",
+          "OTHER": "Other"
+        },
+        "status": {
+          "current": "Current",
+          "expired": "Expired",
+          "future": "Upcoming"
+        },
+        "estimate": "Estimate",
+        "until": "{from} – {to}",
+        "open": "from {from}",
+        "kg": "{value} kg",
+        "save": "Save rate",
+        "saved": "Rate saved.",
+        "deleted": "Rate deleted."
+      },
+      "boxes": {
+        "intro": "The quote uses the outer size and the weight; the suggested price adds the box cost.",
+        "add": "Add box",
+        "empty": "There are no boxes yet.",
+        "newTitle": "New box",
+        "editTitle": "Edit box",
+        "inner": "Inside (cm)",
+        "outer": "Outside (cm)",
+        "columns": {
+          "name": "Name",
+          "inner": "Inside",
+          "outer": "Outside",
+          "weight": "Weight",
+          "cost": "Cost",
+          "masks": "Masks",
+          "actions": "Actions"
+        },
+        "fields": {
+          "name": "Name",
+          "length": "Length",
+          "width": "Width",
+          "height": "Height",
+          "packagingWeightGrams": "Weight of box and padding (g)",
+          "costGtq": "Cost (Q)"
+        },
+        "dimensions": "{length} × {width} × {height} cm",
+        "grams": "{value} g",
+        "masks": "{count, plural, =0 {None} one {# mask} other {# masks}}",
+        "inUse": "Used by masks: it can't be deleted",
+        "save": "Save box",
+        "saved": "Box saved.",
+        "deleted": "Box deleted."
+      },
+      "errors": {
+        "STALE": "Someone else saved changes while you were editing. Reload to see the current version.",
+        "NO_CHANGES": "You didn't change anything. If you reviewed the duty, tick the confirmation box.",
+        "IN_USE": "Some masks use this box. Give them another box before deleting it.",
+        "INVALID_PERIOD": "The end date must be after the start date.",
+        "INVALID_DIMENSIONS": "The outside size can't be smaller than the inside size.",
+        "DUPLICATE": "An identical one already exists.",
+        "INVALID_REFERENCE": "The chosen zone no longer exists. Reload the page.",
+        "NOT_FOUND": "It no longer exists: someone deleted it. Reload the page.",
+        "tooMany": "Too many changes in a row. Wait a minute and try again.",
+        "margin": "Fees plus the target margin must add up to less than 100%.",
+        "invalid": "Check the highlighted fields.",
+        "failed": "We couldn't save. Check your connection and try again."
+      }
     }
   },
   "NotFound": {

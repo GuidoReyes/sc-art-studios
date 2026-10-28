@@ -148,6 +148,169 @@
         "date": "Fecha"
       },
       "unknownMask": "Sin máscara"
+    },
+    "costs": {
+      "title": "Costos y envíos",
+      "intro": "Lo que usan el motor de precios y el cotizador de envíos. Cada cambio queda en el registro con quién y cuándo.",
+      "loading": "Cargando…",
+      "failed": "No pudimos cargar esta sección.",
+      "retry": "Reintentar",
+      "sectionsLabel": "Partes de esta página",
+      "sections": {
+        "settings": "Parámetros de costos",
+        "rates": "Tarifas de envío",
+        "boxes": "Cajas"
+      },
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Borrar",
+      "confirmDelete": "¿Borrar de verdad?",
+      "confirmYes": "Sí, borrar",
+      "duty": {
+        "due": "El arancel de importación de EE. UU. no se revisa desde el {date}. Revisa si sigue igual y confírmalo abajo, o cámbialo.",
+        "ok": "Arancel de EE. UU. revisado el {date}. Próxima revisión: {due}."
+      },
+      "settings": {
+        "groups": {
+          "fx": "Tipo de cambio",
+          "fees": "Comisiones de cada venta",
+          "fixed": "Costos fijos y mano de obra",
+          "pricing": "Precio",
+          "shipping": "Envíos"
+        },
+        "fields": {
+          "fxUsdGtq": "Quetzales por dólar",
+          "gatewayPct": "Comisión de la pasarela (PayPal)",
+          "gatewayFixedUsd": "Cargo fijo de la pasarela por venta",
+          "shopifyThirdPartyPct": "Comisión de Shopify por pasarela externa",
+          "monthlyFixedUsd": "Costos fijos al mes",
+          "expectedUnitsPerMonth": "Piezas que se esperan vender al mes",
+          "laborRateGtqPerHour": "Pago por hora de trabajo",
+          "targetMarginPct": "Margen objetivo",
+          "volumetricDivisor": "Divisor de peso volumétrico",
+          "usImportDutyPct": "Arancel de importación de EE. UU."
+        },
+        "units": {
+          "fxUsdGtq": "Q",
+          "gatewayPct": "%",
+          "gatewayFixedUsd": "US$",
+          "shopifyThirdPartyPct": "%",
+          "monthlyFixedUsd": "US$",
+          "expectedUnitsPerMonth": "piezas",
+          "laborRateGtqPerHour": "Q",
+          "targetMarginPct": "%",
+          "volumetricDivisor": "cm³/kg",
+          "usImportDutyPct": "%"
+        },
+        "dutyReviewed": "Revisé el arancel hoy y sigue vigente",
+        "save": "Guardar nueva versión",
+        "saving": "Guardando…",
+        "saved": "Guardado. El precio sugerido ya usa estos valores.",
+        "current": "Versión {id}, guardada el {date} ({by}).",
+        "seed": "valores iniciales",
+        "history": "Versiones anteriores",
+        "historyEmpty": "Todavía no hay versiones anteriores.",
+        "version": "Versión {id} · {date} · {by}",
+        "changed": "Cambió: {fields}",
+        "unchanged": "Solo se confirmó el arancel",
+        "first": "Primera versión"
+      },
+      "rates": {
+        "intro": "El cotizador usa las tarifas vigentes de la zona del país. Para cambiar un precio, cierra la vigencia de la tarifa vieja y agrega una nueva: así queda el historial.",
+        "zoneFilter": "Zona",
+        "allZones": "Todas las zonas",
+        "add": "Agregar tarifa",
+        "empty": "No hay tarifas para esta zona.",
+        "more": "Se muestran {shown} de {total}. Filtra por zona para ver el resto.",
+        "newTitle": "Nueva tarifa",
+        "editTitle": "Editar tarifa",
+        "columns": {
+          "zone": "Zona",
+          "carrier": "Transportista",
+          "service": "Servicio",
+          "maxWeightKg": "Hasta",
+          "costUsd": "Costo",
+          "validity": "Vigencia",
+          "source": "Fuente",
+          "actions": "Acciones"
+        },
+        "fields": {
+          "zoneId": "Zona",
+          "carrier": "Transportista",
+          "service": "Servicio",
+          "maxWeightKg": "Peso máximo (kg)",
+          "costUsd": "Costo (US$)",
+          "validFrom": "Vigente desde",
+          "validTo": "Vigente hasta (opcional)",
+          "source": "Fuente (enlace, o «cotización» y la fecha)",
+          "isEstimate": "Es una estimación (se avisa al cliente)"
+        },
+        "carriers": {
+          "FEDEX": "FedEx",
+          "POSTAL": "Correo",
+          "COURIER_LOCAL": "Courier local",
+          "OTHER": "Otro"
+        },
+        "status": {
+          "current": "Vigente",
+          "expired": "Vencida",
+          "future": "Futura"
+        },
+        "estimate": "Estimada",
+        "until": "{from} – {to}",
+        "open": "desde {from}",
+        "kg": "{value} kg",
+        "save": "Guardar tarifa",
+        "saved": "Tarifa guardada.",
+        "deleted": "Tarifa borrada."
+      },
+      "boxes": {
+        "intro": "El cotizador usa las medidas exteriores y el peso; el precio sugerido suma el costo de la caja.",
+        "add": "Agregar caja",
+        "empty": "Todavía no hay cajas.",
+        "newTitle": "Nueva caja",
+        "editTitle": "Editar caja",
+        "inner": "Por dentro (cm)",
+        "outer": "Por fuera (cm)",
+        "columns": {
+          "name": "Nombre",
+          "inner": "Por dentro",
+          "outer": "Por fuera",
+          "weight": "Peso",
+          "cost": "Costo",
+          "masks": "Máscaras",
+          "actions": "Acciones"
+        },
+        "fields": {
+          "name": "Nombre",
+          "length": "Largo",
+          "width": "Ancho",
+          "height": "Alto",
+          "packagingWeightGrams": "Peso de la caja y el relleno (g)",
+          "costGtq": "Costo (Q)"
+        },
+        "dimensions": "{length} × {width} × {height} cm",
+        "grams": "{value} g",
+        "masks": "{count, plural, =0 {Ninguna} one {# máscara} other {# máscaras}}",
+        "inUse": "La usan máscaras: no se puede borrar",
+        "save": "Guardar caja",
+        "saved": "Caja guardada.",
+        "deleted": "Caja borrada."
+      },
+      "errors": {
+        "STALE": "Otra persona guardó cambios mientras editabas. Recarga para ver la versión actual.",
+        "NO_CHANGES": "No cambiaste nada. Si revisaste el arancel, marca la casilla de confirmación.",
+        "IN_USE": "Hay máscaras que usan esta caja. Cámbiales la caja antes de borrarla.",
+        "INVALID_PERIOD": "La fecha de fin debe ser posterior a la de inicio.",
+        "INVALID_DIMENSIONS": "Las medidas de afuera no pueden ser menores que las de adentro.",
+        "DUPLICATE": "Ya existe uno igual.",
+        "INVALID_REFERENCE": "La zona elegida ya no existe. Recarga la página.",
+        "NOT_FOUND": "Ya no existe: alguien lo borró. Recarga la página.",
+        "tooMany": "Hiciste muchos cambios seguidos. Espera un minuto e inténtalo de nuevo.",
+        "margin": "Las comisiones más el margen objetivo deben sumar menos de 100 %.",
+        "invalid": "Revisa los campos marcados.",
+        "failed": "No pudimos guardar. Revisa la conexión e inténtalo de nuevo."
+      }
     }
   },
   "NotFound": {

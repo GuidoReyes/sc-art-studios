@@ -15,3 +15,4 @@ export type * from "./content.js";
 export type * from "./shipping.js";
 export type * from "./auth.js";
 export type * from "./admin.js";
+export type * from "./costs.js";

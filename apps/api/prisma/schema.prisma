@@ -227,20 +227,22 @@ model PackagingProfile {
 // Versionada: cada cambio inserta una fila nueva y la vigente es la de id más alto.
 // Los porcentajes se guardan como porcentaje (5.40 = 5.40 %), no como fracción.
 model CostSettings {
-  id                    Int        @id @default(autoincrement())
-  fxUsdGtq              Decimal    @db.Decimal(10, 4)
-  gatewayPct            Decimal    @db.Decimal(5, 2)
-  gatewayFixedUsd       Decimal    @db.Decimal(8, 2)
-  shopifyThirdPartyPct  Decimal    @db.Decimal(5, 2)
-  monthlyFixedUsd       Decimal    @db.Decimal(10, 2)
-  expectedUnitsPerMonth Int
-  laborRateGtqPerHour   Decimal    @db.Decimal(10, 2)
-  targetMarginPct       Decimal    @db.Decimal(5, 2)
-  volumetricDivisor     Int
-  usImportDutyPct       Decimal    @db.Decimal(5, 2)
-  updatedAt             DateTime   @default(now())
-  updatedById           String?
-  updatedBy             AdminUser? @relation(fields: [updatedById], references: [id], onDelete: SetNull)
+  id                     Int        @id @default(autoincrement())
+  fxUsdGtq               Decimal    @db.Decimal(10, 4)
+  gatewayPct             Decimal    @db.Decimal(5, 2)
+  gatewayFixedUsd        Decimal    @db.Decimal(8, 2)
+  shopifyThirdPartyPct   Decimal    @db.Decimal(5, 2)
+  monthlyFixedUsd        Decimal    @db.Decimal(10, 2)
+  expectedUnitsPerMonth  Int
+  laborRateGtqPerHour    Decimal    @db.Decimal(10, 2)
+  targetMarginPct        Decimal    @db.Decimal(5, 2)
+  volumetricDivisor      Int
+  usImportDutyPct        Decimal    @db.Decimal(5, 2)
+  // Cuándo se revisó el arancel por última vez (cambiado o confirmado): el admin avisa a los 60 días.
+  usImportDutyReviewedAt DateTime   @default(now())
+  updatedAt              DateTime   @default(now())
+  updatedById            String?
+  updatedBy              AdminUser? @relation(fields: [updatedById], references: [id], onDelete: SetNull)
 
   @@index([updatedById])
 }

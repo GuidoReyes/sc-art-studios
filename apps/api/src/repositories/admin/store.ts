@@ -28,7 +28,7 @@ type Db = PrismaClient | Prisma.TransactionClient;
 
 /** Lo que cada entidad sabe hacer con Prisma; la transacción y la auditoría las pone el store. */
 export interface EntityOps<Dto extends { id: string }, Create, Update, Query> {
-  entity: "Mask" | "Story" | "Video";
+  entity: "Mask" | "Story" | "Video" | "ShippingRate" | "PackagingProfile";
   /** Prefijo de la acción en AuditLog: "mask" → "mask.create", "mask.update", "mask.delete". */
   action: string;
   duplicateMessage: string;
@@ -96,7 +96,7 @@ export function createAdminStore<Dto extends { id: string }, Create, Update, Que
   const translate = (error: unknown): never => {
     const code = prismaCode(error);
     if (code === "P2002") throw new HttpError(409, ops.duplicateMessage, "DUPLICATE");
-    if (code === "P2003") throw new HttpError(422, "La máscara, historia o empaque indicado no existe", "INVALID_REFERENCE");
+    if (code === "P2003") throw new HttpError(422, "La máscara, historia, zona o empaque indicado no existe", "INVALID_REFERENCE");
     throw error;
   };
 

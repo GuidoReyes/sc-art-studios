@@ -6,8 +6,10 @@ import { HttpError } from "../../lib/httpErrors.js";
 import { createTokenService } from "../../lib/tokens.js";
 import { ACCESS_COOKIE, CSRF_HEADER } from "../../middleware/auth.js";
 import { Prisma } from "../../generated/prisma/client.js";
+import type { CostSettingsRepository } from "../../repositories/admin/costSettings.js";
 import type { DashboardRepository } from "../../repositories/admin/dashboard.js";
 import type { PricingRepository } from "../../repositories/admin/pricing.js";
+import type { ShippingZoneRepository } from "../../repositories/admin/shippingRates.js";
 import type { AdminStore } from "../../repositories/admin/store.js";
 import type { AdminDeps } from "./index.js";
 
@@ -67,6 +69,38 @@ const DASHBOARD = {
 
 const fakeDashboard = () => ({ summary: vi.fn(async () => DASHBOARD) }) satisfies DashboardRepository;
 
+const COST_VALUES = {
+  fxUsdGtq: 7.645,
+  gatewayPct: 5.4,
+  gatewayFixedUsd: 0.3,
+  shopifyThirdPartyPct: 2,
+  monthlyFixedUsd: 54.94,
+  expectedUnitsPerMonth: 8,
+  laborRateGtqPerHour: 25,
+  targetMarginPct: 40,
+  volumetricDivisor: 5000,
+  usImportDutyPct: 10,
+};
+
+const costVersion = (reviewedAt: string) => ({
+  id: 1,
+  values: COST_VALUES,
+  usImportDutyReviewedAt: reviewedAt,
+  updatedAt: reviewedAt,
+  updatedByEmail: null,
+  changedFields: null,
+});
+
+function fakeCostSettings(reviewedAt = new Date().toISOString()) {
+  return {
+    overview: vi.fn(async (_limit: number) => ({ current: costVersion(reviewedAt), history: [] })),
+    save: vi.fn(async () => ({ ...costVersion(reviewedAt), id: 2 })),
+  } satisfies CostSettingsRepository;
+}
+
+const ZONES = [{ id: OTHER_ID, code: "FEDEX-C", name: "FedEx zona C", countries: ["US", "MX", "CA"] }];
+const fakeZones = () => ({ list: vi.fn(async () => ZONES) }) satisfies ShippingZoneRepository;
+
 function setup(extra: Partial<AdminDeps> = {}) {
   const stores = {
     masks: fakeStore(),
@@ -74,6 +108,10 @@ function setup(extra: Partial<AdminDeps> = {}) {
     videos: fakeStore(),
     pricing: fakePricing(),
     dashboard: fakeDashboard(),
+    costSettings: fakeCostSettings(),
+    shippingRates: fakeStore(),
+    shippingZones: fakeZones(),
+    packagingProfiles: fakeStore(),
   };
   const app = createApp({
     allowedOrigins: ["https://scartstudios.com"],
@@ -395,5 +433,168 @@ describe("GET /api/admin/dashboard", () => {
 
     expect(res.status).toBe(401);
     expect(dashboard.summary).not.toHaveBeenCalled();
+  });
+});
+
+describe("/api/admin/cost-settings", () => {
+  const SAVE = { baseVersionId: 1, values: { ...COST_VALUES, gatewayPct: 4.9 } };
+
+  it("devuelve la versión vigente y si toca revisar el arancel", async () => {
+    const { app } = setup({ costSettings: fakeCostSettings("2026-01-01T00:00:00.000Z") });
+
+    const res = await request(app).get("/api/admin/cost-settings").set(session());
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.current.values).toEqual(COST_VALUES);
+    expect(res.body.data.dutyReview).toEqual({ dueAt: "2026-03-02T00:00:00.000Z", isDue: true });
+  });
+
+  it("recién revisado no avisa", async () => {
+    const { app } = setup();
+
+    const res = await request(app).get("/api/admin/cost-settings").set(session());
+
+    expect(res.body.data.dutyReview.isDue).toBe(false);
+  });
+
+  it("guarda una versión nueva a nombre de quien tiene la sesión", async () => {
+    const { app, costSettings } = setup();
+
+    const res = await request(app).put("/api/admin/cost-settings").set(session("u7")).send(SAVE);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.id).toBe(2);
+    expect(costSettings.save).toHaveBeenCalledWith(SAVE, expect.objectContaining({ userId: "u7" }), expect.any(Date));
+  });
+
+  it.each([
+    ["comisiones + margen ≥ 100 %", { ...COST_VALUES, targetMarginPct: 92.6 }],
+    ["tipo de cambio en 0", { ...COST_VALUES, fxUsdGtq: 0 }],
+    ["piezas al mes con decimales", { ...COST_VALUES, expectedUnitsPerMonth: 2.5 }],
+    ["más decimales de los que caben", { ...COST_VALUES, gatewayPct: 5.401 }],
+    ["un campo que no existe", { ...COST_VALUES, shopifyPlanUsd: 39 }],
+  ])("400 con %s y no guarda", async (_case, values) => {
+    const { app, costSettings } = setup();
+
+    const res = await request(app).put("/api/admin/cost-settings").set(session()).send({ baseVersionId: 1, values });
+
+    expect(res.status).toBe(400);
+    expect(costSettings.save).not.toHaveBeenCalled();
+  });
+
+  it("los errores del repositorio salen con su código (409 si otra persona guardó antes)", async () => {
+    const costSettings = fakeCostSettings();
+    costSettings.save.mockRejectedValueOnce(new HttpError(409, "Otra persona cambió los costos", "STALE"));
+    const { app } = setup({ costSettings });
+
+    const res = await request(app).put("/api/admin/cost-settings").set(session()).send(SAVE);
+
+    expect(res.status).toBe(409);
+    expect(res.body.code).toBe("STALE");
+  });
+
+  it("exige CSRF para guardar", async () => {
+    const { app, costSettings } = setup();
+
+    const res = await request(app).put("/api/admin/cost-settings").set("Cookie", session().Cookie).send(SAVE);
+
+    expect(res.status).toBe(403);
+    expect(costSettings.save).not.toHaveBeenCalled();
+  });
+});
+
+describe("/api/admin/shipping-rates y /shipping-zones", () => {
+  const RATE = {
+    carrier: "FEDEX",
+    service: "International Economy",
+    zoneId: OTHER_ID,
+    maxWeightKg: 1,
+    costUsd: 138.8,
+    validFrom: "2026-01-05T00:00:00.000Z",
+    source: "https://www.fedex.com/tarifas.pdf",
+  };
+
+  it("lista las zonas para elegir", async () => {
+    const res = await request(setup().app).get("/api/admin/shipping-zones").set(session());
+
+    expect(res.body).toEqual({ data: ZONES });
+  });
+
+  it("crea una tarifa con fechas convertidas y filtra la lista por zona", async () => {
+    const { app, shippingRates } = setup();
+
+    expect((await request(app).post("/api/admin/shipping-rates").set(session()).send(RATE)).status).toBe(201);
+    await request(app).get(`/api/admin/shipping-rates?zoneId=${OTHER_ID}&limit=48`).set(session());
+
+    expect(shippingRates.create).toHaveBeenCalledWith(
+      { ...RATE, validFrom: new Date(RATE.validFrom) },
+      expect.objectContaining({ userId: "u1" }),
+    );
+    expect(shippingRates.list).toHaveBeenCalledWith({ zoneId: OTHER_ID, page: 1, limit: 48 });
+  });
+
+  it.each([
+    ["sin fuente", { ...RATE, source: " " }],
+    ["transportista inventado", { ...RATE, carrier: "DHL" }],
+    ["peso en 0", { ...RATE, maxWeightKg: 0 }],
+    ["fecha sin zona horaria", { ...RATE, validFrom: "2026-01-05" }],
+  ])("400 %s", async (_case, body) => {
+    const { app, shippingRates } = setup();
+
+    expect((await request(app).post("/api/admin/shipping-rates").set(session()).send(body)).status).toBe(400);
+    expect(shippingRates.create).not.toHaveBeenCalled();
+  });
+
+  it("al editar se puede cerrar la vigencia con validTo", async () => {
+    const { app, shippingRates } = setup();
+
+    const res = await request(app)
+      .put(`/api/admin/shipping-rates/${MASK_ID}`)
+      .set(session())
+      .send({ validTo: "2026-12-31T00:00:00.000Z" });
+
+    expect(res.status).toBe(200);
+    expect(shippingRates.update).toHaveBeenCalledWith(MASK_ID, { validTo: new Date("2026-12-31T00:00:00.000Z") }, expect.anything());
+  });
+});
+
+describe("/api/admin/packaging-profiles", () => {
+  const BOX = {
+    name: "Mediana",
+    innerLengthCm: 25,
+    innerWidthCm: 20,
+    innerHeightCm: 15,
+    outerLengthCm: 30,
+    outerWidthCm: 25,
+    outerHeightCm: 20,
+    packagingWeightGrams: 200,
+    costGtq: 45,
+  };
+
+  it("crea una caja", async () => {
+    const { app, packagingProfiles } = setup();
+
+    expect((await request(app).post("/api/admin/packaging-profiles").set(session()).send(BOX)).status).toBe(201);
+    expect(packagingProfiles.create).toHaveBeenCalledWith(BOX, expect.anything());
+  });
+
+  it("400 con medidas que no caben en un bulto o gramos con decimales", async () => {
+    const { app, packagingProfiles } = setup();
+
+    expect((await request(app).post("/api/admin/packaging-profiles").set(session()).send({ ...BOX, outerLengthCm: 300 })).status).toBe(400);
+    expect((await request(app).post("/api/admin/packaging-profiles").set(session()).send({ ...BOX, packagingWeightGrams: 1.5 })).status).toBe(
+      400,
+    );
+    expect(packagingProfiles.create).not.toHaveBeenCalled();
+  });
+
+  it("409 al borrar una caja en uso", async () => {
+    const { app, packagingProfiles } = setup();
+    packagingProfiles.remove.mockRejectedValueOnce(new HttpError(409, "Hay máscaras que usan esta caja", "IN_USE"));
+
+    const res = await request(app).delete(`/api/admin/packaging-profiles/${MASK_ID}`).set(session());
+
+    expect(res.status).toBe(409);
+    expect(res.body.code).toBe("IN_USE");
   });
 });

@@ -19,11 +19,11 @@ export const nullableText = (max: number) =>
 
 export const reference = z.cuid().nullable();
 
-/** ISO 8601 con zona horaria; null lo deja sin fecha. */
-export const nullableDate = z.iso
-  .datetime({ offset: true })
-  .transform((value) => new Date(value))
-  .nullable();
+/** ISO 8601 con zona horaria. */
+export const isoDate = z.iso.datetime({ offset: true }).transform((value) => new Date(value));
+
+/** Como `isoDate`; null lo deja sin fecha. */
+export const nullableDate = isoDate.nullable();
 
 export const httpsUrl = z.url({ protocol: /^https$/ }).max(512);
 

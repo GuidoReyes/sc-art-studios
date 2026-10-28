@@ -126,6 +126,26 @@ describe("adminRequest", () => {
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
 
+  it("trae el código y los campos inválidos que explica la API", async () => {
+    const fetchImpl = respond(
+      json(400, { error: "Datos inválidos", issues: [{ path: ["values", "fxUsdGtq"], message: "x" }, { path: ["source"] }] }),
+      json(409, { error: "Otra persona cambió los costos", code: "STALE" }),
+      new Response("<html>proxy</html>", { status: 502 }),
+    );
+
+    await expect(adminRequest("/api/admin/cost-settings", SESSION, { method: "PUT", body: {} }, fetchImpl)).resolves.toEqual({
+      kind: "failed",
+      status: 400,
+      fields: ["values.fxUsdGtq", "source"],
+    });
+    await expect(adminRequest("/api/admin/cost-settings", SESSION, { method: "PUT", body: {} }, fetchImpl)).resolves.toEqual({
+      kind: "failed",
+      status: 409,
+      code: "STALE",
+    });
+    await expect(adminRequest("/api/admin/cost-settings", SESSION, {}, fetchImpl)).resolves.toEqual({ kind: "failed", status: 502 });
+  });
+
   it("otros errores salen con su código", async () => {
     await expect(adminRequest("/api/admin/masks", SESSION, {}, respond(json(403)))).resolves.toEqual({
       kind: "failed",

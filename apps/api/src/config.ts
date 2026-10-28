@@ -17,6 +17,11 @@ export const QUOTE_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 2
 // Admin: por usuario autenticado, no por IP (Guido y quien edite pueden compartir red).
 export const ADMIN_RATE_LIMIT: RateLimitConfig = { windowMs: MINUTE_MS, limit: 30 };
 
+// Costos y envíos (tarea 42, PRD §6.5): el arancel de EE. UU. cambia por decreto, así que se revisa
+// cada 60 días. El historial que ve el admin muestra las últimas versiones de CostSettings.
+export const DUTY_REVIEW_DAYS = 60;
+export const COST_SETTINGS_HISTORY = 10;
+
 // Cotizador con peso y medidas a mano: topes de un bulto de courier (FedEx: 68 kg y 274 cm por lado).
 // Validan la entrada; las tarifas de cada tramo viven en la DB.
 export const QUOTE_MAX_WEIGHT_GRAMS = 68_000;

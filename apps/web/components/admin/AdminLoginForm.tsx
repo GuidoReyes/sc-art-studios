@@ -5,12 +5,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { login } from "@/lib/adminApi";
 import { useAdminSession } from "./AdminSessionProvider";
-import { ADMIN_BUTTON } from "./AdminShell";
+import { ADMIN_INPUT as INPUT, ADMIN_PRIMARY_BUTTON } from "./styles";
 
 type Problem = "required" | "invalid" | "locked" | "failed";
-
-const INPUT =
-  "w-full rounded-xl border-2 border-ink bg-white px-3 py-2 font-semibold focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-purple";
 
 export function AdminLoginForm() {
   const t = useTranslations("Admin.login");
@@ -77,7 +74,7 @@ export function AdminLoginForm() {
           </p>
         )}
       </div>
-      <button type="submit" disabled={isSending} className={`${ADMIN_BUTTON} self-start bg-purple text-cream`}>
+      <button type="submit" disabled={isSending} className={`${ADMIN_PRIMARY_BUTTON} self-start`}>
         {isSending ? t("sending") : t("submit")}
       </button>
     </form>

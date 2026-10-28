@@ -1,44 +1,21 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
-import type { AdminDashboardDto, AdminDashboardResponse } from "@sc-art-studio/shared";
+import { type ReactNode, useMemo } from "react";
+import type { AdminDashboardResponse } from "@sc-art-studio/shared";
 import { useLocale, useTranslations } from "next-intl";
 import { asLocale } from "@/i18n/routing";
 import { formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/price";
-import { useAdminSession } from "./AdminSessionProvider";
-import { ADMIN_BUTTON } from "./AdminShell";
-
-type State = { kind: "loading" } | { kind: "failed" } | { kind: "ready"; data: AdminDashboardDto };
+import { ADMIN_BUTTON } from "./styles";
+import { useAdminData } from "./useAdminData";
 
 const total = (counts: Record<string, number>) => Object.values(counts).reduce((sum, count) => sum + count, 0);
 
 export function AdminDashboard() {
   const t = useTranslations("Admin.dashboard");
   const locale = asLocale(useLocale());
-  const { request } = useAdminSession();
-  const [state, setState] = useState<State>({ kind: "loading" });
-
-  // Cada reintento sube `attempt` y vuelve a correr el efecto.
-  const [attempt, setAttempt] = useState(0);
-
-  useEffect(() => {
-    let isCurrent = true;
-    void request<AdminDashboardResponse>("/api/admin/dashboard").then((result) => {
-      if (!isCurrent) return;
-      // Sin sesión, AdminShell ya está mandando al login.
-      if (result.kind === "ok") setState({ kind: "ready", data: result.data.data });
-      else if (result.kind === "failed") setState({ kind: "failed" });
-    });
-    return () => {
-      isCurrent = false;
-    };
-  }, [request, attempt]);
-
-  function retry() {
-    setState({ kind: "loading" });
-    setAttempt((current) => current + 1);
-  }
+  const { state: response, reload: retry } = useAdminData<AdminDashboardResponse>("/api/admin/dashboard");
+  const state = response.kind === "ready" ? { kind: "ready" as const, data: response.data.data } : response;
 
   const regionName = useMemo(() => new Intl.DisplayNames([locale], { type: "region" }), [locale]);
 

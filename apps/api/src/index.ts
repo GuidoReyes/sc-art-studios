@@ -8,7 +8,13 @@ import { createPrismaCustomRequestRepository } from "./repositories/customReques
 import { createPrismaMaskRepository } from "./repositories/masks.js";
 import { createPrismaShippingRepository } from "./repositories/shipping.js";
 import { createPrismaAdminRepository } from "./repositories/admins.js";
+import { createPrismaCostSettingsRepository } from "./repositories/admin/costSettings.js";
 import { createPrismaDashboardRepository } from "./repositories/admin/dashboard.js";
+import { createPrismaAdminPackagingProfileStore } from "./repositories/admin/packagingProfiles.js";
+import {
+  createPrismaAdminShippingRateStore,
+  createPrismaShippingZoneRepository,
+} from "./repositories/admin/shippingRates.js";
 import { createPrismaAdminMaskStore } from "./repositories/admin/masks.js";
 import { createPrismaPricingRepository } from "./repositories/admin/pricing.js";
 import { createPrismaAdminStoryStore } from "./repositories/admin/stories.js";
@@ -58,6 +64,10 @@ const app = createApp({
     videos: createPrismaAdminVideoStore(prisma),
     pricing: createPrismaPricingRepository(prisma),
     dashboard: createPrismaDashboardRepository(prisma),
+    costSettings: createPrismaCostSettingsRepository(prisma),
+    shippingRates: createPrismaAdminShippingRateStore(prisma),
+    shippingZones: createPrismaShippingZoneRepository(prisma),
+    packagingProfiles: createPrismaAdminPackagingProfileStore(prisma),
   },
 });
 

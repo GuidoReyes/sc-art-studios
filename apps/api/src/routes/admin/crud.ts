@@ -11,7 +11,7 @@ export interface CrudSchemas<Create, Update, Query> {
   update: z.ZodType<Update>;
 }
 
-function actorOf(req: Request, res: Response): Actor {
+export function actorOf(req: Request, res: Response): Actor {
   const admin = res.locals.admin;
   if (!admin) throw new Error("La ruta del admin se montó sin requireAdmin");
   return { userId: admin.id, ip: req.ip };
