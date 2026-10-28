@@ -2093,9 +2093,10 @@
             "description": "Crear la página principal del sitio en `apps/web/app/[locale]/(marketing)/page.tsx` con todas las secciones: hero con video corto, máscaras destacadas, conoce a Scarlett, últimos videos y cómo comprar.",
             "dependencies": [],
             "details": "Crear `apps/web/app/[locale]/(marketing)/page.tsx` con las siguientes secciones:\n\n1. **Hero Section**: Video corto embebido (YouTube placeholder o video de R2), título principal con tipografía Bagel Fat One, CTA a /mascaras\n\n2. **Máscaras Destacadas**: Fetch de `/api/masks?featured=true`, renderizar grid de MaskCard (3-4 items), link 'Ver todas' a /mascaras. Usar SectionBlock con color Cream (#FFF6E8)\n\n3. **Conoce a Scarlett**: Foto de Scarlett (sin metadata GPS), texto breve sobre su arte (sin datos sensibles: escuela, grado, ubicación específica), link a /sobre-scarlett. Color de fondo Rose (#E8307A)\n\n4. **Últimos Videos**: Fetch de `/api/videos?limit=4`, renderizar VideoCard con thumbnails, modal de embed al click. Color Purple (#6B3FA0)\n\n5. **Cómo Comprar**: 4 pasos ilustrados (Explora → Elige → Paga → Recibe), íconos SVG, diseño mobile-first\n\nUsar componentes del design system: botones pill-shaped, bordes 4px negro, border-radius 24px. Implementar i18n con contenido en español e inglés.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Abrir /en y /es, verificar que todas las secciones cargan correctamente. Verificar que máscaras destacadas se muestran (si hay con featured=true). Verificar que videos se muestran (si hay). Probar responsive en móvil (mayoría del tráfico viene de TikTok/Instagram). Verificar que NO se expone información sensible de la menor (ubicación, escuela, etc.).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.328Z"
           },
           {
             "id": 2,
@@ -2105,9 +2106,10 @@
               1
             ],
             "details": "Crear `apps/web/app/[locale]/(marketing)/mascaras/page.tsx`:\n\n1. **Layout**: Sidebar de filtros (desktop) / modal de filtros (mobile), grid principal de productos\n\n2. **Fetching**: GET `/api/masks` con query params:\n   - `status`: AVAILABLE | SOLD | RESERVED (por defecto mostrar todas excepto DRAFT)\n   - `animal`: filtro por tipo de animal (jaguar, quetzal, etc.)\n   - Usar searchParams de Next.js para sincronizar URL con filtros\n\n3. **Grid de MaskCard**: Responsive grid (1 col móvil, 2 tablet, 3-4 desktop), cada card muestra:\n   - Imagen principal (next/image con optimización)\n   - Nombre de la máscara\n   - StatusPill (AVAILABLE/SOLD/RESERVED)\n   - PriceTag con USD (y opcionalmente GTQ)\n   - Link a /mascaras/[slug]\n\n4. **Filtros en Sidebar**:\n   - Checkboxes para status (mostrar máscaras vendidas como portafolio con 'Pide una parecida')\n   - Checkboxes para animales disponibles\n   - Botón 'Limpiar filtros'\n   - Actualizar URL sin reload (shallow routing)\n\n5. **Estado vacío**: Mensaje amigable si no hay máscaras que coincidan con filtros",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Abrir /mascaras, verificar que muestra todas las máscaras AVAILABLE (no DRAFT). Probar filtros: /mascaras?status=SOLD debe mostrar solo vendidas. Probar /mascaras?animal=jaguar. Combinar filtros y verificar que se acumulan. Verificar que filtros se sincronizan con URL (para compartir links filtrados). Probar en móvil que modal de filtros funciona.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.333Z"
           },
           {
             "id": 3,
@@ -2118,9 +2120,10 @@
               2
             ],
             "details": "Crear `apps/web/app/[locale]/(marketing)/mascaras/[slug]/page.tsx`:\n\n1. **Fetching de datos**:\n   - GET `/api/masks/:slug` para datos del backend (historia, medidas, etc.)\n   - Storefront API `productByHandle` para datos de Shopify (precio, variantes, disponibilidad)\n   - Unir datos usando `shopifyProductId` como referencia\n\n2. **MaskGallery (carousel)**:\n   - Imagen principal grande con zoom al hover/tap\n   - Thumbnails horizontales navegables\n   - Lightbox al click (galería fullscreen)\n   - Optimización con next/image (blur placeholder, lazy loading)\n\n3. **Información del producto**:\n   - Nombre con tipografía Bagel Fat One\n   - StatusPill prominente\n   - PriceTag grande (USD principal, GTQ secundario)\n   - Medidas: cm y pulgadas (conversión automática)\n   - Peso en gramos\n   - Materiales utilizados\n\n4. **Historia (storyEs/storyEn)**:\n   - Renderizar según locale actual\n   - Texto formateado (puede incluir markdown básico)\n   - Sección visual diferenciada\n\n5. **Video embebido**:\n   - Si la máscara tiene video asociado, mostrar VideoEmbed\n   - Soporte para YouTube, TikTok, Instagram (oEmbed)\n   - Fallback si no hay video",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Abrir /mascaras/[slug-existente] y verificar que carga todos los datos. Probar galería: navegar thumbnails, abrir lightbox, verificar que imágenes cargan correctamente. Verificar que medidas muestran cm y pulgadas. Cambiar locale (/en vs /es) y verificar que historia cambia de idioma. Si tiene video, verificar que embed funciona.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.337Z"
           },
           {
             "id": 4,
@@ -2130,9 +2133,10 @@
               3
             ],
             "details": "Integrar ShippingEstimator en la página de ficha (`mascaras/[slug]/page.tsx`):\n\n1. **Ubicación en la página**:\n   - Debajo del precio y antes de los botones de acción\n   - Sección visualmente diferenciada con borde y padding\n   - Título: 'Calcula tu envío' / 'Calculate shipping'\n\n2. **Props del componente**:\n   - `maskId`: ID de la máscara actual para cotización precisa\n   - Opcionalmente pasar dimensiones y peso si ya se tienen\n\n3. **Flujo de usuario**:\n   - Select de país (lista de ~20 países principales: US, CA, MX, ES, DE, FR, UK, AU, JP, etc.)\n   - Botón 'Cotizar' / 'Get quote'\n   - Loading state mientras se consulta API\n   - Mostrar opciones de envío: carrier (FedEx), servicio, días de entrega, precio USD\n\n4. **Información adicional**:\n   - Nota sobre aranceles: 'Los aranceles de importación pueden aplicar (pagados por el comprador al recibir)'\n   - Link a página /envios para más información\n   - Mostrar `isEstimate: true` con disclaimer si es estimación\n\n5. **Manejo de errores**:\n   - País sin tarifas configuradas: mensaje 'Contáctanos para cotización'\n   - Error de API: mensaje amigable + retry\n\n6. **Dependencia**: Este componente consume la Task 29 (ShippingEstimator), pero la integración en la ficha es responsabilidad de esta subtask.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "En ficha de máscara, usar ShippingEstimator: seleccionar 'United States' y cotizar. Verificar que devuelve al menos 1 opción FedEx. Verificar que precio mostrado incluye fees (chargeUsd > costUsd). Seleccionar país sin tarifas (ej: 'Japan') y verificar mensaje apropiado. Verificar link a /envios funciona. Probar en móvil.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.340Z"
           },
           {
             "id": 5,
@@ -2156,9 +2160,10 @@
               3
             ],
             "details": "Configurar ISR y SSG en las páginas de máscaras:\n\n1. **ISR en página de Catálogo** (`mascaras/page.tsx`):\n   ```typescript\n   export const revalidate = 60; // Revalidar cada 60 segundos\n   ```\n   - Considerar usar on-demand revalidation cuando admin publica máscara\n\n2. **ISR en página de Ficha** (`mascaras/[slug]/page.tsx`):\n   ```typescript\n   export const revalidate = 60;\n   ```\n\n3. **generateStaticParams** para pre-renderizar fichas:\n   ```typescript\n   export async function generateStaticParams() {\n     const masks = await fetch(`${API_URL}/api/masks?status=AVAILABLE,SOLD,RESERVED`);\n     return masks.map((mask) => ({ slug: mask.slug }));\n   }\n   ```\n   - Incluir máscaras AVAILABLE, SOLD y RESERVED (no DRAFT)\n   - Generar para ambos locales si es necesario\n\n4. **On-demand Revalidation**:\n   - Crear endpoint `/api/revalidate` en Next.js\n   - Acepta secret token + path a revalidar\n   - El backend llama a este endpoint cuando admin publica/actualiza máscara\n   - Invalidar tanto /mascaras como /mascaras/[slug] afectado\n\n5. **Configuración en página Home** (`page.tsx`):\n   ```typescript\n   export const revalidate = 60;\n   ```\n\n6. **Fallback behavior**:\n   - `dynamicParams = true` para permitir nuevas máscaras sin rebuild\n   - Mostrar loading skeleton mientras se genera página",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Hacer build de producción (`npm run build`), verificar que páginas de máscaras se pre-renderizan (ver output del build). Desplegar a Vercel, modificar una máscara en el backend, esperar 60s y verificar que página se actualiza. Probar endpoint /api/revalidate con token correcto y verificar que página se invalida inmediatamente. Acceder a máscara nueva (no pre-renderizada) y verificar que se genera dinámicamente.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.344Z"
           },
           {
             "id": 7,
@@ -2169,15 +2174,16 @@
               6
             ],
             "details": "Implementar SEO completo en las páginas:\n\n1. **Metadata dinámica en Ficha** (`mascaras/[slug]/page.tsx`):\n   ```typescript\n   export async function generateMetadata({ params }): Promise<Metadata> {\n     const mask = await getMask(params.slug);\n     return {\n       title: `${mask.name} - Máscara pintada a mano | SC Art Studio`,\n       description: mask.description || `Máscara de ${mask.animal} pintada a mano por Scarlett...`,\n       openGraph: {\n         title: mask.name,\n         description: mask.description,\n         images: [{ url: mask.images[0].url, width: 1200, height: 630 }],\n         type: 'product',\n       },\n       twitter: {\n         card: 'summary_large_image',\n       },\n     };\n   }\n   ```\n\n2. **JSON-LD Product schema**:\n   ```typescript\n   const productJsonLd = {\n     '@context': 'https://schema.org',\n     '@type': 'Product',\n     name: mask.name,\n     description: mask.description,\n     image: mask.images.map(img => img.url),\n     brand: { '@type': 'Brand', name: 'SC Art Studio' },\n     offers: {\n       '@type': 'Offer',\n       price: mask.priceUsd,\n       priceCurrency: 'USD',\n       availability: mask.status === 'AVAILABLE' \n         ? 'https://schema.org/InStock' \n         : 'https://schema.org/SoldOut',\n       url: `https://scartstudios.com/mascaras/${mask.slug}`,\n     },\n     material: mask.materials,\n     weight: { '@type': 'QuantitativeValue', value: mask.weightGrams, unitCode: 'GRM' },\n   };\n   ```\n   - Insertar en <head> con <script type=\"application/ld+json\">\n\n3. **Metadata en Catálogo** (`mascaras/page.tsx`):\n   - Título: 'Catálogo de Máscaras | SC Art Studio'\n   - Descripción: 'Explora nuestra colección de máscaras de madera pintadas a mano...'\n   - CollectionPage JSON-LD\n\n4. **Metadata en Home** (`page.tsx`):\n   - Organization JSON-LD con logo, social links\n   - WebSite JSON-LD con SearchAction\n\n5. **og:image optimization**:\n   - Usar primera imagen de la galería\n   - Asegurar dimensiones 1200x630 o similar ratio\n   - Fallback a imagen genérica de la marca si no hay fotos",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Usar herramientas de testing SEO (Google Rich Results Test, Facebook Sharing Debugger, Twitter Card Validator). Verificar que JSON-LD es válido en cada página de máscara. Compartir link de máscara en redes sociales y verificar que preview muestra imagen, título y descripción correctos. Verificar metadata en view-source de la página. Probar con Lighthouse que scores de SEO son altos (>90).",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2026-10-28T00:16:52.348Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 7,
         "expansionPrompt": "Dividir en: 1) Implementar Home con hero, máscaras destacadas, sección Scarlett, videos y cómo comprar, 2) Implementar Catálogo con grid de MaskCard y filtros (status, animal), 3) Implementar Ficha con galería carousel, medidas, historia, video embebido, 4) Integrar ShippingEstimator en ficha, 5) Agregar botones Comprar y 'Quiero una parecida', 6) Configurar ISR con revalidate y generateStaticParams, 7) Implementar metadata dinámica, JSON-LD Product y og:image.",
-        "updatedAt": "2026-10-22T01:52:24.551Z"
+        "updatedAt": "2026-10-28T00:16:52.348Z"
       },
       {
         "id": "29",
@@ -3656,7 +3662,7 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-27T00:37:11.897Z",
+      "lastModified": "2026-10-28T00:16:52.348Z",
       "taskCount": 49,
       "completedCount": 21,
       "tags": [
