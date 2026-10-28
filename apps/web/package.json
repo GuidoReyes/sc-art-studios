@@ -14,7 +14,7 @@
     "@marsidev/react-turnstile": "^1.6.2",
     "@sc-art-studio/shared": "*",
     "lucide-react": "^1.59.0",
-    "next": "^16.4.1",
+    "next": "^16.4.3",
     "next-intl": "^4.14.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
