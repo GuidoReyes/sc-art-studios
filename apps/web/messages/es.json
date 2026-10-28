@@ -72,7 +72,83 @@
   },
   "Admin": {
     "title": "Panel de administración",
-    "placeholder": "Aquí vivirá el panel de administración (protegido, sin indexar)."
+    "brand": "SC Art Studio · Admin",
+    "roles": {
+      "OWNER": "Propietario",
+      "EDITOR": "Editor"
+    },
+    "nav": {
+      "label": "Secciones del admin",
+      "dashboard": "Resumen",
+      "masks": "Máscaras",
+      "stories": "Historias",
+      "videos": "Videos",
+      "customRequests": "Encargos",
+      "costs": "Costos y envíos",
+      "audit": "Registro de cambios",
+      "soon": "Pronto",
+      "logout": "Cerrar sesión",
+      "site": "Ver el sitio"
+    },
+    "session": {
+      "checking": "Revisando la sesión…",
+      "failed": "No pudimos conectar con la API. Revisa la conexión e inténtalo de nuevo.",
+      "retry": "Reintentar"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "intro": "Solo para el equipo de SC Art Studio.",
+      "email": "Correo",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "sending": "Entrando…",
+      "errors": {
+        "required": "Escribe tu correo y tu contraseña.",
+        "invalid": "Correo o contraseña incorrectos.",
+        "locked": "Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.",
+        "failed": "No pudimos conectar con la API. Inténtalo de nuevo en un momento."
+      }
+    },
+    "dashboard": {
+      "title": "Resumen",
+      "loading": "Cargando el resumen…",
+      "failed": "No pudimos cargar el resumen.",
+      "retry": "Reintentar",
+      "masks": "Máscaras",
+      "masksTotal": "{count, plural, =0 {Sin máscaras} one {# máscara} other {# máscaras}}",
+      "masksByStatus": {
+        "AVAILABLE": "Disponibles",
+        "RESERVED": "Reservadas",
+        "SOLD": "Vendidas",
+        "COMMISSION_EXAMPLE": "Ejemplos de encargo",
+        "DRAFT": "Borradores"
+      },
+      "requests": "Encargos",
+      "requestsPending": "{count, plural, =0 {Ninguno por responder} one {# por responder} other {# por responder}}",
+      "requestsByStatus": {
+        "NEW": "Nuevos",
+        "QUOTED": "Cotizados",
+        "DEPOSIT_PAID": "Anticipo pagado",
+        "IN_PROGRESS": "En proceso",
+        "BALANCE_PAID": "Saldo pagado",
+        "SHIPPED": "Enviados",
+        "CLOSED": "Cerrados",
+        "REJECTED": "Rechazados"
+      },
+      "orders": "Ventas",
+      "ordersCount": "{count, plural, =0 {Sin ventas} one {# venta} other {# ventas}}",
+      "ordersTotal": "Total vendido",
+      "latest": "Últimas ventas",
+      "noOrders": "Todavía no hay ventas. Aparecerán aquí cuando la tienda de Shopify esté conectada.",
+      "columns": {
+        "mask": "Máscara",
+        "total": "Total",
+        "country": "País",
+        "status": "Estado",
+        "date": "Fecha"
+      },
+      "unknownMask": "Sin máscara"
+    }
   },
   "NotFound": {
     "title": "Página no encontrada",

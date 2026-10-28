@@ -72,7 +72,83 @@
   },
   "Admin": {
     "title": "Admin panel",
-    "placeholder": "The admin panel will live here (protected, not indexed)."
+    "brand": "SC Art Studio · Admin",
+    "roles": {
+      "OWNER": "Owner",
+      "EDITOR": "Editor"
+    },
+    "nav": {
+      "label": "Admin sections",
+      "dashboard": "Overview",
+      "masks": "Masks",
+      "stories": "Stories",
+      "videos": "Videos",
+      "customRequests": "Commissions",
+      "costs": "Costs & shipping",
+      "audit": "Change log",
+      "soon": "Soon",
+      "logout": "Sign out",
+      "site": "View site"
+    },
+    "session": {
+      "checking": "Checking your session…",
+      "failed": "We couldn't reach the API. Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "login": {
+      "title": "Sign in",
+      "intro": "For the SC Art Studio team only.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "sending": "Signing in…",
+      "errors": {
+        "required": "Enter your email and password.",
+        "invalid": "Wrong email or password.",
+        "locked": "Too many attempts. Wait 15 minutes and try again.",
+        "failed": "We couldn't reach the API. Try again in a moment."
+      }
+    },
+    "dashboard": {
+      "title": "Overview",
+      "loading": "Loading the overview…",
+      "failed": "We couldn't load the overview.",
+      "retry": "Try again",
+      "masks": "Masks",
+      "masksTotal": "{count, plural, =0 {No masks} one {# mask} other {# masks}}",
+      "masksByStatus": {
+        "AVAILABLE": "Available",
+        "RESERVED": "Reserved",
+        "SOLD": "Sold",
+        "COMMISSION_EXAMPLE": "Commission examples",
+        "DRAFT": "Drafts"
+      },
+      "requests": "Commissions",
+      "requestsPending": "{count, plural, =0 {None waiting for a reply} other {# waiting for a reply}}",
+      "requestsByStatus": {
+        "NEW": "New",
+        "QUOTED": "Quoted",
+        "DEPOSIT_PAID": "Deposit paid",
+        "IN_PROGRESS": "In progress",
+        "BALANCE_PAID": "Balance paid",
+        "SHIPPED": "Shipped",
+        "CLOSED": "Closed",
+        "REJECTED": "Rejected"
+      },
+      "orders": "Sales",
+      "ordersCount": "{count, plural, =0 {No sales} one {# sale} other {# sales}}",
+      "ordersTotal": "Total sold",
+      "latest": "Latest sales",
+      "noOrders": "No sales yet. They'll show up here once the Shopify store is connected.",
+      "columns": {
+        "mask": "Mask",
+        "total": "Total",
+        "country": "Country",
+        "status": "Status",
+        "date": "Date"
+      },
+      "unknownMask": "No mask"
+    }
   },
   "NotFound": {
     "title": "Page not found",

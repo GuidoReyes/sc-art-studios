@@ -118,3 +118,32 @@ export interface PricingSuggestion {
 }
 
 export type PricingSuggestionResponse = AdminItemResponse<PricingSuggestion>;
+
+// GET /api/admin/dashboard (tarea 33): conteos para la portada del admin.
+export type CustomRequestStatus =
+  | "NEW"
+  | "QUOTED"
+  | "DEPOSIT_PAID"
+  | "IN_PROGRESS"
+  | "BALANCE_PAID"
+  | "SHIPPED"
+  | "CLOSED"
+  | "REJECTED";
+
+export interface DashboardOrderDto {
+  id: string;
+  /** Nombre de la máscara vendida; null si ya no existe o el pedido no tenía una. */
+  maskName: { es: string; en: string } | null;
+  totalUsd: number;
+  shippingCountry: string | null;
+  status: string;
+  createdAt: string;
+}
+
+export interface AdminDashboardDto {
+  masksByStatus: Record<MaskStatus, number>;
+  customRequestsByStatus: Record<CustomRequestStatus, number>;
+  orders: { count: number; totalUsd: number; latest: DashboardOrderDto[] };
+}
+
+export type AdminDashboardResponse = AdminItemResponse<AdminDashboardDto>;

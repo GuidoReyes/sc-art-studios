@@ -23,6 +23,8 @@ export const routing = defineRouting({
     "/privacy": { en: "/privacy", es: "/privacidad" },
     "/terms": { en: "/terms", es: "/terminos" },
     "/admin": "/admin",
+    "/admin/login": "/admin/login",
+    "/admin/dashboard": "/admin/dashboard",
   },
 });
 

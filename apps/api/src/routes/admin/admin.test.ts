@@ -6,6 +6,7 @@ import { HttpError } from "../../lib/httpErrors.js";
 import { createTokenService } from "../../lib/tokens.js";
 import { ACCESS_COOKIE, CSRF_HEADER } from "../../middleware/auth.js";
 import { Prisma } from "../../generated/prisma/client.js";
+import type { DashboardRepository } from "../../repositories/admin/dashboard.js";
 import type { PricingRepository } from "../../repositories/admin/pricing.js";
 import type { AdminStore } from "../../repositories/admin/store.js";
 import type { AdminDeps } from "./index.js";
@@ -49,8 +50,31 @@ function fakePricing() {
   } satisfies PricingRepository;
 }
 
+const DASHBOARD = {
+  masksByStatus: { AVAILABLE: 4, RESERVED: 0, SOLD: 1, COMMISSION_EXAMPLE: 0, DRAFT: 2 },
+  customRequestsByStatus: {
+    NEW: 3,
+    QUOTED: 0,
+    DEPOSIT_PAID: 0,
+    IN_PROGRESS: 0,
+    BALANCE_PAID: 0,
+    SHIPPED: 0,
+    CLOSED: 0,
+    REJECTED: 0,
+  },
+  orders: { count: 0, totalUsd: 0, latest: [] },
+};
+
+const fakeDashboard = () => ({ summary: vi.fn(async () => DASHBOARD) }) satisfies DashboardRepository;
+
 function setup(extra: Partial<AdminDeps> = {}) {
-  const stores = { masks: fakeStore(), stories: fakeStore(), videos: fakeStore(), pricing: fakePricing() };
+  const stores = {
+    masks: fakeStore(),
+    stories: fakeStore(),
+    videos: fakeStore(),
+    pricing: fakePricing(),
+    dashboard: fakeDashboard(),
+  };
   const app = createApp({
     allowedOrigins: ["https://scartstudios.com"],
     logger: silent,
@@ -349,5 +373,27 @@ describe("/api/admin/pricing/suggest", () => {
 
     expect((await request(app).post("/api/admin/pricing/suggest").send(PIECE)).status).toBe(401);
     expect((await request(app).post("/api/admin/pricing/suggest").set("Cookie", session().Cookie).send(PIECE)).status).toBe(403);
+  });
+});
+
+describe("GET /api/admin/dashboard", () => {
+  it("devuelve los conteos con sesión de EDITOR y sin caché", async () => {
+    const { app, dashboard } = setup();
+
+    const res = await request(app).get("/api/admin/dashboard").set(session());
+
+    expect(res.status).toBe(200);
+    expect(res.headers["cache-control"]).toBe("no-store");
+    expect(res.body).toEqual({ data: DASHBOARD });
+    expect(dashboard.summary).toHaveBeenCalledOnce();
+  });
+
+  it("401 sin sesión y no consulta la base", async () => {
+    const { app, dashboard } = setup();
+
+    const res = await request(app).get("/api/admin/dashboard");
+
+    expect(res.status).toBe(401);
+    expect(dashboard.summary).not.toHaveBeenCalled();
   });
 });

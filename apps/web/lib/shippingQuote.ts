@@ -1,7 +1,7 @@
 // Cotización de envío desde el navegador: POST /api/shipping/quote de la API (con su propio límite por IP).
 import type { ShippingQuoteDto, ShippingQuoteResponse } from "@sc-art-studio/shared";
+import { BROWSER_API_URL as API_URL } from "./site";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080").replace(/\/$/, "");
 const REQUEST_TIMEOUT_MS = 8_000;
 
 /** Países del selector: primero a los que ya se envía (zonas de FedEx en la DB), luego los más pedidos. */

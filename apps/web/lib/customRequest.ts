@@ -4,8 +4,8 @@
 import type { CustomRequestCreatedResponse } from "@sc-art-studio/shared";
 import { z } from "zod";
 import { isCountryCode } from "./countries";
+import { BROWSER_API_URL as API_URL } from "./site";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080").replace(/\/$/, "");
 // Más que el cotizador: la API re-codifica la foto con sharp y la sube a R2 antes de responder.
 const REQUEST_TIMEOUT_MS = 30_000;
 const DESIRED_DATE_MAX_YEARS = 2;
