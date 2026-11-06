@@ -19,7 +19,7 @@
     "admin:create": "tsx --env-file=.env src/scripts/create-admin.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1146.0",
+    "@aws-sdk/client-s3": "^3.1152.0",
     "@prisma/adapter-mariadb": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "@sc-art-studio/shared": "*",
