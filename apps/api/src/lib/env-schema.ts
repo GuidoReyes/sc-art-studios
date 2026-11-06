@@ -28,6 +28,12 @@ const EnvSchema = z.object({
   R2_ACCESS_KEY_ID: z.string().min(1).optional(),
   R2_SECRET_ACCESS_KEY: z.string().min(1).optional(),
   R2_PRIVATE_BUCKET: z.string().min(3).max(63).optional(),
+  // Tarea 41: bucket público para portadas y miniaturas, y la URL pública desde la que se sirve.
+  // Si faltan, las miniaturas quedan con la URL remota de la red y no se aceptan portadas.
+  R2_PUBLIC_BUCKET: z.string().min(3).max(63).optional(),
+  R2_PUBLIC_URL: z.url({ protocol: /^https$/ }).transform((value) => value.replace(/\/+$/, "")).optional(),
+  // Instagram solo responde oEmbed por la Graph API de Meta (token de app). Sin él, se guarda sin miniatura.
+  INSTAGRAM_OEMBED_TOKEN: z.string().min(1).optional(),
 }).superRefine((env, ctx) => {
   if (env.JWT_SECRET === env.JWT_REFRESH_SECRET) {
     ctx.addIssue({ code: "custom", path: ["JWT_REFRESH_SECRET"], message: "debe ser distinto de JWT_SECRET" });

@@ -12,6 +12,8 @@ export interface StoryInput {
   bodyEn: string;
   maskId?: string | null;
   publishedAt?: Date | null;
+  /** Solo la escribe POST /:id/cover, después de subir la imagen a R2. */
+  coverR2Key?: string | null;
 }
 
 export type StoryPatch = Partial<StoryInput>;

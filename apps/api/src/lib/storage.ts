@@ -13,6 +13,8 @@ export interface R2Config {
   accessKeyId: string;
   secretAccessKey: string;
   bucket: string;
+  /** Bucket público (catálogo, portadas): se puede cachear. Por defecto privado. */
+  cacheControl?: string;
 }
 
 /** Lo único que se usa del cliente de S3; permite probar sin red. */
@@ -41,7 +43,7 @@ export function createR2Storage(
           Key: key,
           Body: data,
           ContentType: contentType,
-          CacheControl: "private, no-store",
+          CacheControl: config.cacheControl ?? "private, no-store",
         }),
       );
     },

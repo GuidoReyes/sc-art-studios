@@ -23,7 +23,9 @@ import {
 import { createAdminDashboardRouter } from "./dashboard.js";
 import { createAdminMasksRouter } from "./masks.js";
 import { createAdminPricingRouter } from "./pricing.js";
-import { createAdminStoriesRouter } from "./stories.js";
+import { createAdminOEmbedRouter } from "./oembed.js";
+import { type StoryMedia, createAdminStoriesRouter } from "./stories.js";
+import { type OEmbedResolver, createOEmbedResolver } from "../../services/oembed.service.js";
 import { createAdminVideosRouter } from "./videos.js";
 
 export interface AdminDeps {
@@ -37,6 +39,9 @@ export interface AdminDeps {
   shippingRates: AdminShippingRateStore;
   shippingZones: ShippingZoneRepository;
   packagingProfiles: AdminPackagingProfileStore;
+  /** Tarea 41: resolutor oEmbed (por defecto, sin R2) y bucket público para portadas. */
+  oembed?: OEmbedResolver;
+  media?: StoryMedia;
   rateLimit?: RateLimitConfig;
 }
 
@@ -51,6 +56,8 @@ export function createAdminRouter({
   shippingRates,
   shippingZones,
   packagingProfiles,
+  oembed = createOEmbedResolver(),
+  media,
   rateLimit = ADMIN_RATE_LIMIT,
 }: AdminDeps): Router {
   const router = Router();
@@ -65,8 +72,9 @@ export function createAdminRouter({
     }),
   );
   router.use("/masks", createAdminMasksRouter(masks));
-  router.use("/stories", createAdminStoriesRouter(stories));
+  router.use("/stories", createAdminStoriesRouter(stories, media));
   router.use("/videos", createAdminVideosRouter(videos));
+  router.use("/oembed", createAdminOEmbedRouter(oembed));
   router.use("/pricing", createAdminPricingRouter(pricing));
   router.use("/dashboard", createAdminDashboardRouter(dashboard));
   router.use("/cost-settings", createAdminCostSettingsRouter(costSettings));

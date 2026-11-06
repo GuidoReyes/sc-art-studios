@@ -65,3 +65,14 @@ export const SHUTDOWN_TIMEOUT_MS = 10_000;
 // Pool de MySQL: una sola instancia de API en Railway, tráfico bajo.
 export const DB_CONNECTION_LIMIT = 5;
 export const DB_CONNECT_TIMEOUT_MS = 5_000;
+
+// oEmbed (tarea 41): las redes a veces tardan; 5 s por intento y hasta 3 intentos con espera creciente.
+export const OEMBED_TIMEOUT_MS = 5_000;
+export const OEMBED_MAX_ATTEMPTS = 3;
+export const OEMBED_BACKOFF_MS = 300;
+// Miniaturas de video y portadas de historia: re-codificadas a WebP sin EXIF antes de subirlas a R2.
+export const THUMBNAIL_MAX_BYTES = 5 * 1024 * 1024;
+export const THUMBNAIL_WIDTH = 640;
+export const COVER_WIDTH = 1200;
+export const COVER_HEIGHT = 630;
+export const COVER_MAX_BYTES = 8 * 1024 * 1024;
