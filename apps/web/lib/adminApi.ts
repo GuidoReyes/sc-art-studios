@@ -113,7 +113,16 @@ export async function adminRequest<T>(
 ): Promise<AdminResult<T>> {
   // GET no lleva CSRF (la API no lo pide en lecturas), así no hay preflight de CORS.
   const send = (current: AdminSessionDto) =>
-    call(fetchImpl, path, method === "GET" ? { method } : jsonInit(method, body, current.csrfToken));
+    call(
+      fetchImpl,
+      path,
+      method === "GET"
+        ? { method }
+        : body instanceof FormData
+          ? // Archivos (portada de historia): el navegador pone el Content-Type multipart con su boundary.
+            { method, headers: { [CSRF_HEADER]: current.csrfToken }, body }
+          : jsonInit(method, body, current.csrfToken),
+    );
 
   let current = session;
   let res = await send(current);

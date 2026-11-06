@@ -153,3 +153,18 @@ describe("adminRequest", () => {
     });
   });
 });
+
+describe("adminRequest con archivos", () => {
+  it("manda FormData con CSRF y sin Content-Type JSON", async () => {
+    const fetchImpl = vi.fn(async () => new Response(JSON.stringify({ data: {} }), { status: 200 }));
+    const form = new FormData();
+    form.append("cover", new Blob(["x"]), "a.jpg");
+
+    await adminRequest("/api/admin/stories/1/cover", SESSION, { method: "POST", body: form }, fetchImpl);
+
+    const init = (fetchImpl.mock.calls[0] as unknown as [string, RequestInit])[1];
+    expect(init.body).toBe(form);
+    expect(init.headers).toMatchObject({ "X-CSRF-Token": "csrf-1" });
+    expect(init.headers).not.toHaveProperty("Content-Type");
+  });
+});
