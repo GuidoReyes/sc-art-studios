@@ -97,3 +97,4 @@
 ## [2026-11-06 10:55] ingest | 2026-11-06-admin-historias-y-videos-oembed
 - Área: frontend
 - Cross-refs: [[2026-10-27-panel-admin-login-y-resumen]] (bidireccional)
+- 2026-11-06: PR de dependencias (body-parser, multer, fast-uri) para dejar npm audit en verde; sin tareas de código desbloqueadas (todas dependen de #16 Shopify).
