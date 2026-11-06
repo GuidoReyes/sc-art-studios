@@ -10,6 +10,7 @@ related:
   - 2026-10-20-login-admin-refresh-rotativo-csrf
   - 2026-10-20-crud-admin-auditado
   - 2026-10-26-sitio-publico-catalogo-envios-y-libro
+  - 2026-11-06-admin-historias-y-videos-oembed
 superseded_by: null
 sources:
   - repo:apps/web/lib/adminApi.ts

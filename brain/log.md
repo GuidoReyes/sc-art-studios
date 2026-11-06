@@ -93,3 +93,7 @@
 ## [2026-10-28 10:05] ingest | 2026-10-28-admin-costos-tarifas-y-cajas
 - Área: frontend
 - Cross-refs: [[2026-10-27-panel-admin-login-y-resumen]], [[2026-10-20-crud-admin-auditado]], [[2026-10-21-motor-de-precios-sugeridos]], [[2026-10-19-seed-tarifas-fedex-y-costos]], [[2026-10-20-cotizador-de-envio-sin-perdida]] (bidireccionales)
+
+## [2026-11-06 10:55] ingest | 2026-11-06-admin-historias-y-videos-oembed
+- Área: frontend
+- Cross-refs: [[2026-10-27-panel-admin-login-y-resumen]] (bidireccional)

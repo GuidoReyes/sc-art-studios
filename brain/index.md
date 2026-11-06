@@ -4,8 +4,8 @@
 > Para operar este wiki, leé `CLAUDE.md` en este directorio.
 > Al hacer queries, leé este archivo primero para decidir qué nodos abrir.
 
-**Última actualización:** 2026-10-28
-**Total de nodos:** 21 sesiones | 0 conceptos | 0 ADRs
+**Última actualización:** 2026-11-06
+**Total de nodos:** 22 sesiones | 0 conceptos | 0 ADRs
 
 ---
 
@@ -33,6 +33,7 @@
 
 ### frontend
 
+- [[2026-11-06-admin-historias-y-videos-oembed]] — Tarea 41: /admin/videos (oEmbed con timeout 5 s y 3 intentos, miniatura a R2 público sin EXIF) y /admin/historias (sanitize-html, portada 1200×630 WebP a R2); Instagram necesita token de Meta
 - [[2026-10-28-admin-costos-tarifas-y-cajas]] — Tarea 42: /admin/costs con CostSettings versionada (409 si otro guardó antes), aviso de arancel a los 60 días con columna propia, tarifas por zona y cajas auditadas
 - [[2026-10-27-panel-admin-login-y-resumen]] — Tarea 33: login y resumen del admin; la sesión vive en cookies de la API (Next no las lee), CSRF en memoria, refresh compartido, GET /api/admin/dashboard
 - [[2026-10-26-sitio-publico-catalogo-envios-y-libro]] — Tareas 28, 29 y 31: inicio, catálogo con filtros, ficha con estimador de envío, /envios, historias, videos y Sobre Scarlett en modo libro (sin grado escolar) y /personalizada con Turnstile; carrito pendiente
