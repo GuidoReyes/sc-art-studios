@@ -6,16 +6,16 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useAdminSession } from "./AdminSessionProvider";
 import { ADMIN_BUTTON } from "./styles";
 
-// Las secciones sin `href` todavía no existen (tareas 34, 40 y 41): se ven, pero no enlazan.
+// Las secciones sin `href` todavía no existen (tareas 34 y 40): se ven, pero no enlazan.
 const SECTIONS = [
   { key: "dashboard", href: "/admin/dashboard" },
   { key: "masks" },
-  { key: "stories" },
-  { key: "videos" },
+  { key: "stories", href: "/admin/stories" },
+  { key: "videos", href: "/admin/videos" },
   { key: "customRequests" },
   { key: "costs", href: "/admin/costs" },
   { key: "audit" },
-] as const satisfies readonly { key: string; href?: "/admin/dashboard" | "/admin/costs" }[];
+] as const satisfies readonly { key: string; href?: "/admin/dashboard" | "/admin/costs" | "/admin/stories" | "/admin/videos" }[];
 
 /** Exige sesión: sin ella manda al login. Con ella pinta la barra lateral y el contenido. */
 export function AdminShell({ children }: { children: ReactNode }) {

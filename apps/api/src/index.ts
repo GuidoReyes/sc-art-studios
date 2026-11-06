@@ -3,6 +3,7 @@ import { createLogger } from "./lib/logger.js";
 import { createApp } from "./app.js";
 import { createPrismaClient } from "./lib/db.js";
 import { createR2Storage } from "./lib/storage.js";
+import { createOEmbedResolver } from "./services/oembed.service.js";
 import { createTurnstileVerifier } from "./lib/turnstile.js";
 import { createPrismaCustomRequestRepository } from "./repositories/customRequests.js";
 import { createPrismaMaskRepository } from "./repositories/masks.js";
@@ -38,6 +39,21 @@ const storage =
         bucket: env.R2_PRIVATE_BUCKET,
       })
     : undefined;
+// Tarea 41: bucket público (portadas y miniaturas). Sin él, las miniaturas quedan con la URL de la red.
+const media =
+  env.R2_ACCOUNT_ID && env.R2_ACCESS_KEY_ID && env.R2_SECRET_ACCESS_KEY && env.R2_PUBLIC_BUCKET && env.R2_PUBLIC_URL
+    ? {
+        storage: createR2Storage({
+          accountId: env.R2_ACCOUNT_ID,
+          accessKeyId: env.R2_ACCESS_KEY_ID,
+          secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+          bucket: env.R2_PUBLIC_BUCKET,
+          cacheControl: "public, max-age=31536000, immutable",
+        }),
+        publicUrl: env.R2_PUBLIC_URL,
+      }
+    : undefined;
+if (!media) logger.warn("Sin R2 público: las historias no aceptan portada y las miniaturas usan la URL de la red");
 const customRequests = env.TURNSTILE_SECRET
   ? {
       repository: createPrismaCustomRequestRepository(prisma),
@@ -68,6 +84,8 @@ const app = createApp({
     shippingRates: createPrismaAdminShippingRateStore(prisma),
     shippingZones: createPrismaShippingZoneRepository(prisma),
     packagingProfiles: createPrismaAdminPackagingProfileStore(prisma),
+    oembed: createOEmbedResolver({ media, instagramToken: env.INSTAGRAM_OEMBED_TOKEN }),
+    media,
   },
 });
 

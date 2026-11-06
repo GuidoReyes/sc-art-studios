@@ -3065,7 +3065,7 @@
         "dependencies": [
           "33"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -3073,7 +3073,7 @@
             "description": "Crear servicio backend que resuelve metadatos oEmbed para URLs de YouTube, TikTok e Instagram con timeout y reintentos configurables",
             "dependencies": [],
             "details": "Crear `apps/api/src/services/oembed.service.ts` con función `resolveOEmbed(url: string)` que detecta plataforma por regex, llama al endpoint oEmbed correspondiente (YouTube: noembed.com o oembed.com, TikTok: www.tiktok.com/oembed, Instagram: graph.facebook.com/v18.0/instagram_oembed). Implementar timeout de 5 segundos y máximo 3 reintentos con backoff exponencial. Extraer título, miniatura (thumbnail_url), autor, y html del embed. Descargar miniatura con sharp, eliminar EXIF, y subir a R2 en carpeta `thumbnails/`. Crear endpoint `POST /api/admin/oembed/resolve` que recibe `{ url }` y retorna `{ title, thumbnailUrl, platform, embedHtml }`. Manejar errores graciosamente cuando plataforma no soporta oEmbed o URL es inválida.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Probar con URLs válidas de cada plataforma: YouTube (watch, youtu.be, shorts), TikTok (@user/video), Instagram (reel, post). Verificar que timeout funciona con URL inaccesible. Verificar reintentos con mock de servicio intermitente. Confirmar que miniatura se sube a R2 sin metadatos EXIF. Verificar respuesta de error apropiada para URLs no soportadas.",
             "parentId": "undefined"
           },
@@ -3085,7 +3085,7 @@
               1
             ],
             "details": "Crear página `apps/web/app/[locale]/(admin)/admin/videos/page.tsx` con tabla de videos existentes y botón 'Agregar Video'. Crear formulario modal/página con campo URL que al perder foco o al presionar botón 'Resolver' llama a `/api/admin/oembed/resolve`. Mostrar spinner mientras resuelve, luego mostrar previsualización: miniatura, título editable, plataforma detectada. Permitir seleccionar máscara relacionada (dropdown con máscaras publicadas). Al guardar, crear registro en tabla `Video` con: originalUrl, embedHtml, title, thumbnailUrl (URL de R2), platform, maskId (opcional). Implementar listado con DataTable: thumbnail, título, plataforma, máscara vinculada, acciones (editar/eliminar). Validar que URL no esté duplicada antes de guardar.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Pegar URL de YouTube y verificar que resuelve título y miniatura automáticamente. Verificar que se puede editar el título antes de guardar. Verificar que el dropdown de máscaras muestra solo máscaras publicadas. Guardar video y verificar que aparece en la tabla. Intentar agregar URL duplicada y verificar mensaje de error. Probar edición y eliminación de video existente.",
             "parentId": "undefined"
           },
@@ -3095,7 +3095,7 @@
             "description": "Crear página /admin/historias con editor de texto enriquecido que sanitiza HTML para prevenir XSS, subida de portada a R2, y soporte bilingüe",
             "dependencies": [],
             "details": "Crear página `apps/web/app/[locale]/(admin)/admin/historias/page.tsx` con tabla de historias y botón 'Nueva Historia'. Crear formulario con: título (ES/EN), slug auto-generado desde título, excerpt (ES/EN), cuerpo con editor rich-text (usar TipTap o React-Quill), subida de imagen de portada. Instalar `sanitize-html` en API. Al guardar, sanitizar bodyEs y bodyEn con whitelist estricta: permitir p, br, strong, em, ul, ol, li, a (solo href http/https), h2, h3, blockquote. Eliminar scripts, iframes, eventos on*, estilos inline peligrosos. Procesar imagen de portada con sharp: resize a 1200x630, eliminar EXIF, convertir a WebP, subir a R2. Guardar en tabla `Story` con campos: slug, titleEs, titleEn, excerptEs, excerptEn, bodyEs, bodyEn, coverUrl, status (draft/published), publishedAt.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear historia con HTML malicioso (<script>, onclick, javascript:) y verificar que se elimina al guardar. Verificar que tags permitidos (p, strong, a) se mantienen. Subir imagen de portada y verificar que se procesa correctamente (WebP, sin EXIF, dimensiones correctas). Verificar que slug se genera automáticamente desde título. Probar edición de historia existente. Verificar que campos bilingües se guardan correctamente.",
             "parentId": "undefined"
           },
@@ -3108,7 +3108,7 @@
               3
             ],
             "details": "Actualizar esquema Prisma: agregar `maskId` opcional a modelos `Video` y `Story` con relación N:1 a `Mask`. Crear migración. En formularios de video e historia, agregar componente `MaskSelector`: dropdown con búsqueda que lista máscaras publicadas mostrando nombre y thumbnail. Implementar endpoint `GET /api/admin/masks/list` que retorna máscaras con id, name, thumbnailUrl para el selector. En la página de edición de máscara (`/admin/mascaras/[id]`), agregar sección 'Contenido Relacionado' que muestra videos e historias vinculadas con links para editarlas o desvincularlas (poner maskId en null). Agregar filtro en listados de videos/historias para filtrar por máscara. Actualizar API pública de máscara para incluir videos e historias relacionadas en la respuesta.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Crear video y vincularlo a una máscara, verificar que aparece en la sección de contenido relacionado de la máscara. Crear historia vinculada a máscara. Desvincular video desde el detalle de máscara y verificar que maskId queda null. Verificar que el filtro por máscara funciona en listados. Verificar que API pública de máscara incluye videos e historias relacionadas. Probar que no se puede vincular a máscara no publicada (si aplica).",
             "parentId": "undefined"
           }
